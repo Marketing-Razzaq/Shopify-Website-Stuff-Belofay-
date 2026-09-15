@@ -1,0 +1,211 @@
+{% doc %}
+  @prompt
+    Sliding banner across the page saying winter sale
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-sliding-banner-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    background-color: {{ block.settings.background_color }};
+    padding: {{ block.settings.banner_height }}px 0;
+    z-index: 10;
+  }
+
+  .ai-sliding-banner-content-{{ ai_gen_id }} {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    white-space: nowrap;
+    animation: ai-slide-{{ ai_gen_id }} {{ block.settings.animation_duration }}s linear infinite;
+    font-family: {{ settings.type_header_font.family }}, {{ settings.type_header_font.fallback_families }};
+    font-weight: {{ settings.type_header_font.weight }};
+    font-size: {{ block.settings.text_size }}px;
+    color: {{ block.settings.text_color }};
+    text-transform: {{ block.settings.text_transform }};
+    letter-spacing: {{ block.settings.letter_spacing }}px;
+  }
+
+  .ai-sliding-banner-text-{{ ai_gen_id }} {
+    display: inline-block;
+    margin-right: {{ block.settings.text_spacing }}px;
+  }
+
+  @keyframes ai-slide-{{ ai_gen_id }} {
+    0% {
+      transform: translateY(-50%) translateX(100%);
+    }
+    100% {
+      transform: translateY(-50%) translateX(-100%);
+    }
+  }
+
+  {% if block.settings.pause_on_hover %}
+    .ai-sliding-banner-{{ ai_gen_id }}:hover .ai-sliding-banner-content-{{ ai_gen_id }} {
+      animation-play-state: paused;
+    }
+  {% endif %}
+
+  @media screen and (max-width: 749px) {
+    .ai-sliding-banner-content-{{ ai_gen_id }} {
+      font-size: {{ block.settings.text_size | times: 0.8 }}px;
+      animation-duration: {{ block.settings.animation_duration | times: 1.2 }}s;
+    }
+    
+    .ai-sliding-banner-{{ ai_gen_id }} {
+      padding: {{ block.settings.banner_height | times: 0.7 }}px 0;
+    }
+  }
+{% endstyle %}
+
+<div
+  class="ai-sliding-banner-{{ ai_gen_id }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="ai-sliding-banner-content-{{ ai_gen_id }}">
+    {% assign repeat_count = block.settings.repeat_count | default: 5 %}
+    {% for i in (1..repeat_count) %}
+      <span class="ai-sliding-banner-text-{{ ai_gen_id }}">
+        {{ block.settings.banner_text }}
+      </span>
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Sliding banner",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "banner_text",
+      "label": "Banner text",
+      "default": "Winter Sale - Up to 50% Off Everything!"
+    },
+    {
+      "type": "range",
+      "id": "repeat_count",
+      "min": 3,
+      "max": 10,
+      "step": 1,
+      "label": "Text repetitions",
+      "default": 5
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#2c332f"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#efecec"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "min": 14,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Text size",
+      "default": 24
+    },
+    {
+      "type": "select",
+      "id": "text_transform",
+      "label": "Text transform",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        },
+        {
+          "value": "lowercase",
+          "label": "Lowercase"
+        },
+        {
+          "value": "capitalize",
+          "label": "Capitalize"
+        }
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "range",
+      "id": "letter_spacing",
+      "min": 0,
+      "max": 5,
+      "step": 0.5,
+      "unit": "px",
+      "label": "Letter spacing",
+      "default": 1
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "banner_height",
+      "min": 20,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "label": "Banner height",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "text_spacing",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "label": "Space between text",
+      "default": 100
+    },
+    {
+      "type": "header",
+      "content": "Animation"
+    },
+    {
+      "type": "range",
+      "id": "animation_duration",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "unit": "s",
+      "label": "Animation speed",
+      "default": 20
+    },
+    {
+      "type": "checkbox",
+      "id": "pause_on_hover",
+      "label": "Pause on hover",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Sliding banner"
+    }
+  ]
+}
+{% endschema %}

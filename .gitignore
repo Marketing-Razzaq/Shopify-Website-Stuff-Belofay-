@@ -1,0 +1,14 @@
+# Local Shopify CLI state and dependencies
+/.shopify/
+/node_modules/
+# Local secrets
+.env
+.env.*
+!.env.example
+# Local logs, OS files, and editor state
+*.log
+.DS_Store
+Thumbs.db
+/.idea/
+/.vscode/
+# Theme source directories are intentionally tracked.

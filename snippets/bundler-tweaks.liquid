@@ -1,0 +1,110 @@
+{% comment %}
+  Cleanup for the Bundler app widget:
+  - card layout with image on top, title, price, options, button pinned to bottom
+  - titles truncated to 30 characters (full title kept in tooltip)
+{% endcomment %}
+<style>
+  .bndlr-product,
+  .bndlr-sectioned-product {
+    display: flex !important;
+    flex-direction: column !important;
+    background: #fff;
+    border: 1px solid rgb(0 0 0 / 8%) !important;
+    border-radius: 10px;
+    padding: 12px !important;
+    gap: 8px;
+  }
+
+  .bndlr-product .bndlr-product-image,
+  .bndlr-sectioned-product .bndlr-product-image {
+    width: 100% !important;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 8px;
+    order: 0;
+  }
+
+  .bndlr-product .bndlr-product-title,
+  .bndlr-sectioned-product .bndlr-product-title {
+    order: 1;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    line-height: 1.4 !important;
+    color: #191919 !important;
+    text-decoration: none !important;
+    text-align: left !important;
+    min-height: 2.8em;
+    margin: 0 !important;
+  }
+
+  .bndlr-product .bndlr-product-title:hover,
+  .bndlr-sectioned-product .bndlr-product-title:hover {
+    text-decoration: underline !important;
+  }
+
+  .bndlr-product .bndlr-product-price,
+  .bndlr-sectioned-product .bndlr-product-price {
+    order: 2;
+    font-size: 14px !important;
+    font-weight: 700;
+    color: #191919;
+    text-align: left !important;
+    margin: 0 !important;
+  }
+
+  .bndlr-product .bndlr-product-options-container,
+  .bndlr-sectioned-product .bndlr-product-options-container {
+    order: 3;
+    margin: 0 !important;
+  }
+
+  .bndlr-product select,
+  .bndlr-sectioned-product select {
+    width: 100% !important;
+    border-radius: 6px !important;
+    border: 1px solid rgb(0 0 0 / 15%) !important;
+    padding: 8px 10px !important;
+    font-size: 12px !important;
+  }
+
+  .bndlr-product .bndlr-add-to-bundle-container,
+  .bndlr-product .bndlr-add-to-bundle,
+  .bndlr-sectioned-product .bndlr-add-to-bundle-container,
+  .bndlr-sectioned-product .bndlr-add-to-sectioned-bundle {
+    order: 4;
+    margin-top: auto !important;
+  }
+
+  .bndlr-add-to-bundle,
+  .bndlr-add-to-sectioned-bundle {
+    width: 100% !important;
+    border-radius: 6px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-size: 12px !important;
+  }
+</style>
+<script>
+  (function () {
+    var MAX = 30;
+    function trimTitles(root) {
+      (root || document)
+        .querySelectorAll('.bndlr-product-title, .bndlr-status-box-product-url')
+        .forEach(function (el) {
+          if (el.dataset.bndlrTrimmed) return;
+          var full = (el.textContent || '').trim();
+          if (full.length > MAX) {
+            el.title = full;
+            el.textContent = full.slice(0, MAX).replace(/\s+\S*$/, '') + '\u2026';
+          }
+          el.dataset.bndlrTrimmed = '1';
+        });
+    }
+    var observer = new MutationObserver(function () { trimTitles(document); });
+    document.addEventListener('DOMContentLoaded', function () {
+      trimTitles(document);
+      observer.observe(document.body, { childList: true, subtree: true });
+    });
+  })();
+</script>

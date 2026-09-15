@@ -1,0 +1,195 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "name": "t:sections.header.name",
+  "type": "header",
+  "sections": {
+    "header": {
+      "type": "header",
+      "settings": {
+        "logo_position": "middle-left",
+        "mobile_logo_position": "center",
+        "menu": "main-menu",
+        "menu_type_desktop": "dropdown",
+        "sticky_header_type": "none",
+        "show_line_separator": false,
+        "color_scheme": "scheme-1",
+        "menu_color_scheme": "scheme-1",
+        "enable_country_selector": true,
+        "enable_language_selector": true,
+        "enable_customer_avatar": true,
+        "margin_bottom": 0,
+        "padding_top": 20,
+        "padding_bottom": 20
+      }
+    },
+    "collection_nav": {
+      "type": "collection-nav",
+      "blocks": {
+        "col_all": {
+          "type": "collection",
+          "settings": {
+            "collection": "all",
+            "label": "Shop All"
+          }
+        },
+        "col_feat": {
+          "type": "collection",
+          "settings": {
+            "collection": "popular-products",
+            "label": "Featured"
+          }
+        },
+        "dd_vanity": {
+          "type": "collection_dropdown",
+          "settings": {
+            "label": "Vanity Units",
+            "collections": [
+              "vanity-units"
+            ]
+          }
+        },
+        "dd_mirrors": {
+          "type": "collection_dropdown",
+          "settings": {
+            "label": "Mirrors",
+            "collections": [
+              "mirrors"
+            ]
+          }
+        },
+        "dd_basins": {
+          "type": "collection_dropdown",
+          "settings": {
+            "label": "Basins",
+            "collections": [
+              "basins"
+            ]
+          }
+        },
+        "dd_splash": {
+          "type": "collection_dropdown",
+          "settings": {
+            "label": "Splashbacks",
+            "collections": [
+              "tempered-glass-splashback",
+              "staines-steel-splashback"
+            ]
+          }
+        },
+        "collections_dd": {
+          "type": "collections_dropdown",
+          "settings": {
+            "label": "Collections",
+            "collections": [
+              "vanity-units",
+              "mirrors",
+              "tempered-glass-splashback",
+              "tiffany-ceiling-lights",
+              "basins",
+              "staines-steel-splashback"
+            ]
+          }
+        },
+        "about": {
+          "type": "link",
+          "settings": {
+            "label": "About Us",
+            "link": "/pages/about-us"
+          }
+        },
+        "contact": {
+          "type": "link",
+          "settings": {
+            "label": "Contact",
+            "link": "/pages/contact"
+          }
+        }
+      },
+      "block_order": [
+        "col_all",
+        "col_feat",
+        "dd_vanity",
+        "dd_mirrors",
+        "dd_basins",
+        "dd_splash",
+        "collections_dd",
+        "about",
+        "contact"
+      ],
+      "name": "Collection nav bar",
+      "settings": {
+        "hide_mobile": true,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "show_search": true,
+        "search_placeholder": "Search...",
+        "background_color": "#ffffff",
+        "text_color": "#333355"
+      }
+    },
+    "benefits_bar": {
+      "type": "benefits-bar",
+      "blocks": {
+        "b_delivery": {
+          "type": "benefit",
+          "settings": {
+            "icon": "truck",
+            "title": "Free UK Delivery",
+            "subtitle": "On all orders"
+          }
+        },
+        "b_returns": {
+          "type": "benefit",
+          "settings": {
+            "icon": "returns",
+            "title": "Free UK Returns",
+            "subtitle": "30 day returns"
+          }
+        },
+        "b_reviews": {
+          "type": "benefit",
+          "settings": {
+            "icon": "star",
+            "title": "Customer Reviews",
+            "subtitle": "Customers rate us Excellent"
+          }
+        },
+        "b_help": {
+          "type": "benefit",
+          "settings": {
+            "icon": "help",
+            "title": "Help & Advice",
+            "subtitle": "+44 7735 860185"
+          }
+        }
+      },
+      "block_order": [
+        "b_delivery",
+        "b_returns",
+        "b_reviews",
+        "b_help"
+      ],
+      "name": "Benefits bar",
+      "settings": {
+        "hide_mobile": true,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "background_color": "#ffffff",
+        "text_color": "#333355"
+      }
+    }
+  },
+  "order": [
+    "header",
+    "collection_nav",
+    "benefits_bar"
+  ]
+}

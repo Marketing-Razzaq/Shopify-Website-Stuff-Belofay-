@@ -1,0 +1,330 @@
+{% comment %}
+  Trusted-by strip + dark stats/newsletter bar.
+  Top: "As seen on & trusted by" logos (Trustpilot + payment brands).
+  Bottom: dark bar with stat items and an email signup form.
+{% endcomment %}
+
+<div class="tby">
+  <div class="tby__logos-wrap">
+    <div class="page-width">
+      <h2 class="tby__heading">{{ section.settings.heading }}</h2>
+      <div class="tby__logos">
+        <span class="tby__logo tby__logo--trustpilot">
+          <svg viewBox="0 0 24 24" fill="#00b67a" aria-hidden="true"><polygon points="12 1.5 15.2 8.6 23 9.4 17.2 14.6 18.9 22.3 12 18.3 5.1 22.3 6.8 14.6 1 9.4 8.8 8.6"/></svg>
+          Trustpilot
+        </span>
+        <span class="tby__logo tby__logo--visa">VISA</span>
+        <span class="tby__logo tby__logo--mc" aria-label="Mastercard">
+          <svg viewBox="0 0 48 30" aria-hidden="true"><circle cx="18" cy="15" r="13" fill="#eb001b"/><circle cx="30" cy="15" r="13" fill="#f79e1b" fill-opacity="0.9"/></svg>
+        </span>
+        <span class="tby__logo tby__logo--paypal">
+          <svg viewBox="0 0 24 24" fill="#003087" aria-hidden="true"><path d="M7.1 22l.6-3.8H4L6.8 2h7.4c2.5 0 4.3.6 5.3 1.8.9 1.1 1.2 2.5.9 4.4-.5 3.5-2.9 5.4-6.9 5.4h-2.3L10.1 22H7.1z"/></svg>
+          <em>PayPal</em>
+        </span>
+        <span class="tby__logo tby__logo--apple">
+          <svg viewBox="0 0 24 24" fill="#000" aria-hidden="true"><path d="M16.6 12.9c0-2 1.6-3 1.7-3-1-1.4-2.4-1.6-2.9-1.6-1.2-.1-2.4.7-3 .7-.6 0-1.6-.7-2.6-.7-1.3 0-2.6.8-3.3 2-1.4 2.4-.4 6 1 8 .7 1 1.5 2.1 2.5 2 1-.1 1.4-.6 2.6-.6s1.6.6 2.6.6c1.1 0 1.8-1 2.5-2 .8-1.1 1.1-2.2 1.1-2.3 0 0-2.2-.8-2.2-3.1zM14.7 6.4c.5-.7.9-1.6.8-2.6-.8 0-1.8.5-2.3 1.2-.5.6-1 1.6-.8 2.5.9.1 1.8-.4 2.3-1.1z"/></svg>
+          Pay
+        </span>
+        <span class="tby__logo tby__logo--gpay"><span class="g1">G</span><span class="g2">&#8202;Pay</span></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="tby__bar">
+    <div class="page-width tby__bar-inner">
+      <div class="tby__stats">
+        {%- for block in section.blocks -%}
+          <div class="tby__stat" {{ block.shopify_attributes }}>
+            <span class="tby__stat-icon" aria-hidden="true">
+              {%- case block.settings.icon -%}
+                {%- when 'star' -%}
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 3 14.7 8.6 21 9.4 16.5 13.7 17.6 20 12 17 6.4 20 7.5 13.7 3 9.4 9.3 8.6"/></svg>
+                {%- when 'rating' -%}
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="14" rx="2"/><path d="M8 3v4M16 3v4M4 10h16"/></svg>
+                {%- when 'truck' -%}
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="5" width="14" height="12"/><path d="M15 9h4l3 3v5h-7"/><circle cx="6" cy="19" r="2"/><circle cx="18" cy="19" r="2"/></svg>
+                {%- else -%}
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13a8 8 0 0 1 16 0"/><rect x="2" y="13" width="4" height="7" rx="2"/><rect x="18" y="13" width="4" height="7" rx="2"/><path d="M20 20a4 4 0 0 1-4 2h-2"/></svg>
+              {%- endcase -%}
+            </span>
+            <span class="tby__stat-title">{{ block.settings.title }}</span>
+            <span class="tby__stat-sub">{{ block.settings.subtitle }}</span>
+          </div>
+        {%- endfor -%}
+      </div>
+
+      <div class="tby__signup">
+        <strong class="tby__signup-title">{{ section.settings.signup_heading }}</strong>
+        <span class="tby__signup-sub">{{ section.settings.signup_text }}</span>
+        {% form 'customer', class: 'tby__form' %}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <input
+            type="email"
+            name="contact[email]"
+            class="tby__input"
+            placeholder="{{ section.settings.placeholder | default: 'Enter your email address' }}"
+            required
+            autocomplete="email"
+            aria-label="Email address"
+          >
+          <button type="submit" class="tby__submit">{{ section.settings.button_label | default: 'Subscribe' }}</button>
+          {%- if form.errors -%}
+            <span class="tby__form-msg tby__form-msg--error">{{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}</span>
+          {%- endif -%}
+          {%- if form.posted_successfully? -%}
+            <span class="tby__form-msg">Thanks for subscribing!</span>
+          {%- endif -%}
+        {% endform %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .tby__logos-wrap {
+    background: #fff;
+    padding: 28px 0 26px;
+  }
+
+  .tby__heading {
+    margin: 0 0 20px;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #191919;
+  }
+
+  .tby__logos {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 28px 56px;
+  }
+
+  .tby__logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 1.7rem;
+    font-weight: 600;
+    color: #191919;
+  }
+
+  .tby__logo svg {
+    height: 24px;
+    width: auto;
+  }
+
+  .tby__logo--trustpilot svg {
+    height: 20px;
+    width: 20px;
+  }
+
+  .tby__logo--visa {
+    color: #1a1f71;
+    font-style: italic;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    font-size: 2rem;
+  }
+
+  .tby__logo--mc svg {
+    height: 28px;
+  }
+
+  .tby__logo--paypal em {
+    font-style: italic;
+    font-weight: 800;
+    color: #003087;
+  }
+
+  .tby__logo--paypal svg {
+    height: 20px;
+    width: 20px;
+  }
+
+  .tby__logo--gpay .g1 {
+    font-weight: 700;
+    background: linear-gradient(90deg, #4285f4, #ea4335, #fbbc05, #34a853);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .tby__logo--gpay .g2 {
+    color: #5f6368;
+    font-weight: 600;
+  }
+
+  .tby__bar {
+    background: #1f1e1c;
+    color: #f4f0e9;
+  }
+
+  .tby__bar-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 28px;
+    padding-top: 34px;
+    padding-bottom: 34px;
+  }
+
+  .tby__stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 22px 40px;
+  }
+
+  .tby__stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 4px;
+    min-width: 110px;
+  }
+
+  .tby__stat-icon {
+    width: 26px;
+    height: 26px;
+    color: #cbb98d;
+    margin-bottom: 4px;
+  }
+
+  .tby__stat-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: #f4f0e9;
+  }
+
+  .tby__stat-sub {
+    font-size: 1.05rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #b9b2a5;
+  }
+
+  .tby__signup {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    max-width: 420px;
+    flex: 1 1 300px;
+  }
+
+  .tby__signup-title {
+    font-size: 1.3rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #f4f0e9;
+  }
+
+  .tby__signup-sub {
+    font-size: 1.15rem;
+    color: #b9b2a5;
+  }
+
+  .tby__form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    margin-top: 8px;
+  }
+
+  .tby__input {
+    flex: 1 1 200px;
+    min-width: 0;
+    padding: 12px 14px;
+    font-size: 1.25rem;
+    border: 1px solid rgb(255 255 255 / 25%);
+    border-right: none;
+    background: #fff;
+    color: #191919;
+  }
+
+  .tby__input:focus {
+    outline: 2px solid #cbb98d;
+    outline-offset: -2px;
+  }
+
+  .tby__submit {
+    padding: 12px 22px;
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: #35332f;
+    color: #fff;
+    border: 1px solid rgb(255 255 255 / 25%);
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+
+  .tby__submit:hover {
+    background: #4a4740;
+  }
+
+  .tby__form-msg {
+    flex-basis: 100%;
+    margin-top: 8px;
+    font-size: 1.15rem;
+    color: #9fd6a8;
+  }
+
+  .tby__form-msg--error {
+    color: #f0a9a9;
+  }
+
+  @media screen and (max-width: 749px) {
+    .tby__bar-inner {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .tby__stats {
+      justify-content: center;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Trusted by & signup",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Logos heading", "default": "As seen on & trusted by" },
+    { "type": "text", "id": "signup_heading", "label": "Signup heading", "default": "Get exclusive offers & new arrivals" },
+    { "type": "text", "id": "signup_text", "label": "Signup text", "default": "Sign up and get 10% off your first order." },
+    { "type": "text", "id": "placeholder", "label": "Email placeholder", "default": "Enter your email address" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Subscribe" }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "star", "label": "Star" },
+            { "value": "rating", "label": "Rating board" },
+            { "value": "truck", "label": "Delivery truck" },
+            { "value": "headset", "label": "Headset" }
+          ],
+          "default": "star"
+        },
+        { "type": "text", "id": "title", "label": "Title", "default": "40+" },
+        { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "Verified Reviews" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Trusted by & signup" }]
+}
+{% endschema %}

@@ -1,0 +1,437 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "belofay_hero": {
+      "type": "belofay-hero",
+      "blocks": {
+        "slide3": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Free_shipping_anywhere_in_the_UK_2.svg"
+          }
+        },
+        "slide1": {
+          "type": "slide",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_Aug_6_2026_05_04_57_PM.png"
+          }
+        },
+        "slide2": {
+          "type": "slide",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_Aug_6_2026_05_23_55_PM.png"
+          }
+        }
+      },
+      "block_order": [
+        "slide3",
+        "slide1",
+        "slide2"
+      ],
+      "settings": {
+        "slide_seconds": 15,
+        "slide_width": 1100,
+        "padding_top": 32,
+        "padding_bottom": 48,
+        "image": "shopify://shop_images/ChatGPT_Image_Aug_6_2026_04_48_51_PM.png",
+        "badge": "",
+        "heading": "",
+        "text": "",
+        "button1_label": "",
+        "button1_link": "/collections/vanity-units",
+        "button2_label": "",
+        "button2_link": "/collections/mirrors",
+        "hide_content_mobile": true,
+        "mobile_large": false,
+        "show_trustpilot": false,
+        "trustpilot_rating": "4.4/5",
+        "trustpilot_reviews": "41 reviews",
+        "trustpilot_url": ""
+      }
+    },
+    "trustpilot": {
+      "type": "trustpilot-testimonials",
+      "blocks": {
+        "r1": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "reviewer": "Mark Luckett",
+            "title": "Lovely glass splash back.",
+            "text": "Order on Thursday and delivered on Friday and looks good too."
+          }
+        },
+        "r2": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "reviewer": "Abby",
+            "title": "Highly Recommended",
+            "text": "Great company. Bought a tempered glass playback from them and the quality was superb! Customer care was great and super fab"
+          }
+        },
+        "r3": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "reviewer": "Mr S Payne",
+            "title": "Great price and excellent quality",
+            "text": "Great price and excellent quality, the delivery was quick and the mirror was very well packed indeed."
+          }
+        },
+        "f1": {
+          "type": "feature",
+          "settings": {
+            "icon": "truck",
+            "title": "Fast Delivery",
+            "subtitle": "Quick & Reliable"
+          }
+        },
+        "f2": {
+          "type": "feature",
+          "settings": {
+            "icon": "shield",
+            "title": "Premium Quality",
+            "subtitle": "Built to Last"
+          }
+        },
+        "f3": {
+          "type": "feature",
+          "settings": {
+            "icon": "headset",
+            "title": "Excellent Support",
+            "subtitle": "We're Here to Help"
+          }
+        },
+        "f4": {
+          "type": "feature",
+          "settings": {
+            "icon": "badge",
+            "title": "Trusted by Thousands",
+            "subtitle": "Quality You Can Trust"
+          }
+        }
+      },
+      "block_order": [
+        "r1",
+        "r2",
+        "r3",
+        "f1",
+        "f2",
+        "f3",
+        "f4"
+      ],
+      "settings": {
+        "hide_mobile": true,
+        "padding_top": 24,
+        "padding_bottom": 24,
+        "score_label": "Excellent",
+        "rating": "4.4",
+        "trustpilot_url": ""
+      }
+    },
+    "shop_by_category": {
+      "type": "shop-by-category",
+      "blocks": {
+        "c1": {
+          "type": "category",
+          "settings": {
+            "collection": "vanity-units",
+            "label": "Vanity Units"
+          }
+        },
+        "c2": {
+          "type": "category",
+          "settings": {
+            "collection": "mirrors",
+            "label": "Mirrors"
+          }
+        },
+        "c3": {
+          "type": "category",
+          "settings": {
+            "collection": "tempered-glass-splashback",
+            "label": "Splashbacks"
+          }
+        },
+        "c4": {
+          "type": "category",
+          "settings": {
+            "collection": "tiffany-ceiling-lights",
+            "label": "Tiffany Ceiling Lights"
+          }
+        },
+        "category_VqdKrc": {
+          "type": "category",
+          "settings": {
+            "collection": "floor-lamp",
+            "label": "Tiffany Floor Lamps"
+          }
+        },
+        "c5": {
+          "type": "category",
+          "settings": {
+            "collection": "basins",
+            "label": "Bathroom Sinks"
+          }
+        },
+        "c6": {
+          "type": "category",
+          "settings": {
+            "collection": "staines-steel-splashback",
+            "label": "STEEL SPLASHBACKS"
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "category_VqdKrc",
+        "c5",
+        "c6"
+      ],
+      "settings": {
+        "padding_top": 24,
+        "padding_bottom": 0,
+        "heading": "Shop by Category",
+        "columns": 7
+      }
+    },
+    "why_choose": {
+      "type": "why-choose",
+      "blocks": {
+        "w1": {
+          "type": "item",
+          "settings": {
+            "icon": "truck",
+            "title": "Free UK Delivery",
+            "subtitle": "On all orders"
+          }
+        },
+        "w2": {
+          "type": "item",
+          "settings": {
+            "icon": "clock",
+            "title": "Fast Dispatch",
+            "subtitle": "Orders shipped daily"
+          }
+        },
+        "w3": {
+          "type": "item",
+          "settings": {
+            "icon": "lock",
+            "title": "Secure Payments",
+            "subtitle": "100% secure checkout"
+          }
+        },
+        "w4": {
+          "type": "item",
+          "settings": {
+            "icon": "badge",
+            "title": "Quality Guarantee",
+            "subtitle": "Premium quality products"
+          }
+        },
+        "w5": {
+          "type": "item",
+          "settings": {
+            "icon": "headset",
+            "title": "UK Customer Support",
+            "subtitle": "We're here to help"
+          }
+        }
+      },
+      "block_order": [
+        "w1",
+        "w2",
+        "w3",
+        "w4",
+        "w5"
+      ],
+      "settings": {
+        "padding_top": 32,
+        "padding_bottom": 32,
+        "heading": "Why Choose Belofay?",
+        "background_color": "#f4f2ee"
+      }
+    },
+    "1785001952a51011ac": {
+      "type": "apps",
+      "blocks": {
+        "bundler_custom_bundle_L7ygmz": {
+          "type": "shopify://apps/bundler/blocks/custom-bundle/7a6ae1b8-3b16-449b-8429-8bb89a62c664",
+          "settings": {
+            "shortcode": "i7sn"
+          }
+        }
+      },
+      "block_order": [
+        "bundler_custom_bundle_L7ygmz"
+      ],
+      "settings": {
+        "include_margins": true
+      }
+    },
+    "featured_collection_iE4njg": {
+      "type": "featured-collection",
+      "name": "t:sections.featured-collection.presets.name",
+      "settings": {
+        "collection": "best-sellers",
+        "products_to_show": 10,
+        "title": "Best Sellers",
+        "heading_size": "h1",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "columns_desktop": 4,
+        "enable_desktop_slider": false,
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "link",
+        "color_scheme": "",
+        "image_ratio": "adapt",
+        "image_shape": "default",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "none",
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 24,
+        "padding_bottom": 36
+      }
+    },
+    "reviews_carousel": {
+      "type": "reviews-carousel",
+      "blocks": {
+        "r1": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "title": "Great overall experience",
+            "text": "Easy ordering, quick delivery, good quality product",
+            "author": "Stuart Ross",
+            "date": "Mar 17, 2026"
+          }
+        },
+        "r2": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "title": "For customer services only (so far)",
+            "text": "Have only used customer services so far to ask for very specific details on a product. The reply was super fast and detailed, answering my question perfectly. As a result I ordered the product (a glass wash basin).",
+            "author": "Mrs Batsleer",
+            "date": "Feb 13, 2026"
+          }
+        },
+        "r3": {
+          "type": "review",
+          "settings": {
+            "rating": 4,
+            "title": "Vanity unit and basin was good value",
+            "text": "Vanity unit and Basin was good value for money and quick delivery, the only thing was the instructions didn't show all parts when assembling.",
+            "author": "Neil Cutler",
+            "date": "Feb 10, 2026"
+          }
+        },
+        "r4": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "title": "Beautiful lights",
+            "text": "I am usually very apprehensive about ordering online, especially not knowing this company. But trust me, it was 3 days delivery. It was so quick and I absolutely love my lights.",
+            "author": "Mrs Irvine",
+            "date": "Feb 4, 2026"
+          }
+        },
+        "r5": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "title": "Great company, great prices",
+            "text": "Keeping me informed every step of the way from ordering to delivering, everything well packed and looks lovely for the price. Space saving too.",
+            "author": "Linda",
+            "date": "Feb 2, 2026"
+          }
+        },
+        "r6": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "title": "Fantastic service",
+            "text": "Our order arrived with 2 panels damaged, they were replaced within the week — fantastic service.",
+            "author": "Bob Hill",
+            "date": "Jan 19, 2026"
+          }
+        },
+        "r7": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "title": "Happy first time customer :-)",
+            "text": "This was my first time ordering from Belofay, but it won't be the last. I loved the Parcel box — reasonably priced, easy to assemble, well packaged and delivered on time. What more could you ask for, happy customer :-)",
+            "author": "Verified Customer",
+            "date": ""
+          }
+        },
+        "r8": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "title": "The icing and the cherry on it",
+            "text": "Just completed a kitchen replacement and this splashback has put the icing and the cherry on it. Very pleased with quality and price and very fast delivery.",
+            "author": "Eileen Whittock",
+            "date": "Dec 4, 2025"
+          }
+        },
+        "r9": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "title": "Very easy to purchase",
+            "text": "Very easy to purchase, delivery was swift, and email response to my issue was very good.",
+            "author": "Sonnyamos",
+            "date": "Nov 14, 2025"
+          }
+        }
+      },
+      "block_order": [
+        "r1",
+        "r2",
+        "r3",
+        "r4",
+        "r5",
+        "r6",
+        "r7",
+        "r8",
+        "r9"
+      ],
+      "settings": {
+        "heading": "More Customer Reviews",
+        "padding_top": 40,
+        "padding_bottom": 56
+      }
+    }
+  },
+  "order": [
+    "belofay_hero",
+    "trustpilot",
+    "shop_by_category",
+    "why_choose",
+    "1785001952a51011ac",
+    "featured_collection_iE4njg",
+    "reviews_carousel"
+  ]
+}

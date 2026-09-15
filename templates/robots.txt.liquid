@@ -1,0 +1,63 @@
+{%- comment -%}
+  Custom robots.txt — keeps all default Shopify rules, then blocks
+  Amazonbot and known scraper / price-monitoring crawlers site-wide.
+  Google, Bing and other search engines are unaffected.
+{%- endcomment -%}
+{%- for group in robots.default_groups -%}
+  {{ group.user_agent }}
+  {%- for rule in group.rules %}
+  {{ rule }}
+  {%- endfor %}
+  {%- if group.sitemap != blank %}
+  {{ group.sitemap }}
+  {%- endif %}
+{% endfor %}
+
+# --- Blocked scraper / price-monitoring bots ---
+User-agent: Amazonbot
+Disallow: /
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: DataForSeoBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: BLEXBot
+Disallow: /
+
+User-agent: PetalBot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: SeekportBot
+Disallow: /
+
+User-agent: serpstatbot
+Disallow: /
+
+User-agent: ZoominfoBot
+Disallow: /
+
+User-agent: Scrapy
+Disallow: /
+
+User-agent: python-requests
+Disallow: /
+
+User-agent: HTTrack
+Disallow: /
+
+User-agent: Screaming Frog SEO Spider
+Disallow: /

@@ -1,0 +1,199 @@
+{% comment %}
+  Reviews carousel — heading + horizontally scrollable review cards with arrows.
+{% endcomment %}
+
+<div class="rvc page-width" style="padding-top: {{ section.settings.padding_top | default: 40 }}px; padding-bottom: {{ section.settings.padding_bottom | default: 40 }}px;">
+  <h2 class="rvc__heading">{{ section.settings.heading }}</h2>
+  <div class="rvc__wrap">
+    <button type="button" class="rvc__arrow rvc__arrow--prev" aria-label="Previous reviews" data-rvc-prev>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <div class="rvc__track" data-rvc-track>
+      {%- for block in section.blocks -%}
+        <div class="rvc__card" {{ block.shopify_attributes }}>
+          <div class="rvc__stars" role="img" aria-label="Rated {{ block.settings.rating }} out of 5 stars">
+            {%- for i in (1..5) -%}
+              <span class="rvc__star{% if i > block.settings.rating %} rvc__star--empty{% endif %}">
+                <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><polygon points="12 2 15 8.6 22 9.4 16.8 14.2 18.4 21.4 12 17.7 5.6 21.4 7.2 14.2 2 9.4 9 8.6"/></svg>
+              </span>
+            {%- endfor -%}
+          </div>
+          {%- if block.settings.title != blank -%}
+            <strong class="rvc__title">{{ block.settings.title }}</strong>
+          {%- endif -%}
+          <p class="rvc__text">&ldquo;{{ block.settings.text }}&rdquo;</p>
+          <span class="rvc__author">&ndash; {{ block.settings.author }}{% if block.settings.date != blank %}<span class="rvc__date"> &middot; {{ block.settings.date }}</span>{% endif %}</span>
+        </div>
+      {%- endfor -%}
+    </div>
+    <button type="button" class="rvc__arrow rvc__arrow--next" aria-label="Next reviews" data-rvc-next>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+  </div>
+</div>
+
+{% stylesheet %}
+  .rvc__heading {
+    margin: 0 0 26px;
+    text-align: center;
+    font-size: clamp(1.9rem, 2vw, 2.4rem);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #191919;
+  }
+
+  .rvc__wrap {
+    display: flex;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .rvc__track {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    flex: 1;
+    padding: 4px 2px;
+  }
+
+  .rvc__track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .rvc__card {
+    flex: 0 0 clamp(220px, 24%, 300px);
+    scroll-snap-align: start;
+    background: #fff;
+    border: 1px solid rgb(0 0 0 / 8%);
+    border-radius: 10px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .rvc__stars {
+    display: inline-flex;
+    gap: 2px;
+  }
+
+  .rvc__star {
+    width: 20px;
+    height: 20px;
+    background: #00b67a;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .rvc__star svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .rvc__star--empty {
+    background: #dcdce6;
+  }
+
+  .rvc__title {
+    font-size: 1.25rem;
+    color: #191919;
+  }
+
+  .rvc__text {
+    margin: 0;
+    font-size: 1.2rem;
+    line-height: 1.55;
+    color: #3a3a3a;
+    flex: 1;
+  }
+
+  .rvc__author {
+    font-size: 1.1rem;
+    color: #6a6a6a;
+  }
+
+  .rvc__date {
+    color: #9a9a9a;
+  }
+
+  .rvc__arrow {
+    align-self: center;
+    flex: 0 0 auto;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid rgb(0 0 0 / 12%);
+    background: #fff;
+    color: #191919;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s ease;
+  }
+
+  .rvc__arrow:hover {
+    background: #f2f2f2;
+  }
+
+  .rvc__arrow svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  @media screen and (max-width: 649px) {
+    .rvc__card {
+      flex-basis: 78%;
+    }
+
+    .rvc__arrow {
+      display: none;
+    }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  document.querySelectorAll('[data-rvc-track]').forEach(function (track) {
+    var wrap = track.closest('.rvc__wrap');
+    if (!wrap) return;
+    var step = function () {
+      var card = track.querySelector('.rvc__card');
+      return card ? card.getBoundingClientRect().width + 16 : 300;
+    };
+    var prev = wrap.querySelector('[data-rvc-prev]');
+    var next = wrap.querySelector('[data-rvc-next]');
+    if (prev) prev.addEventListener('click', function () { track.scrollBy({ left: -step(), behavior: 'smooth' }); });
+    if (next) next.addEventListener('click', function () { track.scrollBy({ left: step(), behavior: 'smooth' }); });
+  });
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Reviews carousel",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "More Customer Reviews" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 40 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 40 }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        { "type": "range", "id": "rating", "label": "Rating", "min": 1, "max": 5, "step": 1, "default": 5 },
+        { "type": "text", "id": "title", "label": "Title" },
+        { "type": "textarea", "id": "text", "label": "Review text" },
+        { "type": "text", "id": "author", "label": "Author" },
+        { "type": "text", "id": "date", "label": "Date" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Reviews carousel" }]
+}
+{% endschema %}

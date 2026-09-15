@@ -1,0 +1,116 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "name": "t:sections.footer.name",
+  "type": "footer",
+  "sections": {
+    "1781793981c68f548c": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_d75b40c_E8bwRj": {
+          "type": "ai_gen_block_d75b40c",
+          "settings": {
+            "about_heading": "About us",
+            "about_text": "<p>We are dedicated to providing quality products and exceptional service to our customers.</p>",
+            "services_heading": "Customer services",
+            "service_link_2_text": "Track order",
+            "service_link_2_url": "shopify://pages/contact",
+            "policies_heading": "Policies",
+            "desktop_width_percent": 100,
+            "section_padding": 40,
+            "column_gap": 40,
+            "mobile_column_gap": 30,
+            "item_spacing": 10,
+            "heading_margin": 15,
+            "background_color": "#2c332f",
+            "heading_color": "#efecec",
+            "text_color": "#efecec",
+            "link_color": "#efecec",
+            "link_hover_color": "#ffffff",
+            "heading_size": 18,
+            "text_size": 14,
+            "link_size": 14
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_d75b40c_E8bwRj"
+      ],
+      "settings": {}
+    },
+    "footer": {
+      "type": "footer",
+      "settings": {
+        "color_scheme": "scheme-4",
+        "newsletter_enable": false,
+        "newsletter_heading": "Subscribe to our emails",
+        "enable_follow_on_shop": false,
+        "show_social": true,
+        "enable_country_selector": true,
+        "enable_language_selector": true,
+        "payment_enable": true,
+        "show_policy": true,
+        "margin_top": 0,
+        "padding_top": 0,
+        "padding_bottom": 36
+      }
+    },
+    "trusted_by": {
+      "type": "trusted-by",
+      "blocks": {
+        "s1": {
+          "type": "stat",
+          "settings": {
+            "icon": "star",
+            "title": "40+",
+            "subtitle": "Verified Reviews"
+          }
+        },
+        "s2": {
+          "type": "stat",
+          "settings": {
+            "icon": "rating",
+            "title": "4.4★",
+            "subtitle": "Trustpilot Rating"
+          }
+        },
+        "s3": {
+          "type": "stat",
+          "settings": {
+            "icon": "truck",
+            "title": "Fast UK",
+            "subtitle": "Delivery"
+          }
+        },
+        "s4": {
+          "type": "stat",
+          "settings": {
+            "icon": "headset",
+            "title": "Responsive",
+            "subtitle": "Customer Service"
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "trusted_by",
+    "1781793981c68f548c",
+    "footer"
+  ]
+}

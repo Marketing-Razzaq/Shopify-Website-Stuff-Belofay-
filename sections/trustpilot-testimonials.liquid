@@ -1,0 +1,374 @@
+{% comment %}
+  Trustpilot-style testimonials banner — summary card, review cards, and a features strip.
+{% endcomment %}
+
+{%- assign tp_green = '#00B67A' -%}
+
+<div class="tp-banner page-width{% if section.settings.hide_mobile %} tp-banner--hide-mobile{% endif %}" style="padding-top: {{ section.settings.padding_top | default: 64 }}px; padding-bottom: {{ section.settings.padding_bottom | default: 64 }}px;">
+  {%- comment -%} Summary header card {%- endcomment -%}
+  <div class="tp-banner__summary">
+    <a
+      class="tp-banner__brand"
+      {% if section.settings.trustpilot_url != blank %}href="{{ section.settings.trustpilot_url }}" target="_blank" rel="noopener"{% endif %}
+    >
+      <svg class="tp-banner__brand-star" viewBox="0 0 24 24" fill="{{ tp_green }}" aria-hidden="true"><polygon points="12 1.5 15.2 8.6 23 9.4 17.2 14.6 18.9 22.3 12 18.3 5.1 22.3 6.8 14.6 1 9.4 8.8 8.6"/></svg>
+      <span class="tp-banner__brand-name">Trustpilot</span>
+    </a>
+    <span class="tp-banner__divider" aria-hidden="true"></span>
+    <div class="tp-banner__score">
+      <span class="tp-banner__score-label">{{ section.settings.score_label }}</span>
+      <span class="tp-stars tp-stars--large" aria-label="{{ section.settings.rating }} out of 5 stars">
+        {%- for i in (1..5) -%}
+          <span class="tp-star"><svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><polygon points="12 2 14.9 8.4 21.8 9.2 16.7 13.9 18.1 20.8 12 17.2 5.9 20.8 7.3 13.9 2.2 9.2 9.1 8.4"/></svg></span>
+        {%- endfor -%}
+      </span>
+      <span class="tp-banner__rating">{{ section.settings.rating }}</span>
+    </div>
+    <span class="tp-banner__verified">
+      <svg viewBox="0 0 24 24" fill="none" stroke="{{ tp_green }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l2.4 2.4 3.4-.5 1 3.3 3.2 1.4-1.4 3.4 1.4 3.4-3.2 1.4-1 3.3-3.4-.5L12 22l-2.4-2.4-3.4.5-1-3.3L2 15.4 3.4 12 2 8.6l3.2-1.4 1-3.3 3.4.5z"/><polyline points="8.5 12 11 14.5 15.5 9.5"/></svg>
+      VERIFIED
+    </span>
+  </div>
+
+  {%- comment -%} Review cards {%- endcomment -%}
+  {%- assign review_blocks = section.blocks | where: 'type', 'review' -%}
+  {%- if review_blocks.size > 0 -%}
+    <div class="tp-banner__reviews" style="--tp-cols: {{ review_blocks.size | at_most: 3 }};">
+      {%- for block in review_blocks -%}
+        <div class="tp-banner__card" {{ block.shopify_attributes }}>
+          <span class="tp-stars" aria-label="{{ block.settings.stars }} out of 5 stars">
+            {%- for i in (1..5) -%}
+              <span class="tp-star{% if i > block.settings.stars %} tp-star--empty{% endif %}"><svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><polygon points="12 2 14.9 8.4 21.8 9.2 16.7 13.9 18.1 20.8 12 17.2 5.9 20.8 7.3 13.9 2.2 9.2 9.1 8.4"/></svg></span>
+            {%- endfor -%}
+          </span>
+          <div class="tp-banner__reviewer">
+            <span class="tp-banner__avatar" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="{{ tp_green }}"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-6 8-6s8 2 8 6z"/></svg>
+            </span>
+            <span class="tp-banner__reviewer-name">{{ block.settings.reviewer }}</span>
+          </div>
+          {%- if block.settings.title != blank -%}
+            <h3 class="tp-banner__review-title">{{ block.settings.title }}</h3>
+          {%- endif -%}
+          <p class="tp-banner__review-text">{{ block.settings.text }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+
+  {%- comment -%} Features strip {%- endcomment -%}
+  {%- assign feature_blocks = section.blocks | where: 'type', 'feature' -%}
+  {%- if feature_blocks.size > 0 -%}
+    <div class="tp-banner__features">
+      {%- for block in feature_blocks -%}
+        <div class="tp-banner__feature" {{ block.shopify_attributes }}>
+          <span class="tp-banner__feature-icon" aria-hidden="true">
+            {%- case block.settings.icon -%}
+              {%- when 'truck' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="{{ tp_green }}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="5" width="14" height="12"/><path d="M15 9h4l3 3v5h-7"/><circle cx="6" cy="19" r="2"/><circle cx="18" cy="19" r="2"/></svg>
+              {%- when 'shield' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="{{ tp_green }}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/><polyline points="8.5 12 11 14.5 15.5 9.5"/></svg>
+              {%- when 'headset' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="{{ tp_green }}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13a8 8 0 0 1 16 0"/><rect x="2" y="13" width="4" height="7" rx="2"/><rect x="18" y="13" width="4" height="7" rx="2"/><path d="M20 20a4 4 0 0 1-4 2h-2"/></svg>
+              {%- else -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="{{ tp_green }}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><path d="M9 14.5L7 22l5-3 5 3-2-7.5"/><path d="M9.8 9l1.6 1.6L14.6 7.4"/></svg>
+            {%- endcase -%}
+          </span>
+          <span class="tp-banner__feature-copy">
+            <strong>{{ block.settings.title }}</strong>
+            <span>{{ block.settings.subtitle }}</span>
+          </span>
+        </div>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</div>
+
+{% stylesheet %}
+  .tp-banner {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 24px;
+    margin-bottom: 24px;
+    padding-top: 64px;
+    padding-bottom: 64px;
+  }
+
+  .tp-banner__summary,
+  .tp-banner__card,
+  .tp-banner__features {
+    background: #fafafa;
+    border: 1px solid rgb(0 0 0 / 5%);
+    border-radius: 10px;
+  }
+
+  .tp-banner__summary {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 22px;
+    padding: 18px 28px;
+  }
+
+  .tp-banner__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: #191919;
+  }
+
+  .tp-banner__brand-star {
+    width: 34px;
+    height: 34px;
+  }
+
+  .tp-banner__brand-name {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .tp-banner__divider {
+    width: 1px;
+    align-self: stretch;
+    background: rgb(0 0 0 / 12%);
+  }
+
+  .tp-banner__score {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+
+  .tp-banner__score-label {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #191919;
+  }
+
+  .tp-stars {
+    display: inline-flex;
+    gap: 4px;
+  }
+
+  .tp-star {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    background: #00b67a;
+  }
+
+  .tp-stars--large .tp-star {
+    width: 38px;
+    height: 38px;
+  }
+
+  .tp-star--empty {
+    background: #dcdce6;
+  }
+
+  .tp-star svg {
+    width: 72%;
+    height: 72%;
+  }
+
+  .tp-banner__rating {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #191919;
+  }
+
+  .tp-banner__verified {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: #191919;
+    margin-left: auto;
+  }
+
+  .tp-banner__verified svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .tp-banner__reviews {
+    display: grid;
+    grid-template-columns: repeat(var(--tp-cols, 3), 1fr);
+    gap: 14px;
+  }
+
+  .tp-banner__card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 18px 22px;
+  }
+
+  .tp-banner__reviewer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .tp-banner__avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #e5f6ef;
+  }
+
+  .tp-banner__avatar svg {
+    width: 60%;
+    height: 60%;
+  }
+
+  .tp-banner__reviewer-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #191919;
+  }
+
+  .tp-banner__review-title {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #191919;
+  }
+
+  .tp-banner__review-text {
+    margin: 0;
+    font-size: 1.35rem;
+    line-height: 1.45;
+    color: #3a3a3a;
+  }
+
+  .tp-banner__features {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px 24px;
+    padding: 14px 28px;
+  }
+
+  .tp-banner__feature {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1 1 200px;
+  }
+
+  .tp-banner__feature:not(:first-child) {
+    border-left: 1px solid rgb(0 0 0 / 10%);
+    padding-left: 24px;
+  }
+
+  .tp-banner__feature-icon {
+    display: inline-flex;
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+  }
+
+  .tp-banner__feature-copy {
+    display: flex;
+    flex-direction: column;
+    font-size: 1.25rem;
+    line-height: 1.35;
+    color: #3a3a3a;
+  }
+
+  .tp-banner__feature-copy strong {
+    color: #191919;
+    font-size: 1.4rem;
+  }
+
+  @media screen and (max-width: 749px) {
+    .tp-banner--hide-mobile {
+      display: none;
+    }
+  }
+
+  @media screen and (max-width: 989px) {
+    .tp-banner__reviews {
+      grid-template-columns: 1fr;
+    }
+
+    .tp-banner__feature:not(:first-child) {
+      border-left: none;
+      padding-left: 0;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Trustpilot testimonials",
+  "settings": [
+    { "type": "checkbox", "id": "hide_mobile", "label": "Hide on mobile", "default": false },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 64 },
+    {
+      "type": "text",
+      "id": "score_label",
+      "label": "Score label",
+      "default": "Excellent"
+    },
+    {
+      "type": "text",
+      "id": "rating",
+      "label": "Rating",
+      "default": "4.4"
+    },
+    {
+      "type": "url",
+      "id": "trustpilot_url",
+      "label": "Trustpilot profile link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        { "type": "range", "id": "stars", "label": "Stars", "min": 1, "max": 5, "step": 1, "default": 5 },
+        { "type": "text", "id": "reviewer", "label": "Reviewer name", "default": "Happy Customer" },
+        { "type": "text", "id": "title", "label": "Review title" },
+        { "type": "textarea", "id": "text", "label": "Review text" }
+      ]
+    },
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "truck", "label": "Delivery truck" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "headset", "label": "Headset" },
+            { "value": "badge", "label": "Award badge" }
+          ],
+          "default": "truck"
+        },
+        { "type": "text", "id": "title", "label": "Title", "default": "Fast Delivery" },
+        { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "Quick & Reliable" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Trustpilot testimonials" }]
+}
+{% endschema %}

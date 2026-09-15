@@ -1,0 +1,425 @@
+{% comment %}
+  Belofay hero — auto-rotating 3-image carousel. The active image sits centered
+  while the neighbours peek in from the screen edges; every N seconds the next
+  image slides into the middle. Text/buttons/Trustpilot chip overlay the centre.
+{% endcomment %}
+
+{%- assign slide_blocks = section.blocks | where: 'type', 'slide' -%}
+{%- assign hero_ratio = '1717 / 916' -%}
+{%- if slide_blocks.size > 0 and slide_blocks.first.settings.image != blank -%}
+  {%- assign hero_ratio = slide_blocks.first.settings.image.aspect_ratio -%}
+{%- elsif section.settings.image != blank -%}
+  {%- assign hero_ratio = section.settings.image.aspect_ratio -%}
+{%- endif -%}
+
+<div
+  class="bf-hero{% if section.settings.hide_content_mobile %} bf-hero--hide-mobile{% endif %}{% if section.settings.mobile_large %} bf-hero--mobile-large{% endif %}"
+  style="--bf-ratio: {{ hero_ratio }}; --bf-slide-w: {{ section.settings.slide_width | default: 1100 }}px;"
+  data-bf-hero
+  data-interval="{{ section.settings.slide_seconds | default: 15 }}"
+>
+  <div class="bf-hero__viewport">
+    <div class="bf-hero__track" data-bf-track>
+      {%- if slide_blocks.size > 0 -%}
+        {%- for block in slide_blocks -%}
+          <div class="bf-hero__slide" data-bf-slide {{ block.shopify_attributes }}>
+            {%- if block.settings.image != blank -%}
+              {{ block.settings.image | image_url: width: 2000 | image_tag: class: 'bf-hero__img', loading: 'eager', sizes: '1100px', widths: '750, 1100, 1500, 2000' }}
+            {%- else -%}
+              <img src="{{ 'belofay-hero.jpg' | asset_url }}" alt="" class="bf-hero__img" loading="eager">
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      {%- else -%}
+        <div class="bf-hero__slide" data-bf-slide>
+          {%- if section.settings.image != blank -%}
+            {{ section.settings.image | image_url: width: 2000 | image_tag: class: 'bf-hero__img', loading: 'eager', sizes: '1100px', widths: '750, 1100, 1500, 2000' }}
+          {%- else -%}
+            <img src="{{ 'belofay-hero.jpg' | asset_url }}" alt="" class="bf-hero__img" loading="eager">
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+    <button type="button" class="bf-hero__arrow bf-hero__arrow--prev" data-bf-prev aria-label="Previous image">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <button type="button" class="bf-hero__arrow bf-hero__arrow--next" data-bf-next aria-label="Next image">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+  </div>
+
+  <div class="bf-hero__inner" style="padding-top: {{ section.settings.padding_top | default: 48 }}px; padding-bottom: {{ section.settings.padding_bottom | default: 48 }}px;">
+    <div class="bf-hero__content">
+      {%- if section.settings.badge != blank -%}
+        <span class="bf-hero__badge">{{ section.settings.badge }}</span>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h1 class="bf-hero__heading">{{ section.settings.heading }}</h1>
+      {%- endif -%}
+      {%- if section.settings.text != blank -%}
+        <p class="bf-hero__text">{{ section.settings.text }}</p>
+      {%- endif -%}
+      <div class="bf-hero__buttons">
+        {%- if section.settings.button1_label != blank and section.settings.button1_link != blank -%}
+          <a href="{{ section.settings.button1_link }}" class="bf-hero__button bf-hero__button--dark">{{ section.settings.button1_label }}</a>
+        {%- endif -%}
+        {%- if section.settings.button2_label != blank and section.settings.button2_link != blank -%}
+          <a href="{{ section.settings.button2_link }}" class="bf-hero__button bf-hero__button--light">{{ section.settings.button2_label }}</a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+
+  {%- if section.settings.show_trustpilot -%}
+    <a
+      class="bf-hero__trustpilot"
+      {% if section.settings.trustpilot_url != blank %}href="{{ section.settings.trustpilot_url }}" target="_blank" rel="noopener"{% endif %}
+    >
+      <span class="bf-hero__tp-row">
+        <svg viewBox="0 0 24 24" fill="#00B67A" aria-hidden="true" class="bf-hero__tp-star"><polygon points="12 1.5 15.2 8.6 23 9.4 17.2 14.6 18.9 22.3 12 18.3 5.1 22.3 6.8 14.6 1 9.4 8.8 8.6"/></svg>
+        <strong>{{ section.settings.trustpilot_rating }}</strong>
+      </span>
+      <span class="bf-hero__tp-reviews">{{ section.settings.trustpilot_reviews }}</span>
+      <span class="bf-hero__tp-row bf-hero__tp-brand">
+        <svg viewBox="0 0 24 24" fill="#00B67A" aria-hidden="true" class="bf-hero__tp-star"><polygon points="12 1.5 15.2 8.6 23 9.4 17.2 14.6 18.9 22.3 12 18.3 5.1 22.3 6.8 14.6 1 9.4 8.8 8.6"/></svg>
+        Trustpilot
+      </span>
+    </a>
+  {%- endif -%}
+</div>
+
+<script>
+  (function () {
+    function initHero(root) {
+      var track = root.querySelector('[data-bf-track]');
+      if (!track || track.dataset.bfInit) return;
+      var slides = Array.prototype.slice.call(track.querySelectorAll('[data-bf-slide]'));
+      var n = slides.length;
+      track.dataset.bfInit = '1';
+
+      var index = 0;
+      var seconds = parseFloat(root.dataset.interval) || 15;
+      var timer = null;
+
+      function show(i) {
+        index = (i + n) % n;
+        slides.forEach(function (s, j) { s.classList.toggle('is-active', j === index); });
+      }
+
+      function next() { show(index + 1); }
+      function prev() { show(index - 1); }
+      function start() { stop(); if (n > 1) timer = setInterval(next, seconds * 1000); }
+      function stop() { if (timer) clearInterval(timer); timer = null; }
+
+      var prevBtn = root.querySelector('[data-bf-prev]');
+      var nextBtn = root.querySelector('[data-bf-next]');
+      if (n > 1) {
+        if (prevBtn) prevBtn.addEventListener('click', function () { prev(); start(); });
+        if (nextBtn) nextBtn.addEventListener('click', function () { next(); start(); });
+      } else {
+        if (prevBtn) prevBtn.style.display = 'none';
+        if (nextBtn) nextBtn.style.display = 'none';
+      }
+
+      show(0);
+      start();
+    }
+
+    function initAll() {
+      document.querySelectorAll('[data-bf-hero]').forEach(initHero);
+    }
+
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initAll);
+    else initAll();
+    document.addEventListener('shopify:section:load', initAll);
+  })();
+</script>
+
+{% stylesheet %}
+  .bf-hero {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    background: #efe9e1;
+  }
+
+  .bf-hero__viewport {
+    position: relative;
+    width: 100%;
+  }
+
+  .bf-hero__track {
+    position: relative;
+    width: min(var(--bf-slide-w, 1100px), 92vw);
+    aspect-ratio: var(--bf-ratio, 1717 / 916);
+    margin: 0 auto;
+  }
+
+  .bf-hero__slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+    pointer-events: none;
+  }
+
+  .bf-hero__slide.is-active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .bf-hero__img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    display: block;
+  }
+
+  .bf-hero__arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 4;
+    width: 44px;
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 50%;
+    background: rgb(255 255 255 / 85%);
+    color: #191919;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 15%);
+    transition: background 0.15s ease;
+  }
+
+  .bf-hero__arrow:hover {
+    background: #fff;
+  }
+
+  .bf-hero__arrow svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .bf-hero__arrow--prev {
+    left: 16px;
+  }
+
+  .bf-hero__arrow--next {
+    right: 16px;
+  }
+
+  .bf-hero__inner {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    width: min(var(--bf-slide-w, 1100px), 92vw);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 24px;
+    pointer-events: none;
+  }
+
+  .bf-hero__content {
+    max-width: 480px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+    pointer-events: auto;
+  }
+
+  .bf-hero__badge {
+    background: rgb(255 255 255 / 78%);
+    color: #3a3a3a;
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 4px;
+  }
+
+  .bf-hero__heading {
+    margin: 0;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-weight: 500;
+    color: #1c1c1c;
+    font-size: clamp(2.6rem, 4.2vw, 5.4rem);
+    line-height: 1.12;
+  }
+
+  .bf-hero__text {
+    margin: 0;
+    color: #3a3a3a;
+    font-size: clamp(1.3rem, 1.4vw, 1.6rem);
+    line-height: 1.6;
+  }
+
+  .bf-hero__buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 6px;
+  }
+
+  .bf-hero__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 26px;
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: opacity 0.15s ease;
+  }
+
+  .bf-hero__button:hover {
+    opacity: 0.85;
+  }
+
+  .bf-hero__button--dark {
+    background: #191919;
+    color: #fff;
+  }
+
+  .bf-hero__button--light {
+    background: #fff;
+    color: #191919;
+    border: 1px solid rgb(0 0 0 / 15%);
+  }
+
+  .bf-hero__trustpilot {
+    position: absolute;
+    right: calc(50% - min(var(--bf-slide-w, 1100px), 92vw) / 2 + 16px);
+    bottom: 16px;
+    z-index: 3;
+    background: #191919;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    padding: 10px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    font-size: 1.1rem;
+    line-height: 1.3;
+  }
+
+  .bf-hero__tp-row {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .bf-hero__tp-star {
+    width: 14px;
+    height: 14px;
+  }
+
+  .bf-hero__tp-reviews {
+    color: #b8b8b8;
+    font-size: 1rem;
+    text-transform: uppercase;
+  }
+
+  .bf-hero__tp-brand {
+    font-weight: 600;
+  }
+
+  @media screen and (max-width: 749px) {
+.bf-hero__inner {
+      align-items: flex-end;
+      justify-content: center;
+      padding-right: 0;
+      padding-bottom: 24px;
+    }
+
+    .bf-hero__content {
+      background: rgb(255 255 255 / 82%);
+      border-radius: 10px;
+      padding: 20px;
+      margin: 0 12px;
+      max-width: 100%;
+    }
+
+    .bf-hero--hide-mobile .bf-hero__content {
+      display: none;
+    }
+
+    .bf-hero--mobile-large .bf-hero__track {
+      width: 100vw;
+      aspect-ratio: auto;
+      height: min(78vh, 130vw);
+    }
+
+    .bf-hero--mobile-large .bf-hero__img {
+      object-fit: cover;
+    }
+
+    .bf-hero--mobile-large .bf-hero__inner {
+      width: 100%;
+      align-items: center;
+      justify-content: center;
+      padding-bottom: 0;
+    }
+
+    .bf-hero--mobile-large .bf-hero__content {
+      align-items: center;
+      text-align: center;
+      margin: 0 16px;
+    }
+
+    .bf-hero--mobile-large .bf-hero__buttons {
+      justify-content: center;
+    }
+
+    .bf-hero--mobile-large .bf-hero__trustpilot {
+      right: 16px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Belofay hero",
+  "max_blocks": 5,
+  "settings": [
+    { "type": "range", "id": "slide_seconds", "label": "Seconds per image", "min": 3, "max": 30, "step": 1, "unit": "s", "default": 15 },
+    { "type": "range", "id": "slide_width", "label": "Image width", "min": 600, "max": 1600, "step": 50, "unit": "px", "default": 1100 },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 48 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 48 },
+    { "type": "image_picker", "id": "image", "label": "Fallback image (used if no slides added)" },
+    { "type": "text", "id": "badge", "label": "Badge text", "default": "Modern designs. Premium quality." },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Elevate Your Home with Belofay" },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Discover our wide range of stylish vanity units, mirrors, splashbacks and lighting designed to transform your space." },
+    { "type": "text", "id": "button1_label", "label": "Button 1 label", "default": "Shop Vanity Units" },
+    { "type": "url", "id": "button1_link", "label": "Button 1 link" },
+    { "type": "text", "id": "button2_label", "label": "Button 2 label", "default": "Shop Mirrors" },
+    { "type": "url", "id": "button2_link", "label": "Button 2 link" },
+    { "type": "checkbox", "id": "hide_content_mobile", "label": "Hide heading, text & buttons on mobile", "default": false },
+    { "type": "checkbox", "id": "mobile_large", "label": "Larger, centered hero on mobile", "default": false },
+    { "type": "checkbox", "id": "show_trustpilot", "label": "Show Trustpilot badge", "default": true },
+    { "type": "text", "id": "trustpilot_rating", "label": "Trustpilot rating", "default": "4.4/5" },
+    { "type": "text", "id": "trustpilot_reviews", "label": "Reviews label", "default": "41 reviews" },
+    { "type": "url", "id": "trustpilot_url", "label": "Trustpilot link" }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Image slide",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Belofay hero" }]
+}
+{% endschema %}
