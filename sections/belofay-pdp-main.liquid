@@ -28,14 +28,17 @@
         {%- if current_variant.compare_at_price > current_variant.price -%}<span class="belofay-pdp-price__saving">Save {{ current_variant.compare_at_price | minus: current_variant.price | money }}</span>{%- endif -%}
       </div>
       {% render 'belofay-pdp-variant-picker', product: product, section_id: section.id %}
-      <div class="belofay-pdp-hero__panels">
-        <article class="belofay-pdp__card belofay-pdp-hero__panel"><h2>{{ section.settings.included_heading }}</h2><ul class="belofay-pdp__check-list"><li><span class="belofay-pdp__check" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="m5 10 3 3 7-7"/></svg></span>{{ section.settings.included_one }}</li><li><span class="belofay-pdp__check" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="m5 10 3 3 7-7"/></svg></span>{{ section.settings.included_two }}</li></ul></article>
-        <article class="belofay-pdp__card belofay-pdp-hero__panel belofay-pdp-hero__panel--attention"><h2>{{ section.settings.warning_heading }}</h2><ul class="belofay-pdp__check-list"><li><span class="belofay-pdp__check belofay-pdp__check--warning" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M10 5v6m0 3v.1"/></svg></span><span>{{ section.settings.warning_one }}<br><a class="belofay-pdp-hero__tap-link" href="{{ section.settings.tap_url | default: '/collections/taps' }}">{{ section.settings.tap_link_text }} <span aria-hidden="true">→</span></a></span></li><li><span class="belofay-pdp__check belofay-pdp__check--info" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M10 9v6m0-10v.1"/></svg></span><span><strong>{{ section.settings.warning_two }}</strong><br><span class="belofay-pdp-hero__detail">{{ section.settings.warning_detail }}</span></span></li></ul></article>
-      </div>
-      <div class="belofay-pdp-delivery-strip">{% render 'belofay-pdp-icon', name: 'delivery' %}<span><strong>{{ section.settings.delivery_heading }}</strong><br>{{ section.settings.delivery_text }}</span></div>
-      {% render 'belofay-pdp-buy-buttons', product: product, settings: section.settings %}
-      {% render 'belofay-pdp-tap-suggestions', blocks: section.blocks, heading: section.settings.suggestions_heading %}
     </div>
+    <div class="belofay-pdp-hero__panels">
+      <article class="belofay-pdp__card belofay-pdp-hero__panel"><h2>{{ section.settings.included_heading }}</h2><ul class="belofay-pdp__check-list"><li><span class="belofay-pdp__check" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="m5 10 3 3 7-7"/></svg></span>{{ section.settings.included_one }}</li><li><span class="belofay-pdp__check" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="m5 10 3 3 7-7"/></svg></span>{{ section.settings.included_two }}</li></ul></article>
+      <article class="belofay-pdp__card belofay-pdp-hero__panel belofay-pdp-hero__panel--attention"><h2>{{ section.settings.warning_heading }}</h2><ul class="belofay-pdp__check-list"><li><span class="belofay-pdp__check belofay-pdp__check--warning" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M10 5v6m0 3v.1"/></svg></span><span>{{ section.settings.warning_one }}<br><a class="belofay-pdp-hero__tap-link" href="{{ section.settings.tap_url | default: '/collections/taps' }}">{{ section.settings.tap_link_text }} <span aria-hidden="true">→</span></a></span></li><li><span class="belofay-pdp__check belofay-pdp__check--info" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M10 9v6m0-10v.1"/></svg></span><span><strong>{{ section.settings.warning_two }}</strong><br><span class="belofay-pdp-hero__detail">{{ section.settings.warning_detail }}</span></span></li></ul></article>
+    </div>
+    {% render 'belofay-pdp-tap-suggestions', blocks: section.blocks, heading: section.settings.suggestions_heading %}
+    <div class="belofay-pdp-delivery-strip">
+      <span class="belofay-pdp-delivery-strip__item">{% render 'belofay-pdp-icon', name: 'delivery' %}<span><strong>{{ section.settings.delivery_heading }}</strong><br>{{ section.settings.delivery_text }}</span></span>
+      <a class="belofay-pdp-delivery-strip__returns" href="{{ section.settings.returns_link | default: '/policies/refund-policy' }}">{% render 'belofay-pdp-icon', name: 'shield' %}<span>{{ section.settings.returns_link_text }}</span><span aria-hidden="true">→</span></a>
+    </div>
+    {% render 'belofay-pdp-buy-buttons', product: product, settings: section.settings %}
   </div>
   <script type="application/json" data-belofay-variants>
     [
@@ -68,6 +71,8 @@
     {"type":"text","id":"warning_detail","label":"Assembly detail","default":"Approx. 30 min · Basic tools · Plumbing connection required"},
     {"type":"text","id":"delivery_heading","label":"Delivery heading","default":"FREE UK DELIVERY"},
     {"type":"text","id":"delivery_text","label":"Delivery text","default":"Cabinet and basin may arrive separately"},
+    {"type":"text","id":"returns_link_text","label":"Returns link text","default":"30-day returns policy"},
+    {"type":"url","id":"returns_link","label":"Returns policy link"},
     {"type":"header","content":"Purchase buttons"},
     {"type":"text","id":"add_to_cart_label","label":"Add to cart label","default":"Add to Cart"},
     {"type":"text","id":"buy_now_label","label":"Buy now label","default":"Buy Now"},

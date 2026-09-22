@@ -37,4 +37,5 @@ Renders the Belofay Add to Cart, Buy Now, reassurance row and mobile sticky acti
     <span><span class="belofay-pdp-sticky__variant" data-sticky-variant>{{ current_variant.title }}</span><strong class="belofay-pdp-sticky__price" data-sticky-price>{{ current_variant.price | money }}</strong></span>
   </div>
   <button class="belofay-pdp-sticky__button" type="button" data-sticky-submit data-available-label="{{ settings.add_to_cart_label | escape }}" data-sold-out-label="{{ settings.sold_out_label | escape }}" {% unless current_variant.available %}disabled{% endunless %}><span data-submit-label>{% if current_variant.available %}{{ settings.add_to_cart_label }}{% else %}{{ settings.sold_out_label }}{% endif %}</span></button>
+  <button class="belofay-pdp-sticky__buy-now" type="button" data-buy-now {% unless current_variant.available %}disabled{% endunless %}><span data-button-label>{{ settings.buy_now_label }}</span></button>
 </div>
