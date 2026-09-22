@@ -62,6 +62,13 @@
   --ds-radius-large: calc(var(--p-radius-unit) * 4);
   --ds-content-width: 1760px;
   --ds-shadow-sticky: 0 -8px 30px rgb(0 27 10 / 12%);
+  --motion-duration-fast: 140ms;
+  --motion-duration-base: 220ms;
+  --motion-duration-loading: 700ms;
+  --motion-ease-standard: cubic-bezier(.2, .8, .2, 1);
+  --motion-ease-emphasized: cubic-bezier(.2, 0, 0, 1);
+  --motion-hover-lift: -2px;
+  --motion-press-scale: .97;
 }
 
 @media screen and (max-width: 749px) {

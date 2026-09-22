@@ -1,7 +1,16 @@
 {
   "wrapper": "main#belofay-pdp.belofay-pdp",
   "sections": {
-    "main": {"type": "belofay-pdp-main", "settings": {}}
+    "main": {
+      "type": "belofay-pdp-main",
+      "blocks": {
+        "tap_suggestion_1": {"type": "tap_suggestion", "settings": {"title": "Matching basin tap", "link": "/collections/taps"}},
+        "tap_suggestion_2": {"type": "tap_suggestion", "settings": {"title": "Chrome mixer tap", "link": "/collections/taps"}},
+        "tap_suggestion_3": {"type": "tap_suggestion", "settings": {"title": "Modern mono tap", "link": "/collections/taps"}}
+      },
+      "block_order": ["tap_suggestion_1", "tap_suggestion_2", "tap_suggestion_3"],
+      "settings": {}
+    }
   },
   "order": ["main"]
 }

@@ -34,7 +34,7 @@ if (!customElements.get('belofay-product')) {
       if (!variant) return null;
       this.selectedVariant = variant;
       this.querySelectorAll('[data-product-submit], [data-sticky-submit], [data-buy-now]').forEach((button) => {
-        button.disabled = !variant.available;
+        button.disabled = this.purchasePending || !variant.available;
         const label = button.querySelector('[data-submit-label]');
         if (label) label.textContent = variant.available ? button.dataset.availableLabel : button.dataset.soldOutLabel;
       });
@@ -58,10 +58,14 @@ if (!customElements.get('belofay-product')) {
     }
 
     async addSelectedVariant(button, redirectToCheckout) {
+      if (this.purchasePending) return;
       const variant = this.updateSelectedVariant();
       if (!variant?.available || button.disabled) return;
       const error = this.querySelector('[data-purchase-error]');
-      button.disabled = true;
+      this.purchasePending = true;
+      this.querySelectorAll('[data-product-submit], [data-sticky-submit], [data-buy-now]').forEach((purchaseButton) => {
+        purchaseButton.disabled = true;
+      });
       button.setAttribute('aria-busy', 'true');
       if (error) error.hidden = true;
       try {
@@ -94,8 +98,9 @@ if (!customElements.get('belofay-product')) {
           error.hidden = false;
         }
       } finally {
+        this.purchasePending = false;
         button.removeAttribute('aria-busy');
-        button.disabled = !this.selectedVariant?.available;
+        this.updateSelectedVariant();
       }
     }
 

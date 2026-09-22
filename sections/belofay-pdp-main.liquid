@@ -34,6 +34,7 @@
       </div>
       <div class="belofay-pdp-delivery-strip">{% render 'belofay-pdp-icon', name: 'delivery' %}<span><strong>{{ section.settings.delivery_heading }}</strong><br>{{ section.settings.delivery_text }}</span></div>
       {% render 'belofay-pdp-buy-buttons', product: product, settings: section.settings %}
+      {% render 'belofay-pdp-tap-suggestions', blocks: section.blocks, heading: section.settings.suggestions_heading %}
     </div>
   </div>
   <script type="application/json" data-belofay-variants>
@@ -78,6 +79,8 @@
     {"type":"text","id":"support_text","label":"Support text","default":"Here to help"},
     {"type":"text","id":"returns_heading","label":"Returns heading","default":"30-day returns"},
     {"type":"text","id":"returns_text","label":"Returns text","default":"Shop with confidence"},
+    {"type":"header","content":"Tap recommendations"},
+    {"type":"text","id":"suggestions_heading","label":"Heading","default":"Complete the look"},
     {"type":"header","content":"Hero colors"},
     {"type":"color","id":"action_color","label":"Action green","default":"#20a957"},
     {"type":"color","id":"accent_color","label":"Accent orange","default":"#ff6b00"},
@@ -85,6 +88,20 @@
     {"type":"color","id":"muted_text_color","label":"Muted text","default":"#5f6d80"},
     {"type":"color","id":"included_background","label":"Included panel background","default":"#effaf3"},
     {"type":"color","id":"warning_background","label":"Before you buy background","default":"#fff4ed"}
-  ]
+  ],
+  "blocks": [
+    {
+      "type": "tap_suggestion",
+      "name": "Tap suggestion",
+      "limit": 3,
+      "settings": [
+        {"type":"product","id":"product","label":"Tap product"},
+        {"type":"image_picker","id":"image","label":"Custom image"},
+        {"type":"text","id":"title","label":"Custom title"},
+        {"type":"url","id":"link","label":"Custom link"}
+      ]
+    }
+  ],
+  "max_blocks": 3
 }
 {% endschema %}
