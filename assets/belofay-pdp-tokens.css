@@ -1,0 +1,62 @@
+.belofay-pdp {
+  --p-green-50: #edf8ef;
+  --p-green-500: #50b05d;
+  --p-green-600: #358f45;
+  --p-orange-50: #fff4ec;
+  --p-orange-500: #ff8834;
+  --p-orange-600: #df6815;
+  --p-white: #ffffff;
+  --p-neutral-50: #f7f9f8;
+  --p-neutral-100: #eef2ef;
+  --p-neutral-200: #dce3de;
+  --p-neutral-500: #66756c;
+  --p-ink: #001b0a;
+  --p-font-base: 16px;
+  --p-space-unit: 4px;
+  --p-radius-unit: 4px;
+  --ds-bg-page: var(--p-white);
+  --ds-bg-surface: var(--p-neutral-50);
+  --ds-bg-success: var(--p-green-50);
+  --ds-bg-attention: var(--p-orange-50);
+  --ds-text-primary: var(--p-ink);
+  --ds-text-secondary: var(--p-neutral-500);
+  --ds-text-on-primary: var(--p-white);
+  --ds-border-default: var(--p-neutral-200);
+  --ds-action-primary: var(--p-green-500);
+  --ds-action-primary-hover: var(--p-green-600);
+  --ds-action-attention: var(--p-orange-500);
+  --ds-action-attention-hover: var(--p-orange-600);
+  --ds-font-body: "Gilroy", Arial, sans-serif;
+  --ds-font-heading: "Gilroy", Arial, sans-serif;
+  --ds-text-xs: calc(var(--p-font-base) * 0.75);
+  --ds-text-sm: calc(var(--p-font-base) * 0.875);
+  --ds-text-md: var(--p-font-base);
+  --ds-text-lg: calc(var(--p-font-base) * 1.25);
+  --ds-text-xl: calc(var(--p-font-base) * 1.625);
+  --ds-text-2xl: calc(var(--p-font-base) * 2.25);
+  --ds-weight-regular: 400;
+  --ds-weight-medium: 500;
+  --ds-weight-semibold: 600;
+  --ds-weight-bold: 700;
+  --ds-space-2xs: calc(var(--p-space-unit) * 1);
+  --ds-space-xs: calc(var(--p-space-unit) * 2);
+  --ds-space-sm: calc(var(--p-space-unit) * 3);
+  --ds-space-md: calc(var(--p-space-unit) * 4);
+  --ds-space-lg: calc(var(--p-space-unit) * 6);
+  --ds-space-xl: calc(var(--p-space-unit) * 8);
+  --ds-space-2xl: calc(var(--p-space-unit) * 12);
+  --ds-space-section: calc(var(--p-space-unit) * 16);
+  --ds-radius-control: calc(var(--p-radius-unit) * 2);
+  --ds-radius-card: calc(var(--p-radius-unit) * 3);
+  --ds-radius-large: calc(var(--p-radius-unit) * 4);
+  --ds-content-width: 1760px;
+  --ds-shadow-sticky: 0 -8px 30px rgb(0 27 10 / 12%);
+}
+
+@media screen and (max-width: 749px) {
+  .belofay-pdp {
+    --ds-text-xl: calc(var(--p-font-base) * 1.375);
+    --ds-text-2xl: calc(var(--p-font-base) * 1.875);
+    --ds-space-section: calc(var(--p-space-unit) * 10);
+  }
+}

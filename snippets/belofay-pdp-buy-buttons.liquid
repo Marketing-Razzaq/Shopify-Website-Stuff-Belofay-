@@ -1,0 +1,39 @@
+{% doc %}
+Renders one native Shopify product form plus the connected mobile sticky purchase action.
+@param {product} product - Product to purchase.
+@param {section} section - Parent product section.
+@example
+{% render 'belofay-pdp-buy-buttons', product: product, section: section %}
+{% enddoc %}
+
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+{%- assign product_form_id = 'belofay-product-form-' | append: section.id -%}
+<product-form class="belofay-pdp-buy" data-section-id="{{ section.id }}">
+  <div class="belofay-pdp-buy__errors" role="alert" hidden><span class="product-form__error-message"></span></div>
+  {%- form 'product', product, id: product_form_id, class: 'belofay-pdp-buy__form', data-belofay-product-form: '' -%}
+    <input type="hidden" name="id" value="{{ current_variant.id }}" data-belofay-variant-id {% unless current_variant.available %}disabled{% endunless %}>
+    <div class="belofay-pdp-buy__actions">
+      <button class="belofay-pdp-buy__submit" type="submit" name="add" data-product-submit data-available-label="Add to Cart" data-sold-out-label="Sold out" {% unless current_variant.available %}disabled{% endunless %}>
+        <span aria-hidden="true">🛒</span><span data-submit-label>{% if current_variant.available %}Add to Cart{% else %}Sold out{% endif %}</span>
+      </button>
+      <div>{{ form | payment_button }}</div>
+    </div>
+  {%- endform -%}
+  <div class="belofay-pdp-buy__reassurance">
+    <span>Secure checkout</span><span>UK support</span><span>30-day returns</span>
+  </div>
+</product-form>
+
+<div class="belofay-pdp-sticky" aria-label="Sticky purchase controls">
+  <div class="belofay-pdp-sticky__summary">
+    {%- if current_variant.featured_image != blank -%}
+      {{ current_variant.featured_image | image_url: width: 100 | image_tag: loading: 'lazy' }}
+    {%- elsif product.featured_image != blank -%}
+      {{ product.featured_image | image_url: width: 100 | image_tag: loading: 'lazy' }}
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag }}
+    {%- endif -%}
+    <span><span class="belofay-pdp-sticky__variant" data-sticky-variant>{{ current_variant.title }}</span><strong class="belofay-pdp-sticky__price" data-sticky-price>{{ current_variant.price | money }}</strong></span>
+  </div>
+  <button class="belofay-pdp-sticky__button" type="button" data-sticky-submit data-available-label="Add to Cart" data-sold-out-label="Sold out" {% unless current_variant.available %}disabled{% endunless %}><span data-submit-label>{% if current_variant.available %}Add to Cart{% else %}Sold out{% endif %}</span></button>
+</div>

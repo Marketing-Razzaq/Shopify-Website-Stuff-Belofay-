@@ -1,0 +1,44 @@
+{% doc %}
+Renders the Belofay PDP media gallery with product media and a native placeholder fallback.
+@param {product} product - Product whose media is displayed.
+@example
+{% render 'belofay-pdp-media', product: product %}
+{% enddoc %}
+
+{%- assign featured_media = product.selected_or_first_available_variant.featured_media | default: product.featured_media -%}
+<div class="belofay-pdp-gallery" aria-label="Product media">
+  <div class="belofay-pdp-gallery__stage">
+    {%- if product.media.size > 0 -%}
+      {%- for media in product.media -%}
+        <div class="belofay-pdp-gallery__item" data-gallery-item="{{ media.id }}" aria-hidden="{% if media.id == featured_media.id %}false{% else %}true{% endif %}">
+          {%- case media.media_type -%}
+            {%- when 'image' -%}
+              {{ media | image_url: width: 1800 | image_tag: widths: '480, 720, 960, 1200, 1600, 1800', sizes: '(min-width: 990px) 58vw, 100vw', loading: 'eager', fetchpriority: 'high' }}
+            {%- when 'video' -%}
+              {{ media | video_tag: controls: true, preload: 'metadata' }}
+            {%- when 'external_video' -%}
+              {{ media | external_video_tag }}
+            {%- else -%}
+              {{ media | media_tag }}
+          {%- endcase -%}
+        </div>
+      {%- endfor -%}
+      <span class="belofay-pdp-gallery__counter">1 / {{ product.media.size }}</span>
+    {%- else -%}
+      <div class="belofay-pdp__media-placeholder">{{ 'product-1' | placeholder_svg_tag }}</div>
+    {%- endif -%}
+  </div>
+  <div class="belofay-pdp-gallery__thumbs" role="list" aria-label="Choose product media">
+    {%- if product.media.size > 0 -%}
+      {%- for media in product.media -%}
+        <button class="belofay-pdp-gallery__thumb" type="button" data-gallery-thumb="{{ media.id }}" aria-current="{% if media.id == featured_media.id %}true{% else %}false{% endif %}" aria-label="Show media {{ forloop.index }}">
+          {{ media.preview_image | image_url: width: 240 | image_tag: loading: 'lazy', widths: '120, 180, 240', sizes: '120px' }}
+        </button>
+      {%- endfor -%}
+    {%- else -%}
+      {%- for index in (1..5) -%}
+        <button class="belofay-pdp-gallery__thumb" type="button" aria-label="Placeholder media {{ index }}" {% if forloop.first %}aria-current="true"{% endif %}>{{ 'product-1' | placeholder_svg_tag }}</button>
+      {%- endfor -%}
+    {%- endif -%}
+  </div>
+</div>

@@ -1,0 +1,29 @@
+{% doc %}
+Renders accessible product option cards for the Belofay PDP.
+@param {product} product - Product whose options are displayed.
+@param {string} section_id - Section identifier used in unique input IDs.
+@example
+{% render 'belofay-pdp-variant-picker', product: product, section_id: section.id %}
+{% enddoc %}
+
+{%- unless product.has_only_default_variant -%}
+  <div class="belofay-pdp-options">
+    {%- for option in product.options_with_values -%}
+      <fieldset data-option-position="{{ option.position }}">
+        <legend>{{ option.name }}</legend>
+        <div class="belofay-pdp-options__values">
+          {%- for option_value in option.values -%}
+            {%- capture input_id -%}BelofayOption-{{ section_id }}-{{ option.position }}-{{ forloop.index0 }}{%- endcapture -%}
+            <div class="belofay-pdp-option">
+              <input id="{{ input_id }}" type="radio" name="options[{{ option.name | escape }}]" value="{{ option_value | escape }}" data-belofay-option {% if option_value.selected %}checked{% endif %} {% unless option_value.available %}disabled{% endunless %}>
+              <label for="{{ input_id }}">
+                <span>{{ option_value }}</span>
+                {%- if option_value.variant.price != blank -%}<small>{{ option_value.variant.price | money }}</small>{%- endif -%}
+              </label>
+            </div>
+          {%- endfor -%}
+        </div>
+      </fieldset>
+    {%- endfor -%}
+  </div>
+{%- endunless -%}

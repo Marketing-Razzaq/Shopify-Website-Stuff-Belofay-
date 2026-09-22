@@ -1,0 +1,61 @@
+{{ 'belofay-pdp-tokens.css' | asset_url | stylesheet_tag }}
+{{ 'belofay-pdp.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'belofay-pdp.js' | asset_url }}" defer="defer"></script>
+
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+<belofay-product class="belofay-pdp-hero">
+  <div class="belofay-pdp__shell belofay-pdp-hero__layout">
+    {% render 'belofay-pdp-media', product: product %}
+    <div class="belofay-pdp-hero__info">
+      {% render 'belofay-pdp-rating', product: product, fallback_rating: section.settings.rating, fallback_count: section.settings.rating_count %}
+      <h1 class="belofay-pdp-hero__title">{{ product.title | default: section.settings.placeholder_title | escape }}</h1>
+      <p class="belofay-pdp-hero__subtitle">{{ section.settings.subtitle }}</p>
+      <div class="belofay-pdp-price" aria-live="polite">
+        <span class="belofay-pdp-price__current" data-price-current>{{ current_variant.price | money }}</span>
+        <span class="belofay-pdp-price__compare" data-price-compare {% unless current_variant.compare_at_price > current_variant.price %}hidden{% endunless %}>{{ current_variant.compare_at_price | money }}</span>
+        {%- if current_variant.compare_at_price > current_variant.price -%}<span class="belofay-pdp-price__saving">Save {{ current_variant.compare_at_price | minus: current_variant.price | money }}</span>{%- endif -%}
+      </div>
+      {% render 'belofay-pdp-variant-picker', product: product, section_id: section.id %}
+      <div class="belofay-pdp-hero__panels">
+        <article class="belofay-pdp__card belofay-pdp-hero__panel"><h2>{{ section.settings.included_heading }}</h2><ul class="belofay-pdp__check-list"><li><span class="belofay-pdp__check">✓</span>{{ section.settings.included_one }}</li><li><span class="belofay-pdp__check">✓</span>{{ section.settings.included_two }}</li></ul></article>
+        <article class="belofay-pdp__card belofay-pdp-hero__panel belofay-pdp-hero__panel--attention"><h2>{{ section.settings.warning_heading }}</h2><ul class="belofay-pdp__check-list"><li><span class="belofay-pdp__check">!</span>{{ section.settings.warning_one }}</li><li><span class="belofay-pdp__check">i</span>{{ section.settings.warning_two }}</li></ul></article>
+      </div>
+      <div class="belofay-pdp-delivery-strip">{% render 'belofay-pdp-icon', name: 'delivery' %}<span><strong>{{ section.settings.delivery_heading }}</strong><br>{{ section.settings.delivery_text }}</span></div>
+      {% render 'belofay-pdp-buy-buttons', product: product, section: section %}
+    </div>
+  </div>
+  <script type="application/json" data-belofay-variants>
+    [
+      {%- for variant in product.variants -%}
+        {"id":{{ variant.id | json }},"title":{{ variant.title | json }},"options":{{ variant.options | json }},"available":{{ variant.available | json }},"price_formatted":{{ variant.price | money | json }},"compare_at_price_formatted":{% if variant.compare_at_price > variant.price %}{{ variant.compare_at_price | money | json }}{% else %}null{% endif %},"featured_media_id":{% if variant.featured_media %}{{ variant.featured_media.id | json }}{% else %}null{% endif %},"url":{{ product.url | append: '?variant=' | append: variant.id | json }}}{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    ]
+  </script>
+</belofay-product>
+
+<nav class="belofay-pdp__tabs" aria-label="Product details">
+  <div class="belofay-pdp__tabs-inner">
+    <a href="#belofay-overview">Overview</a><a href="#belofay-dimensions">Dimensions &amp; Fit</a><a href="#belofay-installation">Installation</a><a href="#belofay-delivery">Delivery &amp; Returns</a><a href="#belofay-reviews">Reviews</a><a href="#belofay-faq">FAQs</a>
+  </div>
+</nav>
+
+{% schema %}
+{
+  "name": "Belofay PDP hero",
+  "settings": [
+    {"type":"text","id":"placeholder_title","label":"Placeholder title","default":"Belofay bathroom vanity unit with basin"},
+    {"type":"text","id":"subtitle","label":"Product summary","default":"Floor-standing · Soft-close · Premium finish"},
+    {"type":"range","id":"rating","label":"Fallback rating","min":1,"max":5,"step":0.1,"default":4.5},
+    {"type":"number","id":"rating_count","label":"Fallback rating count","default":121},
+    {"type":"text","id":"included_heading","label":"Included heading","default":"What’s included"},
+    {"type":"text","id":"included_one","label":"Included item one","default":"Ceramic basin included"},
+    {"type":"text","id":"included_two","label":"Included item two","default":"Chrome waste included"},
+    {"type":"text","id":"warning_heading","label":"Warning heading","default":"Before you buy"},
+    {"type":"text","id":"warning_one","label":"Warning one","default":"Tap not included"},
+    {"type":"text","id":"warning_two","label":"Warning two","default":"Quick self-assembly"},
+    {"type":"text","id":"delivery_heading","label":"Delivery heading","default":"FREE UK DELIVERY"},
+    {"type":"text","id":"delivery_text","label":"Delivery text","default":"Cabinet and basin may arrive separately"}
+  ]
+}
+{% endschema %}
