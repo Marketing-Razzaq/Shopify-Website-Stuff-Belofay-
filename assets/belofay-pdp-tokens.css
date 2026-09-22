@@ -26,8 +26,8 @@
   --ds-action-primary-hover: var(--p-green-600);
   --ds-action-attention: var(--p-orange-500);
   --ds-action-attention-hover: var(--p-orange-600);
-  --ds-font-body: "Gilroy", Arial, sans-serif;
-  --ds-font-heading: "Gilroy", Arial, sans-serif;
+  --ds-font-body: "Gilroy";
+  --ds-font-heading: "Gilroy";
   --ds-text-xs: calc(var(--p-font-base) * 0.75);
   --ds-text-sm: calc(var(--p-font-base) * 0.875);
   --ds-text-md: var(--p-font-base);

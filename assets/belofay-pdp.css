@@ -6,6 +6,7 @@
   line-height: 1.45;
 }
 
+.belofay-pdp, .belofay-pdp * { font-family: "Gilroy"; }
 .belofay-pdp *, .belofay-pdp *::before, .belofay-pdp *::after { box-sizing: border-box; }
 .belofay-pdp img, .belofay-pdp svg { display: block; max-width: 100%; }
 .belofay-pdp button, .belofay-pdp input, .belofay-pdp textarea { font: inherit; }
@@ -73,6 +74,13 @@
 .belofay-pdp-option { position: relative; }
 .belofay-pdp-option input { position: absolute; width: 1px; height: 1px; opacity: 0; }
 .belofay-pdp-option label { display: grid; min-height: 56px; cursor: pointer; place-items: center; padding: var(--ds-space-xs) var(--ds-space-sm); border: 2px solid var(--ds-border-default); border-radius: var(--ds-radius-control); background: var(--ds-bg-page); text-align: center; }
+.belofay-pdp-option-group--color .belofay-pdp-options__values { grid-template-columns: repeat(auto-fit, minmax(92px, 1fr)); }
+.belofay-pdp-option-group--color .belofay-pdp-option label { min-height: 112px; gap: var(--ds-space-xs); }
+.belofay-pdp-option__swatch { display: grid; width: 72px; height: 58px; place-items: center; overflow: hidden; border-radius: var(--ds-radius-control); background: var(--ds-bg-surface); }
+.belofay-pdp-option__swatch img { width: 100%; height: 100%; object-fit: contain; }
+.belofay-pdp-option__color { width: 44px; height: 44px; border: 1px solid var(--ds-border-default); border-radius: 50%; background: var(--swatch-color); }
+.belofay-pdp-option__placeholder { display: grid; width: 44px; height: 44px; place-items: center; border: 1px dashed var(--ds-border-default); border-radius: 50%; color: var(--ds-text-secondary); }
+.belofay-pdp-option__name { font-weight: var(--ds-weight-semibold); }
 .belofay-pdp-option input:checked + label { border-color: var(--ds-action-primary); background: var(--ds-bg-success); font-weight: var(--ds-weight-bold); }
 .belofay-pdp-option input:disabled + label { cursor: not-allowed; opacity: .45; text-decoration: line-through; }
 .belofay-pdp-option input:focus-visible + label { outline: 3px solid var(--ds-action-attention); outline-offset: 2px; }

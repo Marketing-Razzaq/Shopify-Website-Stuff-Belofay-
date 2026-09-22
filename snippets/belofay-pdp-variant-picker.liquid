@@ -1,5 +1,5 @@
 {% doc %}
-Renders accessible product option cards for the Belofay PDP.
+Renders Color/Colour and Size product options for the Belofay PDP hero.
 @param {product} product - Product whose options are displayed.
 @param {string} section_id - Section identifier used in unique input IDs.
 @example
@@ -9,21 +9,43 @@ Renders accessible product option cards for the Belofay PDP.
 {%- unless product.has_only_default_variant -%}
   <div class="belofay-pdp-options">
     {%- for option in product.options_with_values -%}
-      <fieldset data-option-position="{{ option.position }}">
-        <legend>{{ option.name }}</legend>
-        <div class="belofay-pdp-options__values">
-          {%- for option_value in option.values -%}
-            {%- capture input_id -%}BelofayOption-{{ section_id }}-{{ option.position }}-{{ forloop.index0 }}{%- endcapture -%}
-            <div class="belofay-pdp-option">
-              <input id="{{ input_id }}" type="radio" name="options[{{ option.name | escape }}]" value="{{ option_value | escape }}" data-belofay-option {% if option_value.selected %}checked{% endif %} {% unless option_value.available %}disabled{% endunless %}>
-              <label for="{{ input_id }}">
-                <span>{{ option_value }}</span>
-                {%- if option_value.variant.price != blank -%}<small>{{ option_value.variant.price | money }}</small>{%- endif -%}
-              </label>
-            </div>
-          {%- endfor -%}
-        </div>
-      </fieldset>
+      {%- assign option_name = option.name | downcase -%}
+      {%- assign show_option = false -%}
+      {%- assign is_color = false -%}
+      {%- if option_name == 'color' or option_name == 'colour' -%}
+        {%- assign show_option = true -%}
+        {%- assign is_color = true -%}
+      {%- elsif option_name == 'size' -%}
+        {%- assign show_option = true -%}
+      {%- endif -%}
+      {%- if show_option -%}
+        <fieldset class="belofay-pdp-option-group{% if is_color %} belofay-pdp-option-group--color{% else %} belofay-pdp-option-group--size{% endif %}" data-option-position="{{ option.position }}">
+          <legend>{{ option.name }}</legend>
+          <div class="belofay-pdp-options__values">
+            {%- for option_value in option.values -%}
+              {%- capture input_id -%}BelofayOption-{{ section_id }}-{{ option.position }}-{{ forloop.index0 }}{%- endcapture -%}
+              <div class="belofay-pdp-option">
+                <input id="{{ input_id }}" type="radio" name="options[{{ option.name | escape }}]" value="{{ option_value | escape }}" data-belofay-option data-option-value-id="{{ option_value.id }}" {% if option_value.selected %}checked{% endif %} {% unless option_value.available %}disabled{% endunless %}>
+                <label for="{{ input_id }}">
+                  {%- if is_color -%}
+                    <span class="belofay-pdp-option__swatch" aria-hidden="true">
+                      {%- if option_value.swatch.image != blank -%}
+                        {{ option_value.swatch.image | image_url: width: 180 | image_tag: loading: 'lazy', widths: '90, 120, 180', sizes: '72px' }}
+                      {%- elsif option_value.swatch.color != blank -%}
+                        <span class="belofay-pdp-option__color" style="--swatch-color: {{ option_value.swatch.color }}"></span>
+                      {%- else -%}
+                        <span class="belofay-pdp-option__placeholder">{{ option_value | slice: 0 }}</span>
+                      {%- endif -%}
+                    </span>
+                  {%- endif -%}
+                  <span class="belofay-pdp-option__name">{{ option_value }}</span>
+                  {%- if option_value.variant.price != blank -%}<small>{{ option_value.variant.price | money }}</small>{%- endif -%}
+                </label>
+              </div>
+            {%- endfor -%}
+          </div>
+        </fieldset>
+      {%- endif -%}
     {%- endfor -%}
   </div>
 {%- endunless -%}

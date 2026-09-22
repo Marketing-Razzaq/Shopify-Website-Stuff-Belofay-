@@ -1,3 +1,4 @@
+{{ 'belofay-pdp-fonts.css' | asset_url | stylesheet_tag }}
 {{ 'belofay-pdp-tokens.css' | asset_url | stylesheet_tag }}
 {{ 'belofay-pdp.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
@@ -34,17 +35,11 @@
   </script>
 </belofay-product>
 
-<nav class="belofay-pdp__tabs" aria-label="Product details">
-  <div class="belofay-pdp__tabs-inner">
-    <a href="#belofay-overview">Overview</a><a href="#belofay-dimensions">Dimensions &amp; Fit</a><a href="#belofay-installation">Installation</a><a href="#belofay-delivery">Delivery &amp; Returns</a><a href="#belofay-reviews">Reviews</a><a href="#belofay-faq">FAQs</a>
-  </div>
-</nav>
-
 {% schema %}
 {
   "name": "Belofay PDP hero",
   "settings": [
-    {"type":"text","id":"placeholder_title","label":"Placeholder title","default":"Belofay bathroom vanity unit with basin"},
+    {"type":"text","id":"placeholder_title","label":"Placeholder title","default":"BELOFAY Crawley 600mm Floor Standing Bathroom Vanity Unit With Basin"},
     {"type":"text","id":"subtitle","label":"Product summary","default":"Floor-standing · Soft-close · Premium finish"},
     {"type":"range","id":"rating","label":"Fallback rating","min":1,"max":5,"step":0.1,"default":4.5},
     {"type":"number","id":"rating_count","label":"Fallback rating count","default":121},
