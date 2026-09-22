@@ -17,7 +17,7 @@ Renders the Belofay product rating summary without an app block.
     assign count = product.metafields.reviews.rating_count
   endif
 -%}
-<div class="belofay-pdp-rating" aria-label="Rated {{ rating }} out of 5 from {{ count }} ratings">
+<div class="belofay-pdp-rating" aria-label="Rated {{ rating }} out of 5 from {{ count }} reviews">
   <span class="belofay-pdp-rating__stars" aria-hidden="true">★★★★★</span>
-  <span class="belofay-pdp-rating__meta">{{ rating }} <span aria-hidden="true">|</span> {{ count }} ratings</span>
+  <span class="belofay-pdp-rating__meta">{{ rating }} <span aria-hidden="true">|</span> {{ count }} reviews</span>
 </div>

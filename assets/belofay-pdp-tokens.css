@@ -10,6 +10,15 @@
   --p-neutral-100: #eef2ef;
   --p-neutral-200: #dce3de;
   --p-neutral-500: #66756c;
+  --p-dark-50: #f5f7fa;
+  --p-dark-100: #e7ebf0;
+  --p-dark-200: #cbd2dc;
+  --p-dark-300: #a6b0bf;
+  --p-dark-400: #7d899b;
+  --p-dark-500: #5f6d80;
+  --p-dark-600: #445268;
+  --p-dark-700: #29384f;
+  --p-dark-800: #14233a;
   --p-ink: #001b0a;
   --p-font-base: 16px;
   --p-space-unit: 4px;
@@ -20,6 +29,8 @@
   --ds-bg-attention: var(--p-orange-50);
   --ds-text-primary: var(--p-ink);
   --ds-text-secondary: var(--p-neutral-500);
+  --ds-text-muted: var(--p-dark-500);
+  --ds-text-strong: var(--p-dark-800);
   --ds-text-on-primary: var(--p-white);
   --ds-border-default: var(--p-neutral-200);
   --ds-action-primary: var(--p-green-500);

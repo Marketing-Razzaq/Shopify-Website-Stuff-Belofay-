@@ -1,12 +1,9 @@
 if (!customElements.get('belofay-product')) {
   class BelofayProduct extends HTMLElement {
     connectedCallback() {
-      this.form = this.querySelector('[data-belofay-product-form]');
-      this.variantInput = this.querySelector('[data-belofay-variant-id]');
       this.data = JSON.parse(this.querySelector('[data-belofay-variants]').textContent);
       this.addEventListener('change', this.onOptionChange.bind(this));
       this.addEventListener('click', this.onClick.bind(this));
-      this.form?.addEventListener('submit', this.onSubmit.bind(this), true);
       this.updateSelectedVariant();
       requestAnimationFrame(() => this.updateSelectedVariant());
       this.syncStickyButton();
@@ -16,7 +13,11 @@ if (!customElements.get('belofay-product')) {
       const thumb = event.target.closest('[data-gallery-thumb]');
       if (thumb) this.selectMedia(thumb.dataset.galleryThumb);
       const stickyButton = event.target.closest('[data-sticky-submit]');
-      if (stickyButton && this.form) this.form.requestSubmit();
+      if (stickyButton) this.addSelectedVariant(stickyButton, false);
+      const addButton = event.target.closest('[data-product-submit]');
+      if (addButton) this.addSelectedVariant(addButton, false);
+      const buyButton = event.target.closest('[data-buy-now]');
+      if (buyButton) this.addSelectedVariant(buyButton, true);
     }
 
     onOptionChange(event) {
@@ -25,21 +26,17 @@ if (!customElements.get('belofay-product')) {
       requestAnimationFrame(() => this.updateSelectedVariant());
     }
 
-    onSubmit() {
-      this.updateSelectedVariant();
-    }
-
     updateSelectedVariant() {
       const selected = [...this.querySelectorAll('[data-option-position]')].map((group) => {
         return group.querySelector('[data-belofay-option]:checked')?.value;
       });
       const variant = this.data.find((item) => item.options.every((value, index) => value === selected[index]));
-      if (!variant) return;
-      this.variantInput.value = variant.id;
-      this.variantInput.disabled = !variant.available;
-      this.querySelectorAll('[data-product-submit], [data-sticky-submit]').forEach((button) => {
+      if (!variant) return null;
+      this.selectedVariant = variant;
+      this.querySelectorAll('[data-product-submit], [data-sticky-submit], [data-buy-now]').forEach((button) => {
         button.disabled = !variant.available;
-        button.querySelector('[data-submit-label]').textContent = variant.available ? button.dataset.availableLabel : button.dataset.soldOutLabel;
+        const label = button.querySelector('[data-submit-label]');
+        if (label) label.textContent = variant.available ? button.dataset.availableLabel : button.dataset.soldOutLabel;
       });
       const price = this.querySelector('[data-price-current]');
       if (price) price.textContent = variant.price_formatted;
@@ -56,6 +53,49 @@ if (!customElements.get('belofay-product')) {
         const templateView = new URL(window.location.href).searchParams.get('view');
         if (templateView) nextUrl.searchParams.set('view', templateView);
         history.replaceState({}, '', nextUrl);
+      }
+      return variant;
+    }
+
+    async addSelectedVariant(button, redirectToCheckout) {
+      const variant = this.updateSelectedVariant();
+      if (!variant?.available || button.disabled) return;
+      const error = this.querySelector('[data-purchase-error]');
+      button.disabled = true;
+      button.setAttribute('aria-busy', 'true');
+      if (error) error.hidden = true;
+      try {
+        const cart = document.querySelector('cart-notification') || document.querySelector('cart-drawer');
+        const payload = { items: [{ id: variant.id, quantity: 1 }] };
+        if (cart?.getSectionsToRender) {
+          payload.sections = cart.getSectionsToRender().map((section) => section.id);
+          payload.sections_url = window.location.pathname;
+        }
+        const controller = new AbortController();
+        const timeout = window.setTimeout(() => controller.abort(), 10000);
+        const response = await fetch(`${window.Shopify?.routes?.root || '/'}cart/add.js`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify(payload),
+          signal: controller.signal,
+        });
+        window.clearTimeout(timeout);
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.description || result.message || 'Unable to add this item.');
+        if (redirectToCheckout) {
+          window.location.assign(`${window.Shopify?.routes?.root || '/'}checkout`);
+          return;
+        }
+        if (cart?.renderContents) cart.renderContents(result);
+        document.dispatchEvent(new CustomEvent('belofay:cart-added', { detail: result }));
+      } catch (purchaseError) {
+        if (error) {
+          error.textContent = purchaseError.message;
+          error.hidden = false;
+        }
+      } finally {
+        button.removeAttribute('aria-busy');
+        button.disabled = !this.selectedVariant?.available;
       }
     }
 

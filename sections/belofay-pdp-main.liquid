@@ -1,17 +1,27 @@
 {{ 'belofay-pdp-fonts.css' | asset_url | stylesheet_tag }}
 {{ 'belofay-pdp-tokens.css' | asset_url | stylesheet_tag }}
 {{ 'belofay-pdp.css' | asset_url | stylesheet_tag }}
-<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'belofay-pdp.js' | asset_url }}" defer="defer"></script>
 
 {%- assign current_variant = product.selected_or_first_available_variant -%}
-<belofay-product class="belofay-pdp-hero">
+{%- assign is_best_seller = false -%}
+{%- for product_tag in product.tags -%}
+  {%- assign normalized_tag = product_tag | downcase | replace: '-', ' ' | replace: '_', ' ' -%}
+  {%- if normalized_tag == 'best seller' or normalized_tag == 'bestseller' -%}
+    {%- assign is_best_seller = true -%}
+  {%- endif -%}
+{%- endfor -%}
+<belofay-product
+  class="belofay-pdp-hero"
+  style="--pdp-included-bg: {{ section.settings.included_background }}; --pdp-warning-bg: {{ section.settings.warning_background }}; --pdp-accent: {{ section.settings.accent_color }}; --pdp-action: {{ section.settings.action_color }}; --pdp-strong-text: {{ section.settings.strong_text_color }}; --pdp-muted-text: {{ section.settings.muted_text_color }};"
+>
   <div class="belofay-pdp__shell belofay-pdp-hero__layout">
     {% render 'belofay-pdp-media', product: product %}
     <div class="belofay-pdp-hero__info">
-      {% render 'belofay-pdp-rating', product: product, fallback_rating: section.settings.rating, fallback_count: section.settings.rating_count %}
+      {%- if is_best_seller -%}<span class="belofay-pdp-badge">{{ section.settings.best_seller_label }}</span>{%- endif -%}
       <h1 class="belofay-pdp-hero__title">{{ product.title | default: section.settings.placeholder_title | escape }}</h1>
       <p class="belofay-pdp-hero__subtitle">{{ section.settings.subtitle }}</p>
+      {% render 'belofay-pdp-rating', product: product, fallback_rating: section.settings.rating, fallback_count: section.settings.rating_count %}
       <div class="belofay-pdp-price" aria-live="polite">
         <span class="belofay-pdp-price__current" data-price-current>{{ current_variant.price | money }}</span>
         <span class="belofay-pdp-price__compare" data-price-compare {% unless current_variant.compare_at_price > current_variant.price %}hidden{% endunless %}>{{ current_variant.compare_at_price | money }}</span>
@@ -19,11 +29,11 @@
       </div>
       {% render 'belofay-pdp-variant-picker', product: product, section_id: section.id %}
       <div class="belofay-pdp-hero__panels">
-        <article class="belofay-pdp__card belofay-pdp-hero__panel"><h2>{{ section.settings.included_heading }}</h2><ul class="belofay-pdp__check-list"><li><span class="belofay-pdp__check">✓</span>{{ section.settings.included_one }}</li><li><span class="belofay-pdp__check">✓</span>{{ section.settings.included_two }}</li></ul></article>
-        <article class="belofay-pdp__card belofay-pdp-hero__panel belofay-pdp-hero__panel--attention"><h2>{{ section.settings.warning_heading }}</h2><ul class="belofay-pdp__check-list"><li><span class="belofay-pdp__check">!</span>{{ section.settings.warning_one }}</li><li><span class="belofay-pdp__check">i</span>{{ section.settings.warning_two }}</li></ul></article>
+        <article class="belofay-pdp__card belofay-pdp-hero__panel"><h2>{{ section.settings.included_heading }}</h2><ul class="belofay-pdp__check-list"><li><span class="belofay-pdp__check" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="m5 10 3 3 7-7"/></svg></span>{{ section.settings.included_one }}</li><li><span class="belofay-pdp__check" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="m5 10 3 3 7-7"/></svg></span>{{ section.settings.included_two }}</li></ul></article>
+        <article class="belofay-pdp__card belofay-pdp-hero__panel belofay-pdp-hero__panel--attention"><h2>{{ section.settings.warning_heading }}</h2><ul class="belofay-pdp__check-list"><li><span class="belofay-pdp__check belofay-pdp__check--warning" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M10 5v6m0 3v.1"/></svg></span><span>{{ section.settings.warning_one }}<br><a class="belofay-pdp-hero__tap-link" href="{{ section.settings.tap_url | default: '/collections/taps' }}">{{ section.settings.tap_link_text }} <span aria-hidden="true">→</span></a></span></li><li><span class="belofay-pdp__check belofay-pdp__check--info" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M10 9v6m0-10v.1"/></svg></span><span><strong>{{ section.settings.warning_two }}</strong><br><span class="belofay-pdp-hero__detail">{{ section.settings.warning_detail }}</span></span></li></ul></article>
       </div>
       <div class="belofay-pdp-delivery-strip">{% render 'belofay-pdp-icon', name: 'delivery' %}<span><strong>{{ section.settings.delivery_heading }}</strong><br>{{ section.settings.delivery_text }}</span></div>
-      {% render 'belofay-pdp-buy-buttons', product: product, section: section %}
+      {% render 'belofay-pdp-buy-buttons', product: product, settings: section.settings %}
     </div>
   </div>
   <script type="application/json" data-belofay-variants>
@@ -39,18 +49,42 @@
 {
   "name": "Belofay PDP hero",
   "settings": [
+    {"type":"header","content":"Product header"},
     {"type":"text","id":"placeholder_title","label":"Placeholder title","default":"BELOFAY Crawley 600mm Floor Standing Bathroom Vanity Unit With Basin"},
+    {"type":"text","id":"best_seller_label","label":"Best seller label","default":"Best Seller"},
     {"type":"text","id":"subtitle","label":"Product summary","default":"Floor-standing · Soft-close · Premium finish"},
     {"type":"range","id":"rating","label":"Fallback rating","min":1,"max":5,"step":0.1,"default":4.5},
     {"type":"number","id":"rating_count","label":"Fallback rating count","default":121},
+    {"type":"header","content":"Information panels"},
     {"type":"text","id":"included_heading","label":"Included heading","default":"What’s included"},
     {"type":"text","id":"included_one","label":"Included item one","default":"Ceramic basin included"},
     {"type":"text","id":"included_two","label":"Included item two","default":"Chrome waste included"},
     {"type":"text","id":"warning_heading","label":"Warning heading","default":"Before you buy"},
     {"type":"text","id":"warning_one","label":"Warning one","default":"Tap not included"},
+    {"type":"text","id":"tap_link_text","label":"Tap link text","default":"Shop matching taps"},
+    {"type":"url","id":"tap_url","label":"Tap collection link"},
     {"type":"text","id":"warning_two","label":"Warning two","default":"Quick self-assembly"},
+    {"type":"text","id":"warning_detail","label":"Assembly detail","default":"Approx. 30 min · Basic tools · Plumbing connection required"},
     {"type":"text","id":"delivery_heading","label":"Delivery heading","default":"FREE UK DELIVERY"},
-    {"type":"text","id":"delivery_text","label":"Delivery text","default":"Cabinet and basin may arrive separately"}
+    {"type":"text","id":"delivery_text","label":"Delivery text","default":"Cabinet and basin may arrive separately"},
+    {"type":"header","content":"Purchase buttons"},
+    {"type":"text","id":"add_to_cart_label","label":"Add to cart label","default":"Add to Cart"},
+    {"type":"text","id":"buy_now_label","label":"Buy now label","default":"Buy Now"},
+    {"type":"text","id":"sold_out_label","label":"Sold out label","default":"Sold out"},
+    {"type":"header","content":"Purchase reassurance"},
+    {"type":"text","id":"secure_heading","label":"Secure checkout heading","default":"Secure checkout"},
+    {"type":"text","id":"secure_text","label":"Secure checkout text","default":"Your information is safe"},
+    {"type":"text","id":"support_heading","label":"Support heading","default":"UK support"},
+    {"type":"text","id":"support_text","label":"Support text","default":"Here to help"},
+    {"type":"text","id":"returns_heading","label":"Returns heading","default":"30-day returns"},
+    {"type":"text","id":"returns_text","label":"Returns text","default":"Shop with confidence"},
+    {"type":"header","content":"Hero colors"},
+    {"type":"color","id":"action_color","label":"Action green","default":"#20a957"},
+    {"type":"color","id":"accent_color","label":"Accent orange","default":"#ff6b00"},
+    {"type":"color","id":"strong_text_color","label":"Strong text","default":"#14233a"},
+    {"type":"color","id":"muted_text_color","label":"Muted text","default":"#5f6d80"},
+    {"type":"color","id":"included_background","label":"Included panel background","default":"#effaf3"},
+    {"type":"color","id":"warning_background","label":"Before you buy background","default":"#fff4ed"}
   ]
 }
 {% endschema %}
