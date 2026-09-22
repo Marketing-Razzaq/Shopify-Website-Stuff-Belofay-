@@ -173,6 +173,7 @@
 
 @media screen and (max-width: 989px) {
   .belofay-pdp-overview__content, .belofay-pdp-faq__layout { grid-template-columns: 1fr; }
+  .belofay-pdp-hero__info { position: static; top: auto; }
   .belofay-pdp__grid--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
