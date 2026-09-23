@@ -11,15 +11,15 @@ Renders the Belofay Add to Cart, Buy Now, reassurance row and mobile sticky acti
   <div class="belofay-pdp-buy__errors" role="alert" data-purchase-error hidden></div>
   <div class="belofay-pdp-buy__actions">
     <button class="belofay-pdp-buy__submit" type="button" data-product-submit data-available-label="{{ settings.add_to_cart_label | escape }}" data-sold-out-label="{{ settings.sold_out_label | escape }}" {% unless current_variant.available %}disabled{% endunless %}>
-      <svg class="belofay-pdp-buy__cart-icon" viewBox="0 0 32 32" aria-hidden="true"><path d="M4 6h4l2.4 13.2h13.8L27 10H9.2M12 25.5a1.8 1.8 0 1 1-3.6 0 1.8 1.8 0 0 1 3.6 0Zm13 0a1.8 1.8 0 1 1-3.6 0 1.8 1.8 0 0 1 3.6 0ZM14 5v8m-4-4h8" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      {% render 'belofay-pdp-icon', name: 'cart' %}
       <span data-submit-label>{% if current_variant.available %}{{ settings.add_to_cart_label }}{% else %}{{ settings.sold_out_label }}{% endif %}</span>
     </button>
     <button class="belofay-pdp-buy__now" type="button" data-buy-now {% unless current_variant.available %}disabled{% endunless %}><span data-button-label>{{ settings.buy_now_label }}</span></button>
   </div>
   <div class="belofay-pdp-buy__reassurance">
-    <div class="belofay-pdp-reassurance"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="7" y="14" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M11 14V9a5 5 0 0 1 10 0v5m-5 5v4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg><span><strong>{{ settings.secure_heading }}</strong><small>{{ settings.secure_text }}</small></span></div>
-    <div class="belofay-pdp-reassurance"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M7 18v-4a9 9 0 0 1 18 0v4M7 17H4v7h5v-7H7Zm18 0h3v7h-5v-7h2Zm0 7c0 3-2 5-6 5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg><span><strong>{{ settings.support_heading }}</strong><small>{{ settings.support_text }}</small></span></div>
-    <div class="belofay-pdp-reassurance"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="m16 3 11 4v8c0 7-4.6 11.7-11 14-6.4-2.3-11-7-11-14V7z" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="m11 16 3.2 3.2L21 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg><span><strong>{{ settings.returns_heading }}</strong><small>{{ settings.returns_text }}</small></span></div>
+    <div class="belofay-pdp-reassurance">{% render 'belofay-pdp-icon', name: 'lock' %}<span><strong>{{ settings.secure_heading }}</strong><small>{{ settings.secure_text }}</small></span></div>
+    <div class="belofay-pdp-reassurance">{% render 'belofay-pdp-icon', name: 'support' %}<span><strong>{{ settings.support_heading }}</strong><small>{{ settings.support_text }}</small></span></div>
+    <div class="belofay-pdp-reassurance">{% render 'belofay-pdp-icon', name: 'shield' %}<span><strong>{{ settings.returns_heading }}</strong><small>{{ settings.returns_text }}</small></span></div>
   </div>
 </div>
 

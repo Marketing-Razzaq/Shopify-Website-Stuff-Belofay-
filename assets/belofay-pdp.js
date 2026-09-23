@@ -22,16 +22,32 @@ if (!customElements.get('belofay-product')) {
 
     onOptionChange(event) {
       if (!event.target.matches('[data-belofay-option]')) return;
+      const group = event.target.closest('[data-option-position]');
+      if (group) {
+        group.removeAttribute('data-invalid');
+        const optionError = group.querySelector('[data-option-error]');
+        if (optionError) optionError.hidden = true;
+        const dimensions = group.querySelector('[data-dimensions]');
+        if (dimensions) {
+          const value = dimensions.querySelector('[data-dimensions-value]');
+          if (value) value.textContent = `${event.target.value} W × ${dimensions.dataset.depth} × ${dimensions.dataset.height}`;
+          dimensions.hidden = false;
+        }
+      }
       this.updateSelectedVariant();
       requestAnimationFrame(() => this.updateSelectedVariant());
     }
 
     updateSelectedVariant() {
-      const selected = [...this.querySelectorAll('[data-option-position]')].map((group) => {
-        return group.querySelector('[data-belofay-option]:checked')?.value;
+      const selected = Array(this.data[0]?.options.length || 0).fill(undefined);
+      this.querySelectorAll('[data-option-position]').forEach((group) => {
+        selected[Number(group.dataset.optionPosition) - 1] = group.querySelector('[data-belofay-option]:checked')?.value;
       });
       const variant = this.data.find((item) => item.options.every((value, index) => value === selected[index]));
-      if (!variant) return null;
+      if (!variant) {
+        this.selectedVariant = null;
+        return null;
+      }
       this.selectedVariant = variant;
       this.querySelectorAll('[data-product-submit], [data-sticky-submit], [data-buy-now]').forEach((button) => {
         button.disabled = this.purchasePending || !variant.available;
@@ -59,6 +75,7 @@ if (!customElements.get('belofay-product')) {
 
     async addSelectedVariant(button, redirectToCheckout) {
       if (this.purchasePending) return;
+      if (!this.validateRequiredOptions()) return;
       const variant = this.updateSelectedVariant();
       if (!variant?.available || button.disabled) return;
       const error = this.querySelector('[data-purchase-error]');
@@ -102,6 +119,26 @@ if (!customElements.get('belofay-product')) {
         button.removeAttribute('aria-busy');
         this.updateSelectedVariant();
       }
+    }
+
+    validateRequiredOptions() {
+      const invalidGroups = [...this.querySelectorAll('[data-option-position]')].filter((group) => {
+        const invalid = !group.querySelector('[data-belofay-option]:checked');
+        group.toggleAttribute('data-invalid', invalid);
+        const optionError = group.querySelector('[data-option-error]');
+        if (optionError) optionError.hidden = !invalid;
+        return invalid;
+      });
+      if (!invalidGroups.length) return true;
+      const names = invalidGroups.map((group) => group.dataset.optionName).join(' and ');
+      const error = this.querySelector('[data-purchase-error]');
+      if (error) {
+        error.textContent = `Please select ${names} before continuing.`;
+        error.hidden = false;
+      }
+      invalidGroups[0].querySelector('[data-belofay-option]:not(:disabled)')?.focus({ preventScroll: true });
+      invalidGroups[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return false;
     }
 
     selectMedia(id) {

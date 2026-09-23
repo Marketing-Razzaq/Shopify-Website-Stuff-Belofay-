@@ -17,14 +17,14 @@
 >
   {%- if section.settings.show_breadcrumbs -%}
     <div class="belofay-pdp__shell">
-      {% render 'belofay-pdp-breadcrumbs', product: product, collection: collection, fallback_collection: section.settings.breadcrumb_collection, home_label: section.settings.breadcrumb_home_label, aria_label: section.settings.breadcrumb_aria_label %}
+      {% render 'belofay-pdp-breadcrumbs', product: product, collection: collection, fallback_collection: section.settings.breadcrumb_collection, home_label: section.settings.breadcrumb_home_label %}
     </div>
   {%- endif -%}
   <div class="belofay-pdp__shell belofay-pdp-hero__layout">
     {% render 'belofay-pdp-media', product: product %}
     <div class="belofay-pdp-hero__info">
       {%- if is_best_seller -%}<span class="belofay-pdp-badge">{{ section.settings.best_seller_label }}</span>{%- endif -%}
-      <h1 class="belofay-pdp-hero__title">{{ product.title | default: section.settings.placeholder_title | escape }}</h1>
+      <h1 class="belofay-pdp-hero__title">{{ product.title | escape }}</h1>
       <p class="belofay-pdp-hero__subtitle">{{ section.settings.subtitle }}</p>
       {% render 'belofay-pdp-rating', product: product, fallback_rating: section.settings.rating, fallback_count: section.settings.rating_count %}
       <div class="belofay-pdp-price" aria-live="polite">
@@ -32,7 +32,7 @@
         <span class="belofay-pdp-price__compare" data-price-compare {% unless current_variant.compare_at_price > current_variant.price %}hidden{% endunless %}>{{ current_variant.compare_at_price | money }}</span>
         {%- if current_variant.compare_at_price > current_variant.price -%}<span class="belofay-pdp-price__saving">Save {{ current_variant.compare_at_price | minus: current_variant.price | money }}</span>{%- endif -%}
       </div>
-      {% render 'belofay-pdp-variant-picker', product: product, section_id: section.id %}
+      {% render 'belofay-pdp-variant-picker', product: product, section_id: section.id, settings: section.settings %}
     </div>
     <div class="belofay-pdp-hero__panels">
       <article class="belofay-pdp__card belofay-pdp-hero__panel"><h2>{{ section.settings.included_heading }}</h2><ul class="belofay-pdp__check-list"><li><span class="belofay-pdp__check" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="m5 10 3 3 7-7"/></svg></span>{{ section.settings.included_one }}</li><li><span class="belofay-pdp__check" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="m5 10 3 3 7-7"/></svg></span>{{ section.settings.included_two }}</li></ul></article>
@@ -62,13 +62,16 @@
     {"type":"checkbox","id":"show_breadcrumbs","label":"Show breadcrumbs","default":true},
     {"type":"collection","id":"breadcrumb_collection","label":"Fallback collection"},
     {"type":"text","id":"breadcrumb_home_label","label":"Home label","default":"Home"},
-    {"type":"text","id":"breadcrumb_aria_label","label":"Accessibility label","default":"Breadcrumb"},
     {"type":"header","content":"Product header"},
-    {"type":"text","id":"placeholder_title","label":"Placeholder title","default":"BELOFAY Crawley 600mm Floor Standing Bathroom Vanity Unit With Basin"},
     {"type":"text","id":"best_seller_label","label":"Best seller label","default":"Best Seller"},
     {"type":"text","id":"subtitle","label":"Product summary","default":"Floor-standing · Soft-close · Premium finish"},
     {"type":"range","id":"rating","label":"Fallback rating","min":1,"max":5,"step":0.1,"default":4.5},
     {"type":"number","id":"rating_count","label":"Fallback rating count","default":121},
+    {"type":"header","content":"Product options"},
+    {"type":"text","id":"size_label","label":"Size option label","default":"Size (Width)"},
+    {"type":"text","id":"dimension_depth","label":"Depth","default":"388mm D"},
+    {"type":"text","id":"dimension_height","label":"Height","default":"800mm H"},
+    {"type":"text","id":"option_error_text","label":"Selection error","default":"Please select an option"},
     {"type":"header","content":"Information panels"},
     {"type":"text","id":"included_heading","label":"Included heading","default":"What’s included"},
     {"type":"text","id":"included_one","label":"Included item one","default":"Ceramic basin included"},

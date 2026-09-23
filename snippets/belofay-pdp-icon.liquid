@@ -7,11 +7,17 @@ Renders a small decorative icon for the Belofay PDP.
 
 {%- case name -%}
   {%- when 'delivery' -%}
-    <svg class="belofay-pdp__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h11v11H3zM14 9h4l3 3v4h-7zM7 19a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm10 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+    <span class="belofay-pdp__icon" aria-hidden="true">{{ 'delivery_truck.svg' | inline_asset_content }}</span>
   {%- when 'measure' -%}
-    <svg class="belofay-pdp__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8h18v8H3zM7 8v4m4-4v2m4-2v4m4-4v2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    <span class="belofay-pdp__icon" aria-hidden="true">{{ 'measurement_ruler.svg' | inline_asset_content }}</span>
+  {%- when 'lock' -%}
+    <span class="belofay-pdp__icon" aria-hidden="true">{{ 'secure_lock.svg' | inline_asset_content }}</span>
   {%- when 'shield' -%}
-    <svg class="belofay-pdp__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 20 6v5c0 5-3.4 8.2-8 10-4.6-1.8-8-5-8-10V6z" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m8.5 12 2.2 2.2 4.8-5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+    <span class="belofay-pdp__icon" aria-hidden="true">{{ 'shield_check.svg' | inline_asset_content }}</span>
+  {%- when 'cart' -%}
+    <span class="belofay-pdp__icon" aria-hidden="true">{{ 'shopping_cart.svg' | inline_asset_content }}</span>
+  {%- when 'support' -%}
+    <span class="belofay-pdp__icon" aria-hidden="true">{{ 'support_headset.svg' | inline_asset_content }}</span>
   {%- when 'tools' -%}
     <svg class="belofay-pdp__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6 4-3 3 3-3 4m-4-4-9 9a3 3 0 0 0 4 4l9-9M5 4l4 4m-5 1 5-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
   {%- else -%}

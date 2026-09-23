@@ -32,7 +32,8 @@
 .belofay-pdp__feature { padding: var(--ds-space-lg); }
 .belofay-pdp__feature h3 { margin: var(--ds-space-sm) 0 var(--ds-space-xs); font-size: var(--ds-text-lg); }
 .belofay-pdp__feature p { margin: 0; color: var(--ds-text-secondary); }
-.belofay-pdp__icon { width: 28px; height: 28px; color: var(--ds-action-primary-hover); }
+.belofay-pdp__icon { display: inline-flex; flex: 0 0 28px; width: 28px; height: 28px; align-items: center; justify-content: center; color: var(--ds-action-primary-hover); }
+.belofay-pdp__icon svg { width: 100%; height: 100%; object-fit: contain; }
 .belofay-pdp__media-placeholder { display: grid; width: 100%; min-height: 280px; place-items: center; overflow: hidden; border-radius: var(--ds-radius-card); background: linear-gradient(135deg, var(--ds-bg-success), var(--ds-bg-surface)); }
 .belofay-pdp__media-placeholder svg { width: 65%; height: 65%; }
 .belofay-pdp__notice { padding: var(--ds-space-lg); background: var(--ds-bg-attention); }
@@ -88,6 +89,14 @@
 .belofay-pdp-options { display: grid; gap: var(--ds-space-md); margin-block: var(--ds-space-lg); }
 .belofay-pdp-options fieldset { min-width: 0; padding: 0; border: 0; margin: 0; }
 .belofay-pdp-options legend { margin-bottom: var(--ds-space-xs); font-weight: var(--ds-weight-semibold); }
+.belofay-pdp-option-group[data-invalid] { padding: var(--ds-space-sm); border: 2px solid var(--ds-action-attention); border-radius: var(--ds-radius-control); background: var(--ds-bg-attention); }
+.belofay-pdp-option-error { margin: var(--ds-space-xs) 0 0; color: var(--ds-action-attention-hover); font-size: var(--ds-text-sm); font-weight: var(--ds-weight-semibold); }
+.belofay-pdp-dimensions { display: flex; align-items: center; gap: var(--ds-space-sm); margin-top: var(--ds-space-sm); padding-top: var(--ds-space-sm); border-top: 1px solid var(--ds-border-default); color: var(--ds-text-strong); }
+.belofay-pdp-dimensions[hidden] { display: none; }
+.belofay-pdp-dimensions .belofay-pdp__icon { flex-basis: 38px; width: 38px; height: 32px; }
+.belofay-pdp-dimensions small, .belofay-pdp-dimensions strong { display: block; }
+.belofay-pdp-dimensions small { color: var(--ds-text-muted); font-size: var(--ds-text-sm); }
+.belofay-pdp-dimensions strong { font-size: var(--ds-text-md); }
 .belofay-pdp-options__values { display: grid; grid-template-columns: repeat(auto-fit, minmax(112px, 1fr)); gap: var(--ds-space-xs); }
 .belofay-pdp-option { position: relative; }
 .belofay-pdp-option input { position: absolute; width: 1px; height: 1px; opacity: 0; }
@@ -124,6 +133,7 @@
 .belofay-pdp-buy__actions { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: var(--ds-space-sm); }
 .belofay-pdp-buy__submit { display: inline-flex; min-height: 60px; cursor: pointer; align-items: center; justify-content: center; gap: var(--ds-space-xs); border: 2px solid var(--ds-action-primary); border-radius: var(--ds-radius-control); background: var(--ds-action-primary); color: var(--ds-text-on-primary); font-weight: var(--ds-weight-bold); }
 .belofay-pdp-buy__cart-icon { width: 30px; height: 30px; color: var(--ds-text-on-primary); }
+.belofay-pdp-buy__submit .belofay-pdp__icon { width: 30px; height: 30px; }
 .belofay-pdp-buy__submit:hover { border-color: var(--ds-action-primary-hover); background: var(--ds-action-primary-hover); }
 .belofay-pdp-buy__submit:disabled, .belofay-pdp-buy__now:disabled { cursor: not-allowed; opacity: .5; }
 .belofay-pdp-buy__now { min-height: 60px; cursor: pointer; border: 2px solid var(--ds-action-primary); border-radius: var(--ds-radius-control); background: var(--ds-bg-page); color: var(--ds-action-primary-hover); font-size: var(--ds-text-lg); font-weight: var(--ds-weight-bold); }
@@ -138,7 +148,7 @@
 .belofay-pdp-reassurance { display: grid; grid-template-columns: 40px 1fr; gap: var(--ds-space-sm); align-items: center; padding-inline: var(--ds-space-md); border-right: 1px solid var(--ds-border-default); }
 .belofay-pdp-reassurance:first-child { padding-left: 0; }
 .belofay-pdp-reassurance:last-child { padding-right: 0; border-right: 0; }
-.belofay-pdp-reassurance svg { width: 36px; height: 36px; color: var(--ds-text-strong); }
+.belofay-pdp-reassurance svg, .belofay-pdp-reassurance > .belofay-pdp__icon { width: 36px; height: 36px; color: var(--ds-text-strong); }
 .belofay-pdp-reassurance strong, .belofay-pdp-reassurance small { display: block; }
 .belofay-pdp-reassurance strong { color: var(--ds-text-strong); font-size: var(--ds-text-md); font-weight: var(--ds-weight-semibold); }
 .belofay-pdp-reassurance small { color: var(--ds-text-muted); font-size: var(--ds-text-sm); }

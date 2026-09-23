@@ -2,8 +2,9 @@
 Renders Color/Colour and Size product options for the Belofay PDP hero.
 @param {product} product - Product whose options are displayed.
 @param {string} section_id - Section identifier used in unique input IDs.
+@param {object} settings - Parent section settings.
 @example
-{% render 'belofay-pdp-variant-picker', product: product, section_id: section.id %}
+{% render 'belofay-pdp-variant-picker', product: product, section_id: section.id, settings: section.settings %}
 {% enddoc %}
 
 {%- unless product.has_only_default_variant -%}
@@ -19,13 +20,14 @@ Renders Color/Colour and Size product options for the Belofay PDP hero.
         {%- assign show_option = true -%}
       {%- endif -%}
       {%- if show_option -%}
-        <fieldset class="belofay-pdp-option-group{% if is_color %} belofay-pdp-option-group--color{% else %} belofay-pdp-option-group--size{% endif %}" data-option-position="{{ option.position }}">
-          <legend>{{ option.name }}</legend>
+        {%- capture error_id -%}BelofayOptionError-{{ section_id }}-{{ option.position }}{%- endcapture -%}
+        <fieldset class="belofay-pdp-option-group{% if is_color %} belofay-pdp-option-group--color{% else %} belofay-pdp-option-group--size{% endif %}" data-option-position="{{ option.position }}" data-option-name="{{ option.name | escape }}" aria-describedby="{{ error_id }}">
+          <legend>{% if is_color %}{{ option.name }}{% else %}{{ settings.size_label }}{% endif %}</legend>
           <div class="belofay-pdp-options__values">
             {%- for option_value in option.values -%}
               {%- capture input_id -%}BelofayOption-{{ section_id }}-{{ option.position }}-{{ forloop.index0 }}{%- endcapture -%}
               <div class="belofay-pdp-option">
-                <input id="{{ input_id }}" type="radio" name="options[{{ option.name | escape }}]" value="{{ option_value | escape }}" data-belofay-option data-option-value-id="{{ option_value.id }}" {% if option_value.selected %}checked{% endif %} {% unless option_value.available %}disabled{% endunless %}>
+                <input id="{{ input_id }}" type="radio" name="options[{{ option.name | escape }}]" value="{{ option_value | escape }}" data-belofay-option data-option-value-id="{{ option_value.id }}" {% unless option_value.available %}disabled{% endunless %}>
                 <label for="{{ input_id }}">
                   {%- if is_color -%}
                     <span class="belofay-pdp-option__swatch" aria-hidden="true">
@@ -44,6 +46,13 @@ Renders Color/Colour and Size product options for the Belofay PDP hero.
               </div>
             {%- endfor -%}
           </div>
+          <p class="belofay-pdp-option-error" id="{{ error_id }}" data-option-error hidden>{{ settings.option_error_text }}</p>
+          {%- unless is_color -%}
+            <div class="belofay-pdp-dimensions" data-dimensions data-depth="{{ settings.dimension_depth | escape }}" data-height="{{ settings.dimension_height | escape }}" hidden>
+              {% render 'belofay-pdp-icon', name: 'measure' %}
+              <span><small>Dimensions (selected)</small><strong data-dimensions-value></strong></span>
+            </div>
+          {%- endunless -%}
         </fieldset>
       {%- endif -%}
     {%- endfor -%}

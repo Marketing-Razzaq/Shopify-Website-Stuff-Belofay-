@@ -5,10 +5,10 @@ Renders accessible product breadcrumbs with optional collection context and stru
 @param {collection} [collection] - Collection from the current storefront context.
 @param {collection} [fallback_collection] - Merchant-selected collection used when context is unavailable.
 @param {string} home_label - Label for the storefront home link.
-@param {string} aria_label - Accessible label for the breadcrumb navigation.
+@param {string} [aria_label] - Accessible label for the breadcrumb navigation.
 
 @example
-{% render 'belofay-pdp-breadcrumbs', product: product, collection: collection, fallback_collection: section.settings.breadcrumb_collection, home_label: section.settings.breadcrumb_home_label, aria_label: section.settings.breadcrumb_aria_label %}
+{% render 'belofay-pdp-breadcrumbs', product: product, collection: collection, fallback_collection: section.settings.breadcrumb_collection, home_label: section.settings.breadcrumb_home_label %}
 {% enddoc %}
 
 {%- liquid
@@ -16,9 +16,10 @@ Renders accessible product breadcrumbs with optional collection context and stru
   if breadcrumb_collection == blank
     assign breadcrumb_collection = fallback_collection
   endif
+  assign breadcrumb_aria_label = aria_label | default: 'Breadcrumb'
 -%}
 
-<nav class="belofay-pdp-breadcrumbs" aria-label="{{ aria_label | escape }}">
+<nav class="belofay-pdp-breadcrumbs" aria-label="{{ breadcrumb_aria_label | escape }}">
   <ol class="belofay-pdp-breadcrumbs__list">
     <li class="belofay-pdp-breadcrumbs__item">
       <a href="{{ routes.root_url }}">{{ home_label | escape }}</a>
