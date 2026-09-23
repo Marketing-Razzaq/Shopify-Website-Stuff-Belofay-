@@ -54,6 +54,13 @@
 
 .belofay-pdp-hero { padding-block: var(--ds-space-xl); }
 .belofay-pdp-hero { display: block; }
+.belofay-pdp-breadcrumbs { margin-bottom: var(--ds-space-md); color: var(--ds-text-muted); font-size: var(--ds-text-sm); }
+.belofay-pdp-breadcrumbs__list { display: flex; min-width: 0; flex-wrap: wrap; align-items: center; gap: var(--ds-space-xs); padding: 0; margin: 0; list-style: none; }
+.belofay-pdp-breadcrumbs__item { display: flex; min-width: 0; align-items: center; gap: var(--ds-space-xs); }
+.belofay-pdp-breadcrumbs__item:not(:last-child)::after { color: var(--p-dark-300); content: "/"; }
+.belofay-pdp-breadcrumbs a { color: var(--ds-text-muted); text-decoration: none; transition: color var(--motion-duration-fast) var(--motion-ease-standard); }
+.belofay-pdp-breadcrumbs a:hover { color: var(--ds-action-primary-hover); text-decoration: underline; text-underline-offset: 3px; }
+.belofay-pdp-breadcrumbs__item--current { color: var(--ds-text-strong); font-weight: var(--ds-weight-medium); }
 .belofay-pdp-hero__layout { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(440px, .85fr); gap: var(--ds-space-xl); align-items: start; }
 .belofay-pdp-hero__layout > * { min-width: 0; }
 .belofay-pdp-gallery { grid-column: 1; grid-row: 1 / span 6; }
@@ -231,6 +238,10 @@
   .belofay-pdp__tabs-inner { justify-content: flex-start; gap: var(--ds-space-md); }
   .belofay-pdp__grid--4, .belofay-pdp__grid--3, .belofay-pdp__grid--2 { grid-template-columns: 1fr; }
   .belofay-pdp-hero { padding-top: 0; }
+  .belofay-pdp-breadcrumbs { margin-block: var(--ds-space-sm); overflow: hidden; white-space: nowrap; }
+  .belofay-pdp-breadcrumbs__list { flex-wrap: nowrap; overflow: hidden; }
+  .belofay-pdp-breadcrumbs__item--current { overflow: hidden; }
+  .belofay-pdp-breadcrumbs__item--current span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .belofay-pdp-hero__layout { gap: var(--ds-space-md); }
   .belofay-pdp-hero__layout { grid-template-columns: 1fr; }
   .belofay-pdp-gallery, .belofay-pdp-hero__info, .belofay-pdp-hero__panels, .belofay-pdp-suggestions, .belofay-pdp-delivery-strip, .belofay-pdp-buy, .belofay-pdp-mobile-buy-now { grid-column: 1; grid-row: auto; }

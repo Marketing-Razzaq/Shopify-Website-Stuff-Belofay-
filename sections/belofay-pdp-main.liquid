@@ -15,6 +15,11 @@
   class="belofay-pdp-hero"
   style="--pdp-included-bg: {{ section.settings.included_background }}; --pdp-warning-bg: {{ section.settings.warning_background }}; --pdp-accent: {{ section.settings.accent_color }}; --pdp-action: {{ section.settings.action_color }}; --pdp-strong-text: {{ section.settings.strong_text_color }}; --pdp-muted-text: {{ section.settings.muted_text_color }};"
 >
+  {%- if section.settings.show_breadcrumbs -%}
+    <div class="belofay-pdp__shell">
+      {% render 'belofay-pdp-breadcrumbs', product: product, collection: collection, fallback_collection: section.settings.breadcrumb_collection, home_label: section.settings.breadcrumb_home_label, aria_label: section.settings.breadcrumb_aria_label %}
+    </div>
+  {%- endif -%}
   <div class="belofay-pdp__shell belofay-pdp-hero__layout">
     {% render 'belofay-pdp-media', product: product %}
     <div class="belofay-pdp-hero__info">
@@ -53,6 +58,11 @@
 {
   "name": "Belofay PDP hero",
   "settings": [
+    {"type":"header","content":"Breadcrumbs"},
+    {"type":"checkbox","id":"show_breadcrumbs","label":"Show breadcrumbs","default":true},
+    {"type":"collection","id":"breadcrumb_collection","label":"Fallback collection"},
+    {"type":"text","id":"breadcrumb_home_label","label":"Home label","default":"Home"},
+    {"type":"text","id":"breadcrumb_aria_label","label":"Accessibility label","default":"Breadcrumb"},
     {"type":"header","content":"Product header"},
     {"type":"text","id":"placeholder_title","label":"Placeholder title","default":"BELOFAY Crawley 600mm Floor Standing Bathroom Vanity Unit With Basin"},
     {"type":"text","id":"best_seller_label","label":"Best seller label","default":"Best Seller"},
