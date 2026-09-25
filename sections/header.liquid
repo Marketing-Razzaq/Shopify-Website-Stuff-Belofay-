@@ -1,6 +1,8 @@
 <link rel="stylesheet" href="{{ 'component-list-menu.css' | asset_url }}" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="{{ 'component-search.css' | asset_url }}" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="{{ 'component-menu-drawer.css' | asset_url }}" media="print" onload="this.media='all'">
+{{ 'belofay-header.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'belofay-header.js' | asset_url }}" defer="defer"></script>
 <link
   rel="stylesheet"
   href="{{ 'component-cart-notification.css' | asset_url }}"
@@ -192,7 +194,7 @@
   {% if header_tag == 'sticky-header' %}
     data-sticky-type="{{ section.settings.sticky_header_type }}"
   {% endif %}
-  class="header-wrapper color-{{ section.settings.color_scheme }} gradient{% if section.settings.show_line_separator %} header-wrapper--border-bottom{% endif %}"
+  class="header-wrapper belofay-header belofay-header--{{ request.page_type }} color-{{ section.settings.color_scheme }} gradient{% if section.settings.show_line_separator %} header-wrapper--border-bottom{% endif %}"
 >
   {%- liquid
     assign social_links = false
@@ -207,7 +209,7 @@
     endif
   -%}
 
-  <header class="header header--{{ section.settings.logo_position }} header--mobile-{{ section.settings.mobile_logo_position }} page-width{% if section.settings.menu_type_desktop == 'drawer' %} drawer-menu{% endif %}{% if section.settings.menu != blank %} header--has-menu{% endif %}{% if has_app_block %} header--has-app{% endif %}{% if social_links %} header--has-social{% endif %}{% if shop.customer_accounts_enabled %} header--has-account{% endif %}{% if localization_forms %} header--has-localizations{% endif %}">
+  <header class="header header--{{ section.settings.logo_position }} header--mobile-{{ section.settings.mobile_logo_position }} page-width{% if section.settings.menu_type_desktop == 'drawer' %} drawer-menu{% endif %}{% if section.settings.menu != blank %} header--has-menu{% endif %}{% if has_app_block %} header--has-app{% endif %}{% if social_links %} header--has-social{% endif %}{% if shop.customer_accounts_enabled %} header--has-account{% endif %}{% if localization_forms %} header--has-localizations{% endif %}" data-belofay-header>
 
     <!-- LEFT ZONE: keep drawer + (optional) top search as-is, add logo on the left -->
     <div class="header__left">
@@ -264,7 +266,7 @@
             <a class="list-menu__item--link button-link" href="{{ contact_item.url | default: routes.contact_url }}">Contact</a>
           </li>
           <li class="list-menu__item">
-  <a class="list-menu__item--link button-link" href="/collections/all">
+  <a class="list-menu__item--link button-link" href="{{ routes.all_products_collection_url }}">
     All Products
   </a>
 </li>
@@ -326,6 +328,7 @@
               endif
             -%}
           </span>
+          <span class="belofay-header__action-label">Account</span>
         </a>
       {%- endif -%}
 
@@ -343,6 +346,7 @@
           <span class="svg-wrapper">{{ 'icon-cart.svg' | inline_asset_content }}</span>
         {% endif %}
         <span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
+        <span class="belofay-header__action-label">Cart</span>
         {%- if cart != empty -%}
           <div class="cart-count-bubble">
             {%- if cart.item_count < 100 -%}

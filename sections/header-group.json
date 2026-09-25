@@ -126,11 +126,11 @@
       ],
       "name": "Collection nav bar",
       "settings": {
-        "hide_mobile": true,
+        "hide_mobile": false,
         "padding_top": 0,
         "padding_bottom": 0,
         "show_search": true,
-        "search_placeholder": "Search...",
+        "search_placeholder": "Search vanity units, mirrors, basins...",
         "background_color": "#ffffff",
         "text_color": "#333355"
       }
@@ -150,46 +150,37 @@
           "type": "benefit",
           "settings": {
             "icon": "returns",
-            "title": "Free UK Returns",
-            "subtitle": "30 day returns"
-          }
-        },
-        "b_reviews": {
-          "type": "benefit",
-          "settings": {
-            "icon": "star",
-            "title": "Customer Reviews",
-            "subtitle": "Customers rate us Excellent"
+            "title": "30-day returns",
+            "subtitle": "Shop with confidence"
           }
         },
         "b_help": {
           "type": "benefit",
           "settings": {
             "icon": "help",
-            "title": "Help & Advice",
-            "subtitle": "+44 7735 860185"
+            "title": "UK support",
+            "subtitle": "Here to help"
           }
         }
       },
       "block_order": [
         "b_delivery",
         "b_returns",
-        "b_reviews",
         "b_help"
       ],
       "name": "Benefits bar",
       "settings": {
-        "hide_mobile": true,
+        "hide_mobile": false,
         "padding_top": 0,
         "padding_bottom": 0,
-        "background_color": "#ffffff",
-        "text_color": "#333355"
+        "background_color": "#003f2e",
+        "text_color": "#ffffff"
       }
     }
   },
   "order": [
+    "benefits_bar",
     "header",
-    "collection_nav",
-    "benefits_bar"
+    "collection_nav"
   ]
 }
