@@ -1,0 +1,16 @@
+{% doc %}
+Renders an existing theme icon for the Belofay FAQ section.
+@param {string} name - Icon name.
+@example
+{% render 'belofay-faq-icon', name: 'chat' %}
+{% enddoc %}
+<span class="belofay-faq__icon belofay-faq__icon--{{ name }}" aria-hidden="true">
+  {%- case name -%}
+    {%- when 'chat' -%}{{ 'icon-chat-bubble.svg' | inline_asset_content }}
+    {%- when 'support' -%}{{ 'support_headset.svg' | inline_asset_content }}
+    {%- when 'shield' -%}{{ 'shield_check.svg' | inline_asset_content }}
+    {%- when 'clock' -%}{{ 'icon-stopwatch.svg' | inline_asset_content }}
+    {%- when 'plus' -%}{{ 'icon-plus.svg' | inline_asset_content }}
+    {%- when 'minus' -%}{{ 'icon-minus.svg' | inline_asset_content }}
+  {%- endcase -%}
+</span>

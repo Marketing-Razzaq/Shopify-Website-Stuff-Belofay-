@@ -25,7 +25,7 @@ Renders the Belofay Add to Cart, Buy Now, reassurance row and mobile sticky acti
 
 <button class="belofay-pdp-mobile-buy-now" type="button" data-buy-now {% unless current_variant.available %}disabled{% endunless %}><span data-button-label>{{ settings.buy_now_label }}</span></button>
 
-<div class="belofay-pdp-sticky" aria-label="Sticky purchase controls">
+<div class="belofay-pdp-sticky" aria-label="Sticky purchase controls" aria-hidden="true">
   <div class="belofay-pdp-sticky__summary">
     {%- if current_variant.featured_image != blank -%}
       {{ current_variant.featured_image | image_url: width: 100 | image_tag: loading: 'lazy' }}

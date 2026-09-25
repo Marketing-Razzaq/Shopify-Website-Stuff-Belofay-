@@ -1,0 +1,245 @@
+<section id="installation" class="belofay-installation">
+  <div class="belofay-installation__shell">
+    <details class="belofay-installation__outer" data-installation-outer>
+      <summary class="belofay-installation__outer-summary">
+        <span><strong>{{ section.settings.heading }}</strong><small>{{ section.settings.mobile_summary }}</small></span>
+        <i aria-hidden="true"></i>
+      </summary>
+
+      <div class="belofay-installation__body">
+        <header class="belofay-installation__header">
+          <div class="belofay-installation__intro">
+            <p class="belofay-installation__eyebrow">{{ section.settings.eyebrow }}</p>
+            <h2>{{ section.settings.heading }}</h2>
+            <p>{{ section.settings.intro }}</p>
+          </div>
+          {%- for block in section.blocks -%}{%- if block.type == 'link_card' -%}
+            <a class="belofay-installation__{{ block.settings.style }}{% if block.settings.link == blank %} is-disabled{% endif %}"{% if block.settings.link != blank %} href="{{ block.settings.link }}"{% if block.settings.style == 'download' %} target="_blank" rel="noopener"{% endif %}{% else %} aria-disabled="true"{% endif %} {{ block.shopify_attributes }}>
+              {% render 'belofay-installation-icon', name: block.settings.icon %}
+              <span><strong>{{ block.settings.title }}</strong><small>{{ block.settings.text }}</small></span>{% if block.settings.style == 'download' %}<b aria-hidden="true">↓</b>{% else %}<i aria-hidden="true"></i>{% endif %}
+            </a>
+          {%- endif -%}{%- endfor -%}
+        </header>
+
+        {%- for block in section.blocks -%}{%- if block.type == 'video_card' -%}<div class="belofay-installation__mobile-video" {{ block.shopify_attributes }}>
+          <div class="belofay-installation__video-image">{%- if block.settings.image != blank -%}{{ block.settings.image | image_url: width: 1100 | image_tag: widths: '400,600,800,1100', sizes: '(max-width: 1024px) 100vw, 40vw', loading: 'lazy', alt: block.settings.alt }}{%- else -%}{{ 'lifestyle-1' | placeholder_svg_tag }}{%- endif -%}</div>
+          <div><strong>{{ block.settings.title }}</strong><small>{{ block.settings.text }}</small>{% if block.settings.link != blank %}<a href="{{ block.settings.link }}">{{ block.settings.label }}</a>{% endif %}</div>
+        </div>{%- endif -%}{%- endfor -%}
+
+        <section class="belofay-installation__glance" aria-labelledby="InstallationGlance-{{ section.id }}">
+          <h3 id="InstallationGlance-{{ section.id }}">{{ section.settings.glance_heading }}</h3>
+          <div class="belofay-installation__glance-grid">
+            {%- for block in section.blocks -%}{%- if block.type == 'glance' -%}
+              <article class="belofay-installation__glance-card tone-{{ block.settings.tone }}" {{ block.shopify_attributes }}>
+                {% render 'belofay-installation-icon', name: block.settings.icon %}<span><strong>{{ block.settings.title }}</strong><small>{{ block.settings.text }}</small></span>
+              </article>
+            {%- endif -%}{%- endfor -%}
+          </div>
+        </section>
+
+        <div class="belofay-installation__dashboard">
+          <article class="belofay-installation__card belofay-installation__included">
+            <h3>{{ section.settings.included_heading }}</h3><p>{{ section.settings.included_text }}</p>
+            <ul>{%- for block in section.blocks -%}{%- if block.type == 'included' -%}<li {{ block.shopify_attributes }}><span aria-hidden="true">✓</span>{{ block.settings.title }}</li>{%- endif -%}{%- endfor -%}</ul>
+            <div class="belofay-installation__product-image">{%- if section.settings.included_image != blank -%}{{ section.settings.included_image | image_url: width: 800 | image_tag: widths: '320,480,640,800', loading: 'lazy', alt: section.settings.included_alt }}{%- else -%}{{ 'product-1' | placeholder_svg_tag }}{%- endif -%}</div>
+          </article>
+
+          <article class="belofay-installation__card belofay-installation__requirements">
+            <h3>{{ section.settings.required_heading }}</h3><p>{{ section.settings.required_text }}</p>
+            <ul>{%- for block in section.blocks -%}{%- if block.type == 'requirement' -%}<li {{ block.shopify_attributes }}>{% render 'belofay-installation-icon', name: block.settings.icon %}<span><strong>{{ block.settings.title }}</strong><small>{{ block.settings.text }}</small></span></li>{%- endif -%}{%- endfor -%}</ul>
+            <a class="belofay-installation__attention{% if section.settings.tap_link == blank %} is-disabled{% endif %}"{% if section.settings.tap_link != blank %} href="{{ section.settings.tap_link }}"{% else %} aria-disabled="true"{% endif %}><strong>{{ section.settings.tap_heading }}</strong><small>{{ section.settings.tap_text }}</small><b>{{ section.settings.tap_label }} →</b></a>
+          </article>
+
+          <article class="belofay-installation__card belofay-installation__planning">
+            <h3>{{ section.settings.planning_heading }}</h3><p>{{ section.settings.planning_text }}</p>
+            <div>{%- if section.settings.planning_image != blank -%}{{ section.settings.planning_image | image_url: width: 1400 | image_tag: widths: '500,800,1100,1400', sizes: '(min-width: 1025px) 38vw, 100vw', loading: 'lazy', alt: section.settings.planning_alt }}{%- else -%}{{ 'lifestyle-2' | placeholder_svg_tag }}{%- endif -%}</div>
+          </article>
+
+          <article class="belofay-installation__card belofay-installation__steps">
+            <h3>{{ section.settings.steps_heading }}</h3><p>{{ section.settings.steps_text }}</p>
+            <ol>{%- assign step_number = 0 -%}{%- for block in section.blocks -%}{%- if block.type == 'step' -%}{%- assign step_number = step_number | plus: 1 -%}<li {{ block.shopify_attributes }}><b>{{ step_number }}</b><span><strong>{{ block.settings.title }}</strong><small>{{ block.settings.text }}</small></span></li>{%- endif -%}{%- endfor -%}</ol>
+          </article>
+        </div>
+
+        <div class="belofay-installation__tools-strip">
+          <div><strong>{{ section.settings.tools_heading }}</strong><small>{{ section.settings.tools_text }}</small></div>
+          {%- for block in section.blocks -%}{%- if block.type == 'tool' -%}<span {{ block.shopify_attributes }}>{% render 'belofay-installation-icon', name: block.settings.icon %}<small>{{ block.settings.title }}</small></span>{%- endif -%}{%- endfor -%}
+        </div>
+
+        <aside class="belofay-installation__reassurance">{% render 'belofay-installation-icon', name: 'shield' %}<span><strong>{{ section.settings.reassurance_heading }}</strong><small>{{ section.settings.reassurance_text }}</small></span></aside>
+
+        <div class="belofay-installation__accordions">
+          <details name="installation-{{ section.id }}"><summary>{% render 'belofay-installation-icon', name: 'package' %}<span><strong>{{ section.settings.parts_heading }}</strong><small>{{ section.settings.parts_summary }}</small></span><i aria-hidden="true"></i></summary><div class="belofay-installation__accordion-content"><div class="belofay-installation__parts-grid">{%- for block in section.blocks -%}{%- if block.type == 'included' -%}<article><div>{%- if block.settings.image != blank -%}{{ block.settings.image | image_url: width: 500 | image_tag: widths: '240,360,500', loading: 'lazy', alt: block.settings.title }}{%- else -%}{{ 'product-1' | placeholder_svg_tag }}{%- endif -%}</div><strong>{{ block.settings.title }}</strong><small>✓ {{ section.settings.included_label }}</small></article>{%- endif -%}{%- endfor -%}</div></div></details>
+          <details name="installation-{{ section.id }}"><summary>{% render 'belofay-installation-icon', name: 'screwdriver' %}<span><strong>{{ section.settings.tools_panel_heading }}</strong><small>{{ section.settings.tools_panel_summary }}</small></span><i aria-hidden="true"></i></summary><div class="belofay-installation__accordion-content"><div class="belofay-installation__panel-list">{%- for block in section.blocks -%}{%- if block.type == 'tool' -%}<article>{% render 'belofay-installation-icon', name: block.settings.icon %}<span><strong>{{ block.settings.title }}</strong><small>{{ block.settings.text }}</small></span></article>{%- endif -%}{%- endfor -%}</div></div></details>
+          <details name="installation-{{ section.id }}"><summary>{% render 'belofay-installation-icon', name: 'level' %}<span><strong>{{ section.settings.planning_heading }}</strong><small>{{ section.settings.planning_text }}</small></span><i aria-hidden="true"></i></summary><div class="belofay-installation__accordion-content"><div class="belofay-installation__panel-image">{%- if section.settings.planning_image != blank -%}{{ section.settings.planning_image | image_url: width: 1200 | image_tag: widths: '400,700,900,1200', loading: 'lazy', alt: section.settings.planning_alt }}{%- else -%}{{ 'lifestyle-2' | placeholder_svg_tag }}{%- endif -%}</div></div></details>
+          <details name="installation-{{ section.id }}"><summary>{% render 'belofay-installation-icon', name: 'document' %}<span><strong>{{ section.settings.notes_heading }}</strong><small>{{ section.settings.notes_summary }}</small></span><i aria-hidden="true"></i></summary><div class="belofay-installation__accordion-content"><div class="belofay-installation__notes-grid">{%- assign note_number = 0 -%}{%- for block in section.blocks -%}{%- if block.type == 'note' -%}{%- assign note_number = note_number | plus: 1 -%}<article {{ block.shopify_attributes }}><b>{{ note_number }}</b><strong>{{ block.settings.title }}</strong><div>{%- if block.settings.image != blank -%}{{ block.settings.image | image_url: width: 700 | image_tag: widths: '320,500,700', loading: 'lazy', alt: block.settings.title }}{%- else -%}{{ 'image' | placeholder_svg_tag }}{%- endif -%}</div><p>{{ block.settings.text }}</p></article>{%- endif -%}{%- endfor -%}</div></div></details>
+          <details name="installation-{{ section.id }}"><summary>{% render 'belofay-installation-icon', name: 'package' %}<span><strong>{{ section.settings.accessories_heading }}</strong><small>{{ section.settings.accessories_summary }}</small></span><i aria-hidden="true"></i></summary><div class="belofay-installation__accordion-content"><div class="belofay-installation__accessories">{%- for block in section.blocks -%}{%- if block.type == 'accessory' -%}{%- assign accessory = block.settings.product -%}<article {{ block.shopify_attributes }}>{%- if accessory != blank -%}<a href="{{ accessory.url }}">{{ accessory.featured_image | image_url: width: 600 | image_tag: widths: '260,420,600', loading: 'lazy', alt: accessory.title }}</a><strong>{{ accessory.title }}</strong><b>{{ accessory.price | money }}</b>{% form 'product', accessory %}<input type="hidden" name="id" value="{{ accessory.selected_or_first_available_variant.id }}"><button type="submit"{% unless accessory.available %} disabled{% endunless %}>{{ section.settings.add_to_cart_label }}</button>{% endform %}{%- else -%}{{ 'product-1' | placeholder_svg_tag }}<strong>{{ block.settings.placeholder_title }}</strong>{%- endif -%}</article>{%- endif -%}{%- endfor -%}</div></div></details>
+        </div>
+      </div>
+    </details>
+  </div>
+</section>
+
+{% stylesheet %}
+  .belofay-installation { scroll-margin-top: 118px; color: var(--ds-text-strong); background: var(--ds-bg-page); font-family: var(--ds-font-body),Arial,sans-serif; }
+  .belofay-installation *, .belofay-installation *::before, .belofay-installation *::after { box-sizing: border-box; }
+  .belofay-installation__shell { max-width: 1600px; margin: 0 auto; padding: var(--ds-space-2xl) var(--ds-space-xl) var(--ds-space-section); }
+  .belofay-installation h2, .belofay-installation h3, .belofay-installation p { margin-top: 0; }
+  .belofay-installation__icon { display: block; object-fit: contain; }
+  .belofay-installation__outer-summary { display: none; }
+  .belofay-installation__header { display: grid; grid-template-columns: minmax(0,1.3fr) minmax(300px,.65fr) minmax(320px,.7fr); gap: var(--ds-space-lg); align-items: end; margin-bottom: var(--ds-space-lg); }
+  .belofay-installation__eyebrow { margin-bottom: 10px; color: var(--ds-text-heading); font-size: var(--ds-text-sm); font-weight: var(--ds-weight-semibold); letter-spacing: .24em; }
+  .belofay-installation__intro h2 { margin-bottom: 10px; color: var(--ds-text-heading); font-family: var(--ds-font-heading),Arial,sans-serif; font-size: clamp(30px,2.25vw,42px); font-weight: var(--ds-weight-bold); line-height: 1.08; letter-spacing: -.03em; }
+  .belofay-installation__intro > p:last-child { max-width: 820px; margin: 0; color: var(--ds-text-supporting); font-family: var(--ds-font-body),Arial,sans-serif; font-size: 19px; font-weight: var(--ds-weight-regular); line-height: 1.45; }
+  .belofay-installation__action, .belofay-installation__download { min-width: 0; min-height: 96px; display: grid; grid-template-columns: 44px minmax(0,1fr) auto; align-items: center; gap: var(--ds-space-md); padding: var(--ds-space-md); border: 1px solid var(--ds-control-border); border-radius: var(--ds-radius-card); color: inherit; text-decoration: none; transition: transform var(--motion-duration-fast) var(--motion-ease-standard), border-color var(--motion-duration-fast) var(--motion-ease-standard), background-color var(--motion-duration-base) var(--motion-ease-standard); }
+  .belofay-installation__action { background: var(--ds-surface-measurement); }
+  .belofay-installation__download { background: var(--ds-bg-page); }
+  .belofay-installation__action:not(.is-disabled):hover, .belofay-installation__download:not(.is-disabled):hover { border-color: var(--ds-action-primary); background: var(--ds-control-selected-bg); transform: translateY(var(--motion-hover-lift)); }
+  .belofay-installation__action:not(.is-disabled):active, .belofay-installation__download:not(.is-disabled):active { transform: scale(var(--motion-press-scale)); }
+  .belofay-installation__action .belofay-installation__icon, .belofay-installation__download .belofay-installation__icon { width: 44px; height: 44px; flex: 0 0 44px; }
+  .belofay-installation__action > span, .belofay-installation__download > span { min-width: 0; gap: 3px; }
+  .belofay-installation__action span, .belofay-installation__download span, .belofay-installation__glance-card span, .belofay-installation__requirements li span, .belofay-installation__steps li span, .belofay-installation__accordions summary span { display: grid; }
+  .belofay-installation small { color: var(--ds-text-supporting); font-size: var(--ds-text-sm); font-weight: var(--ds-weight-regular); line-height: 1.4; }
+  .belofay-installation__action > i { width: 10px; height: 10px; margin-left: auto; border-top: 2px solid; border-right: 2px solid; transform: rotate(45deg); }
+  .belofay-installation__download b { width: 44px; height: 44px; display: grid; place-items: center; margin-left: auto; border-radius: var(--ds-radius-control); color: var(--ds-text-on-primary); background: var(--ds-text-strong); font-size: 24px; flex-shrink: 0; }
+  .belofay-installation__mobile-video { display: none; }
+  .belofay-installation__glance h3 { margin-bottom: var(--ds-space-sm); font-size: var(--ds-text-lg); }
+  .belofay-installation__glance-grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: var(--ds-space-sm); }
+  .belofay-installation__glance-card { min-height: 84px; display: flex; align-items: center; gap: var(--ds-space-md); padding: var(--ds-space-md); border: 1px solid var(--ds-border-default); border-radius: var(--ds-radius-card); }
+  .belofay-installation__glance-card .belofay-installation__icon { width: 44px; height: 44px; padding: 8px; border-radius: 50%; background: var(--ds-bg-success); }
+  .belofay-installation__glance-card.tone-attention .belofay-installation__icon { background: var(--ds-bg-attention); }
+  .belofay-installation__dashboard { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: var(--ds-space-md); margin-top: var(--ds-space-md); }
+  .belofay-installation__card { min-width: 0; padding: var(--ds-space-md); border: 1px solid var(--ds-border-default); border-radius: var(--ds-radius-card); background: var(--ds-bg-page); }
+  .belofay-installation__card h3 { margin-bottom: 4px; font-size: var(--ds-text-lg); }
+  .belofay-installation__card > p { color: var(--ds-text-supporting); font-size: var(--ds-text-sm); }
+  .belofay-installation__card ul, .belofay-installation__steps ol { display: grid; gap: var(--ds-space-sm); margin: 0; padding: 0; list-style: none; }
+  .belofay-installation__included li { min-width: 0; display: grid; grid-template-columns: 24px minmax(0,1fr); gap: var(--ds-space-sm); align-items: center; }
+  .belofay-installation__included li > span { width: 24px; height: 24px; display: grid; place-items: center; border-radius: 50%; color: var(--ds-text-on-primary); background: var(--ds-action-primary); }
+  .belofay-installation__product-image { height: 210px; margin-top: var(--ds-space-md); }
+  .belofay-installation__product-image img, .belofay-installation__product-image svg, .belofay-installation__planning > div img, .belofay-installation__planning > div svg { width: 100%; height: 100%; object-fit: contain; }
+  .belofay-installation__requirements li { display: flex; gap: var(--ds-space-sm); align-items: center; }
+  .belofay-installation__requirements li .belofay-installation__icon { width: 36px; height: 36px; padding: 7px; border-radius: 50%; background: var(--ds-bg-surface); }
+  .belofay-installation__attention { display: grid; gap: 3px; margin-top: var(--ds-space-md); padding: var(--ds-space-md); border: 1px solid var(--ds-action-attention); border-radius: var(--ds-radius-control); color: var(--ds-action-attention-hover); background: var(--ds-bg-attention); text-decoration: none; }
+  .belofay-installation__attention b { margin-top: var(--ds-space-xs); text-decoration: underline; }
+  .belofay-installation__planning > div { height: 320px; overflow: hidden; border-radius: var(--ds-radius-control); }
+  .belofay-installation__planning > div img, .belofay-installation__planning > div svg { object-fit: cover; }
+  .belofay-installation__steps li { position: relative; display: grid; grid-template-columns: 42px minmax(0,1fr); gap: var(--ds-space-md); align-items: start; }
+  .belofay-installation__steps li > b { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 50%; color: var(--ds-text-on-primary); background: var(--ds-action-primary); font-size: var(--ds-text-md); line-height: 1; }
+  .belofay-installation__steps li > span { min-width: 0; gap: 3px; padding-top: 1px; }
+  .belofay-installation__tools-strip { display: flex; align-items: center; gap: clamp(18px,3vw,46px); margin-top: var(--ds-space-sm); padding: var(--ds-space-md); border: 1px solid var(--ds-border-default); border-radius: var(--ds-radius-card); overflow-x: auto; }
+  .belofay-installation__tools-strip > div { min-width: 210px; display: grid; gap: 3px; margin-right: auto; }
+  .belofay-installation__tools-strip > span { min-width: 70px; display: grid; justify-items: center; gap: 5px; text-align: center; }
+  .belofay-installation__tools-strip .belofay-installation__icon { width: 32px; height: 32px; }
+  .belofay-installation__reassurance { display: flex; align-items: center; gap: var(--ds-space-md); margin-top: var(--ds-space-sm); padding: var(--ds-space-md); border-radius: var(--ds-radius-card); background: var(--ds-bg-surface); }
+  .belofay-installation__reassurance .belofay-installation__icon { width: 42px; height: 42px; }
+  .belofay-installation__reassurance > span { min-width: 0; display: flex; align-items: baseline; flex-wrap: wrap; column-gap: var(--ds-space-xs); row-gap: 3px; }
+  .belofay-installation__reassurance strong { color: var(--ds-text-heading); font-family: var(--ds-font-heading),Arial,sans-serif; font-weight: var(--ds-weight-semibold); }
+  .belofay-installation__reassurance small { color: var(--ds-text-supporting); }
+  .belofay-installation__accordions { display: grid; grid-template-columns: 1fr 1fr; gap: var(--ds-space-sm); margin-top: var(--ds-space-md); }
+  .belofay-installation__accordions details { min-width: 0; overflow: clip; border: 1px solid var(--ds-border-default); border-radius: var(--ds-radius-card); background: var(--ds-bg-page); transition: border-color var(--motion-duration-base) var(--motion-ease-standard), background-color var(--motion-duration-base) var(--motion-ease-standard), box-shadow var(--motion-duration-base) var(--motion-ease-standard); }
+  .belofay-installation__accordions details[open] { grid-column: 1 / -1; border-color: color-mix(in srgb,var(--ds-action-primary),var(--ds-border-default) 45%); background: var(--ds-surface-expanded); box-shadow: 0 8px 24px rgb(20 35 58 / 6%); }
+  .belofay-installation__accordions summary { min-height: 74px; display: flex; align-items: center; gap: var(--ds-space-md); padding: var(--ds-space-md); cursor: pointer; list-style: none; transition: color var(--motion-duration-fast) var(--motion-ease-standard), background-color var(--motion-duration-fast) var(--motion-ease-standard), transform var(--motion-duration-fast) var(--motion-ease-standard); }
+  .belofay-installation summary::-webkit-details-marker { display: none; }
+  .belofay-installation__accordions summary:hover { color: var(--ds-action-primary-hover); background: color-mix(in srgb,var(--ds-control-selected-bg),transparent 45%); }
+  .belofay-installation__accordions summary:active { transform: scale(var(--motion-press-scale)); }
+  .belofay-installation__accordions summary .belofay-installation__icon { width: 40px; height: 40px; flex: 0 0 40px; }
+  .belofay-installation summary i { width: 10px; height: 10px; margin-left: auto; border-right: 2px solid; border-bottom: 2px solid; transform: rotate(45deg); transition: transform var(--motion-duration-base) var(--motion-ease-standard); }
+  .belofay-installation details[open] > summary i { transform: rotate(225deg); }
+  .belofay-installation__accordion-content { padding: 0 var(--ds-space-md) var(--ds-space-md); }
+  .belofay-installation__parts-grid, .belofay-installation__notes-grid, .belofay-installation__accessories { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: var(--ds-space-sm); }
+  .belofay-installation__parts-grid article, .belofay-installation__notes-grid article, .belofay-installation__accessories article { min-width: 0; padding: var(--ds-space-sm); border: 1px solid var(--ds-border-default); border-radius: var(--ds-radius-control); background: var(--ds-bg-page); }
+  .belofay-installation__parts-grid article > div, .belofay-installation__notes-grid article > div, .belofay-installation__accessories article > a { height: 180px; display: block; }
+  .belofay-installation__parts-grid img, .belofay-installation__parts-grid svg, .belofay-installation__notes-grid img, .belofay-installation__notes-grid svg, .belofay-installation__accessories img, .belofay-installation__accessories svg, .belofay-installation__panel-image img, .belofay-installation__panel-image svg { width: 100%; height: 100%; object-fit: contain; }
+  .belofay-installation__parts-grid small { display: block; color: var(--ds-action-primary-hover); }
+  .belofay-installation__panel-list { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: var(--ds-space-sm); }
+  .belofay-installation__panel-list article { min-width: 0; display: grid; grid-template-columns: 42px minmax(0,1fr); align-items: start; gap: var(--ds-space-md); padding: var(--ds-space-md); border: 1px solid var(--ds-border-default); border-radius: var(--ds-radius-control); background: var(--ds-bg-page); }
+  .belofay-installation__panel-list .belofay-installation__icon { width: 42px; height: 42px; }
+  .belofay-installation__panel-list article > span { min-width: 0; display: grid; gap: 4px; }
+  .belofay-installation__panel-list article strong { color: var(--ds-text-heading); font-size: var(--ds-text-md); font-weight: var(--ds-weight-semibold); line-height: 1.25; }
+  .belofay-installation__panel-list article small { color: var(--ds-text-supporting); font-size: var(--ds-text-sm); line-height: 1.4; }
+  .belofay-installation__panel-image { height: min(65vw,620px); }
+  .belofay-installation__notes-grid article { position: relative; }
+  .belofay-installation__notes-grid article > b { width: 32px; height: 32px; display: grid; place-items: center; float: left; margin-right: 8px; border-radius: 50%; color: white; background: var(--ds-action-primary); }
+  .belofay-installation__notes-grid article p { margin: var(--ds-space-sm) 0 0; color: var(--ds-text-supporting); }
+  .belofay-installation__accessories article { display: grid; gap: var(--ds-space-xs); }
+  .belofay-installation__accessories button { min-height: 44px; border: 1px solid var(--ds-action-primary); border-radius: var(--ds-radius-control); color: var(--ds-text-on-primary); background: var(--ds-action-primary); font: 600 var(--ds-text-md)/1 var(--ds-font-body); cursor: pointer; transition: transform var(--motion-duration-fast) var(--motion-ease-standard), background-color var(--motion-duration-fast) var(--motion-ease-standard); }
+  .belofay-installation__accessories button:hover { background: var(--ds-action-primary-hover); transform: translateY(var(--motion-hover-lift)); }
+  .belofay-installation__accessories button:active { transform: scale(var(--motion-press-scale)); }
+  .belofay-installation button:focus-visible, .belofay-installation a:focus-visible, .belofay-installation summary:focus-visible { outline: 3px solid color-mix(in srgb,var(--ds-action-primary),transparent 55%); outline-offset: 2px; }
+  @supports selector(details::details-content) { .belofay-installation__accordions details::details-content { block-size: 0; opacity: 0; overflow: clip; transition: block-size var(--motion-duration-base) var(--motion-ease-emphasized), opacity var(--motion-duration-fast) var(--motion-ease-standard), content-visibility var(--motion-duration-base) allow-discrete; } .belofay-installation__accordions details[open]::details-content { block-size: auto; opacity: 1; } }
+  @media (max-width: 1240px) and (min-width: 1025px) { .belofay-installation__header { grid-template-columns: 1fr 1fr; } .belofay-installation__intro { grid-column: 1 / -1; } .belofay-installation__glance-grid { grid-template-columns: 1fr 1fr; } .belofay-installation__dashboard { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 1024px) {
+    .belofay-installation { scroll-margin-top: 104px; }
+    .belofay-installation__shell { padding: 6px var(--ds-space-md); }
+    .belofay-installation__outer { overflow: clip; border: 1px solid var(--ds-control-border); border-radius: var(--ds-radius-card); background: var(--ds-bg-page); transition: border-color var(--motion-duration-base) var(--motion-ease-standard), background-color var(--motion-duration-base) var(--motion-ease-standard); }
+    .belofay-installation__outer[open] { border-color: color-mix(in srgb,var(--ds-action-primary),var(--ds-border-default) 55%); background: color-mix(in srgb,var(--ds-bg-surface),var(--ds-bg-page) 65%); }
+    .belofay-installation__outer-summary { min-height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 16px; cursor: pointer; list-style: none; transition: color var(--motion-duration-fast) var(--motion-ease-standard), background-color var(--motion-duration-fast) var(--motion-ease-standard), transform var(--motion-duration-fast) var(--motion-ease-standard); }
+    .belofay-installation__outer-summary:hover { color: var(--ds-action-primary-hover); background: var(--ds-control-selected-bg); }
+    .belofay-installation__outer-summary:active { transform: scale(var(--motion-press-scale)); }
+    .belofay-installation__outer-summary span { display: grid; }
+    .belofay-installation__outer-summary strong { color: var(--ds-text-heading); font-family: var(--ds-font-heading),Arial,sans-serif; font-size: 19px; font-weight: var(--ds-weight-semibold); line-height: 1.2; }
+    .belofay-installation__outer-summary small { margin-top: 2px; color: var(--ds-text-supporting); font-family: var(--ds-font-body),Arial,sans-serif; font-size: var(--ds-text-sm); font-weight: var(--ds-weight-regular); line-height: 1.25; }
+    .belofay-installation__body { padding: var(--ds-space-sm); border-top: 1px solid var(--ds-border-default); }
+    .belofay-installation__header { grid-template-columns: 1fr; gap: var(--ds-space-md); margin-bottom: var(--ds-space-md); }
+    .belofay-installation__intro h2 { font-size: clamp(28px,6vw,34px); }
+    .belofay-installation__intro > p:last-child { font-size: var(--ds-text-md); }
+    .belofay-installation__mobile-video { display: grid; grid-template-columns: 1.1fr .9fr; align-items: center; gap: var(--ds-space-md); margin-bottom: var(--ds-space-md); padding: var(--ds-space-sm); border: 1px solid var(--ds-border-default); border-radius: var(--ds-radius-card); background: var(--ds-bg-page); }
+    .belofay-installation__video-image { height: 220px; overflow: hidden; border-radius: var(--ds-radius-control); }
+    .belofay-installation__video-image img, .belofay-installation__video-image svg { width: 100%; height: 100%; object-fit: cover; }
+    .belofay-installation__mobile-video > div:last-child { display: grid; gap: 5px; }
+    .belofay-installation__mobile-video > div:last-child strong { font-size: var(--ds-text-lg); }
+    .belofay-installation__glance-grid { grid-template-columns: 1fr 1fr; }
+    .belofay-installation__dashboard { grid-template-columns: 1fr; }
+    .belofay-installation__included, .belofay-installation__requirements, .belofay-installation__planning, .belofay-installation__tools-strip, .belofay-installation__reassurance { display: none; }
+    .belofay-installation__steps ol { gap: var(--ds-space-md); }
+    .belofay-installation__steps li { grid-template-columns: 38px minmax(0,1fr); gap: 12px; }
+    .belofay-installation__steps li > b { width: 38px; height: 38px; }
+    .belofay-installation__accordions { grid-template-columns: 1fr; }
+    .belofay-installation__accordions details[open] { grid-column: auto; }
+    .belofay-installation__parts-grid, .belofay-installation__notes-grid, .belofay-installation__accessories, .belofay-installation__panel-list { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 560px) { .belofay-installation__mobile-video { grid-template-columns: 1fr; } .belofay-installation__video-image { height: 240px; } .belofay-installation__glance-grid, .belofay-installation__parts-grid, .belofay-installation__notes-grid, .belofay-installation__accessories, .belofay-installation__panel-list { grid-template-columns: 1fr; } }
+  @media (prefers-reduced-motion: reduce) { .belofay-installation *, .belofay-installation *::before, .belofay-installation *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+{% endstylesheet %}
+
+{% javascript %}
+  (() => {
+    const breakpoint = window.matchMedia('(min-width: 1025px)');
+    const sync = root => root.querySelectorAll('[data-installation-outer]').forEach(item => { item.open = breakpoint.matches; });
+    sync(document);
+    breakpoint.addEventListener('change', () => sync(document));
+    document.addEventListener('shopify:section:load', event => sync(event.target));
+    document.addEventListener('click', event => {
+      const link = event.target.closest('[data-product-nav-link="installation"]');
+      if (!link || breakpoint.matches) return;
+      const outer = document.querySelector('#installation [data-installation-outer]');
+      if (outer) outer.open = true;
+    });
+  })();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name":"Belofay installation","tag":"section","class":"section-belofay-installation","max_blocks":40,
+  "settings":[
+    {"type":"text","id":"eyebrow","label":"Eyebrow","default":"BELOFAY"},{"type":"text","id":"heading","label":"Heading","default":"Installation"},{"type":"text","id":"mobile_summary","label":"Mobile summary","default":"Fitting information, box contents and setup guidance."},{"type":"textarea","id":"intro","label":"Introduction","default":"Everything you need to know to fit the Crawley 600mm vanity unit with confidence."},
+    {"type":"text","id":"glance_heading","label":"At a glance heading","default":"Installation at a glance"},{"type":"text","id":"included_heading","label":"Included heading","default":"What’s included"},{"type":"text","id":"included_text","label":"Included text","default":"Everything you receive with your vanity unit."},{"type":"image_picker","id":"included_image","label":"Included product image"},{"type":"text","id":"included_alt","label":"Included image alt","default":"Crawley vanity and included fittings"},{"type":"text","id":"included_label","label":"Included label","default":"Included"},
+    {"type":"text","id":"required_heading","label":"Required heading","default":"You’ll need"},{"type":"text","id":"required_text","label":"Required text","default":"Additional items required for installation."},{"type":"text","id":"tap_heading","label":"Tap warning heading","default":"Tap not included"},{"type":"text","id":"tap_text","label":"Tap warning text","default":"Choose a compatible single-hole basin mixer."},{"type":"text","id":"tap_label","label":"Tap link label","default":"Shop matching taps"},{"type":"url","id":"tap_link","label":"Tap link"},
+    {"type":"text","id":"planning_heading","label":"Planning heading","default":"Plan your plumbing space"},{"type":"text","id":"planning_text","label":"Planning text","default":"Keep the rear area clear for waste and pipework."},{"type":"image_picker","id":"planning_image","label":"Plumbing planning image"},{"type":"text","id":"planning_alt","label":"Planning image alt","default":"Plumbing clearance inside vanity cabinet"},
+    {"type":"text","id":"steps_heading","label":"Steps heading","default":"How installation works"},{"type":"text","id":"steps_text","label":"Steps text","default":"Follow these key steps for a hassle-free installation."},{"type":"text","id":"tools_heading","label":"Tools heading","default":"Typical tools"},{"type":"text","id":"tools_text","label":"Tools text","default":"Common tools you’ll need (not included)."},{"type":"text","id":"reassurance_heading","label":"Reassurance heading","default":"Not confident with plumbing?"},{"type":"text","id":"reassurance_text","label":"Reassurance text","default":"Use a qualified installer for water and waste connections."},
+    {"type":"text","id":"parts_heading","label":"Parts panel heading","default":"Included parts & fittings"},{"type":"text","id":"parts_summary","label":"Parts panel summary","default":"Everything in the box, itemized."},{"type":"text","id":"tools_panel_heading","label":"Tools panel heading","default":"Tools & materials you’ll need"},{"type":"text","id":"tools_panel_summary","label":"Tools panel summary","default":"Basic tools and materials for installation."},{"type":"text","id":"notes_heading","label":"Notes panel heading","default":"Expert installation notes"},{"type":"text","id":"notes_summary","label":"Notes panel summary","default":"Helpful tips for a smooth installation."},{"type":"text","id":"accessories_heading","label":"Accessories panel heading","default":"Compatible accessories"},{"type":"text","id":"accessories_summary","label":"Accessories panel summary","default":"Matching taps, traps and more."},{"type":"text","id":"add_to_cart_label","label":"Add to cart label","default":"Add to cart"}
+  ],
+  "blocks":[
+    {"type":"link_card","name":"Header link card","limit":2,"settings":[{"type":"select","id":"style","label":"Style","options":[{"value":"action","label":"Green guide"},{"value":"download","label":"PDF download"}],"default":"action"},{"type":"select","id":"icon","label":"Icon","options":[{"value":"screwdriver","label":"Screwdriver"},{"value":"document","label":"Document"}],"default":"screwdriver"},{"type":"text","id":"title","label":"Title","default":"Straightforward installation"},{"type":"text","id":"text","label":"Text","default":"Simple preparation now helps you avoid delays later."},{"type":"url","id":"link","label":"Link"}]},
+    {"type":"video_card","name":"Installation video","limit":1,"settings":[{"type":"image_picker","id":"image","label":"Cover image"},{"type":"text","id":"alt","label":"Image alt text","default":"Installing the vanity basin"},{"type":"text","id":"title","label":"Title","default":"Watch installation video"},{"type":"text","id":"text","label":"Text","default":"Step-by-step guide · Approx. 3 min"},{"type":"url","id":"link","label":"Video link"},{"type":"text","id":"label","label":"Link label","default":"Watch guide"}]},
+    {"type":"glance","name":"At a glance","limit":4,"settings":[{"type":"select","id":"icon","label":"Icon","options":[{"value":"package","label":"Package"},{"value":"screwdriver","label":"Screwdriver"},{"value":"level","label":"Spirit level"},{"value":"document","label":"Document"},{"value":"shield","label":"Shield"}],"default":"package"},{"type":"select","id":"tone","label":"Tone","options":[{"value":"success","label":"Success"},{"value":"neutral","label":"Neutral"},{"value":"attention","label":"Attention"}],"default":"success"},{"type":"text","id":"title","label":"Title","default":"Floor-standing"},{"type":"text","id":"text","label":"Text","default":"Sits on the floor, no wall mounting required."}]},
+    {"type":"included","name":"Included item","limit":8,"settings":[{"type":"text","id":"title","label":"Title","default":"Vanity cabinet"},{"type":"image_picker","id":"image","label":"Image"}]},
+    {"type":"requirement","name":"Required item","limit":8,"settings":[{"type":"select","id":"icon","label":"Icon","options":[{"value":"drill","label":"Drill"},{"value":"screwdriver","label":"Screwdriver"},{"value":"sealant","label":"Sealant"},{"value":"level","label":"Spirit level"}],"default":"screwdriver"},{"type":"text","id":"title","label":"Title","default":"Basic tools"},{"type":"text","id":"text","label":"Text","default":"See the tools list below."}]},
+    {"type":"step","name":"Installation step","limit":8,"settings":[{"type":"text","id":"title","label":"Title","default":"Assemble cabinet"},{"type":"textarea","id":"text","label":"Text","default":"Follow the included instructions to build your cabinet."}]},
+    {"type":"tool","name":"Tool or material","limit":9,"settings":[{"type":"select","id":"icon","label":"Icon","options":[{"value":"drill","label":"Drill"},{"value":"screwdriver","label":"Screwdriver"},{"value":"sealant","label":"Sealant"},{"value":"level","label":"Spirit level"}],"default":"screwdriver"},{"type":"text","id":"title","label":"Title","default":"Screwdriver"},{"type":"text","id":"text","label":"Text","default":"For assembling and fitting components."}]},
+    {"type":"note","name":"Expert note","limit":8,"settings":[{"type":"text","id":"title","label":"Title","default":"Level before fitting"},{"type":"image_picker","id":"image","label":"Image"},{"type":"textarea","id":"text","label":"Text","default":"Use a spirit level and adjust the position before sealing or connecting plumbing."}]},
+    {"type":"accessory","name":"Compatible accessory","limit":6,"settings":[{"type":"product","id":"product","label":"Product"},{"type":"text","id":"placeholder_title","label":"Placeholder title","default":"Choose an accessory product"}]}
+  ],
+  "presets":[{"name":"Belofay installation"}]
+}
+{% endschema %}

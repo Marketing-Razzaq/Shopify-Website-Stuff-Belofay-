@@ -7,6 +7,7 @@ if (!customElements.get('belofay-product')) {
       this.updateSelectedVariant();
       requestAnimationFrame(() => this.updateSelectedVariant());
       this.syncStickyButton();
+      this.observeMainPurchaseActions();
     }
 
     onClick(event) {
@@ -18,6 +19,12 @@ if (!customElements.get('belofay-product')) {
       if (addButton) this.addSelectedVariant(addButton, false);
       const buyButton = event.target.closest('[data-buy-now]');
       if (buyButton) this.addSelectedVariant(buyButton, true);
+      const upsellAdd = event.target.closest('[data-upsell-add]');
+      if (upsellAdd) this.changeUpsellQuantity(upsellAdd.closest('[data-upsell-card]'), 1);
+      const upsellIncrease = event.target.closest('[data-upsell-increase]');
+      if (upsellIncrease) this.changeUpsellQuantity(upsellIncrease.closest('[data-upsell-card]'), 1);
+      const upsellDecrease = event.target.closest('[data-upsell-decrease]');
+      if (upsellDecrease) this.changeUpsellQuantity(upsellDecrease.closest('[data-upsell-card]'), -1);
     }
 
     onOptionChange(event) {
@@ -121,6 +128,57 @@ if (!customElements.get('belofay-product')) {
       }
     }
 
+    async changeUpsellQuantity(card, delta) {
+      if (!card || card.dataset.pending === 'true') return;
+      const variantId = Number(card.dataset.upsellVariantId);
+      const currentQuantity = Number(card.dataset.upsellQuantity || 0);
+      const nextQuantity = Math.max(0, currentQuantity + delta);
+      if (!variantId || nextQuantity === currentQuantity) return;
+      const status = card.querySelector('[data-upsell-status]');
+      const controls = card.querySelectorAll('button');
+      card.dataset.pending = 'true';
+      controls.forEach((button) => { button.disabled = true; });
+      if (status) status.hidden = true;
+      try {
+        const cart = document.querySelector('cart-notification') || document.querySelector('cart-drawer');
+        const adding = currentQuantity === 0 && nextQuantity > 0;
+        const payload = adding ? { items: [{ id: variantId, quantity: nextQuantity }] } : { id: variantId, quantity: nextQuantity };
+        if (cart?.getSectionsToRender) {
+          payload.sections = cart.getSectionsToRender().map((section) => section.id);
+          payload.sections_url = window.location.pathname;
+        }
+        const endpoint = adding ? 'cart/add.js' : 'cart/change.js';
+        const response = await fetch(`${window.Shopify?.routes?.root || '/'}${endpoint}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.description || result.message || 'Unable to update this item.');
+        this.updateUpsellCard(card, nextQuantity);
+        if (cart?.renderContents) cart.renderContents(result);
+        document.dispatchEvent(new CustomEvent('belofay:cart-added', { detail: result }));
+      } catch (error) {
+        if (status) {
+          status.textContent = error.message;
+          status.hidden = false;
+        }
+      } finally {
+        card.dataset.pending = 'false';
+        controls.forEach((button) => { button.disabled = false; });
+      }
+    }
+
+    updateUpsellCard(card, quantity) {
+      card.dataset.upsellQuantity = String(quantity);
+      const add = card.querySelector('[data-upsell-add]');
+      const quantityControl = card.querySelector('[data-upsell-quantity-control]');
+      const value = card.querySelector('[data-upsell-quantity-value]');
+      if (add) add.hidden = quantity > 0;
+      if (quantityControl) quantityControl.hidden = quantity === 0;
+      if (value) value.textContent = String(quantity);
+    }
+
     validateRequiredOptions() {
       const invalidGroups = [...this.querySelectorAll('[data-option-position]')].filter((group) => {
         const invalid = !group.querySelector('[data-belofay-option]:checked');
@@ -158,6 +216,28 @@ if (!customElements.get('belofay-product')) {
       if (!sticky || !main) return;
       sticky.disabled = main.disabled;
     }
+
+    observeMainPurchaseActions() {
+      const purchase = this.querySelector('[data-belofay-purchase]');
+      const productInfo = this.querySelector('.belofay-pdp-hero__info');
+      const sticky = this.querySelector('.belofay-pdp-sticky');
+      if (!purchase || !sticky || !('IntersectionObserver' in window)) return;
+      if (window.matchMedia('(max-width: 1366px)').matches) {
+        sticky.classList.add('is-visible');
+        sticky.setAttribute('aria-hidden', 'false');
+        return;
+      }
+      const trigger = purchase.offsetParent === null ? productInfo : purchase;
+      if (!trigger) return;
+      this.purchaseObserver?.disconnect();
+      this.purchaseObserver = new IntersectionObserver(([entry]) => {
+        const hasScrolledPastPurchase = !entry.isIntersecting && entry.boundingClientRect.bottom < 0;
+        sticky.classList.toggle('is-visible', hasScrolledPastPurchase);
+        sticky.setAttribute('aria-hidden', String(!hasScrolledPastPurchase));
+      }, { threshold: 0.01 });
+      this.purchaseObserver.observe(trigger);
+    }
+
   }
   customElements.define('belofay-product', BelofayProduct);
 }

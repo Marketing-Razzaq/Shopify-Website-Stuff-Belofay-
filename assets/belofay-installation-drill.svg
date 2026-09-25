@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 64 64" role="img" aria-label="drill">
+  
+<path d="M14 22h18a4 4 0 0 1 4 4v6a4 4 0 0 1-4 4H14a4 4 0 0 1-4-4v-6a4 4 0 0 1 4-4z" stroke="#1E2745" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+<path d="M36 24h7l4 4v2l-4 4h-7" stroke="#1E2745" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+<line x1="47" y1="29" x2="56" y2="29" stroke="#1E2745" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+<path d="M18 36h9v18h-9a2 2 0 0 1-2-2V38a2 2 0 0 1 2-2z" stroke="#1E2745" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+<line x1="20" y1="29" x2="28" y2="29" stroke="#1E2745" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+<line x1="23.5" y1="36" x2="23.5" y2="43" stroke="#1E2745" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+</svg>
+

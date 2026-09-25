@@ -1,0 +1,220 @@
+<section id="delivery-returns" class="belofay-delivery" data-delivery-section>
+  <div class="belofay-delivery__shell">
+    <details class="belofay-delivery__outer" data-delivery-outer open>
+      <summary class="belofay-delivery__outer-summary">
+        <span><strong>{{ section.settings.heading }}</strong><small>{{ section.settings.mobile_summary }}</small></span><i aria-hidden="true"></i>
+      </summary>
+      <div class="belofay-delivery__body">
+        <header class="belofay-delivery__header">
+          <div><p class="belofay-delivery__eyebrow">{{ section.settings.eyebrow }}</p><h2>{{ section.settings.heading }}</h2><p>{{ section.settings.intro }}</p></div>
+          <aside>{% render 'belofay-delivery-icon', name: 'truck' %}<span>{{ section.settings.reassurance }}</span></aside>
+        </header>
+
+        <div class="belofay-delivery__benefits">
+          {%- for block in section.blocks -%}{%- if block.type == 'benefit' -%}
+            <article class="{% unless block.settings.show_mobile %}is-desktop-only{% endunless %}" {{ block.shopify_attributes }}><span>{% render 'belofay-delivery-icon', name: block.settings.icon %}</span><div><strong>{{ block.settings.title }}</strong><small>{{ block.settings.text }}</small>{% if block.settings.link != blank %}<a href="{{ block.settings.link }}">{{ block.settings.link_label }} →</a>{% endif %}</div></article>
+          {%- endif -%}{%- endfor -%}
+        </div>
+
+        <div class="belofay-delivery__main">
+          <div class="belofay-delivery__journey-card">
+            <div class="belofay-delivery__journey-head"><div><h3>{{ section.settings.delivery_heading }}</h3><p>{{ section.settings.delivery_text }}</p></div><div class="belofay-delivery__estimate">{% render 'belofay-delivery-icon', name: 'calendar' %}<span><small>{{ section.settings.estimate_label }}</small><strong data-delivery-estimate data-min-days="{{ section.settings.estimate_min_days }}" data-max-days="{{ section.settings.estimate_max_days }}" data-skip-weekends="{{ section.settings.skip_weekends }}">{{ section.settings.estimate_text }}</strong><b>{{ section.settings.delivery_badge }}</b></span></div></div>
+            <ol class="belofay-delivery__timeline">
+              {%- assign step_number = 0 -%}{%- for block in section.blocks -%}{%- if block.type == 'delivery_step' -%}{%- assign step_number = step_number | plus: 1 -%}
+                <li class="{% unless block.settings.show_mobile %}is-desktop-only{% endunless %}" {{ block.shopify_attributes }}><b>{{ step_number }}</b><span><strong class="desktop-title">{{ block.settings.title }}</strong><strong class="mobile-title">{{ block.settings.mobile_title | default: block.settings.title }}</strong><small>{{ block.settings.text }}</small></span></li>
+              {%- endif -%}{%- endfor -%}
+            </ol>
+            <div class="belofay-delivery__parcels">
+              <div class="belofay-delivery__parcel-images"><figure>{% if section.settings.parcel_image_one != blank %}{{ section.settings.parcel_image_one | image_url: width: 500 | image_tag: widths: '240,360,500', loading: 'lazy', alt: section.settings.parcel_image_one_alt }}{% else %}{{ 'product-1' | placeholder_svg_tag }}{% endif %}<figcaption>{{ section.settings.parcel_image_one_label }}</figcaption></figure><b aria-hidden="true">+</b><figure>{% if section.settings.parcel_image_two != blank %}{{ section.settings.parcel_image_two | image_url: width: 500 | image_tag: widths: '240,360,500', loading: 'lazy', alt: section.settings.parcel_image_two_alt }}{% else %}{{ 'product-2' | placeholder_svg_tag }}{% endif %}<figcaption>{{ section.settings.parcel_image_two_label }}</figcaption></figure></div>
+              <div><strong>{{ section.settings.parcel_heading }}</strong><p>{{ section.settings.parcel_text }}</p><small>ⓘ {{ section.settings.parcel_note }}</small></div>
+            </div>
+          </div>
+
+          <div class="belofay-delivery__policies">
+            <article class="belofay-delivery__returns"><span>{% render 'belofay-delivery-icon', name: 'return' %}<b>{{ section.settings.returns_badge }}</b></span><div><h3>{{ section.settings.returns_heading }}</h3><p>{{ section.settings.returns_text }}</p><ul>{%- for block in section.blocks -%}{%- if block.type == 'return_item' -%}<li {{ block.shopify_attributes }}>✓ {{ block.settings.text }}</li>{%- endif -%}{%- endfor -%}</ul><a{% if section.settings.returns_link != blank %} href="{{ section.settings.returns_link }}"{% else %} aria-disabled="true"{% endif %}>{{ section.settings.returns_link_label }} →</a><small>{{ section.settings.rights_note }}</small></div></article>
+            <article class="belofay-delivery__damage"><span>{% render 'belofay-delivery-icon', name: 'damage' %}</span><div><h3>{{ section.settings.damage_heading }}</h3><p>{{ section.settings.damage_text }}</p><ol>{%- assign damage_number = 0 -%}{%- for block in section.blocks -%}{%- if block.type == 'damage_step' -%}{%- assign damage_number = damage_number | plus: 1 -%}<li {{ block.shopify_attributes }}>{% render 'belofay-delivery-icon', name: block.settings.icon %}<span><strong>{{ damage_number }}. {{ block.settings.title }}</strong><small>{{ block.settings.text }}</small></span></li>{%- endif -%}{%- endfor -%}</ol><a{% if section.settings.damage_link != blank %} href="{{ section.settings.damage_link }}"{% else %} aria-disabled="true"{% endif %}>{{ section.settings.damage_link_label }} →</a></div></article>
+          </div>
+        </div>
+
+        <aside class="belofay-delivery__support"><div><h3>{{ section.settings.support_heading }}</h3><p>{{ section.settings.support_text }}</p></div><div>{%- for block in section.blocks -%}{%- if block.type == 'support_item' -%}<article {{ block.shopify_attributes }}><span>{% render 'belofay-delivery-icon', name: block.settings.icon %}</span><div><strong>{{ block.settings.title }}</strong><small>{{ block.settings.text }}</small></div></article>{%- endif -%}{%- endfor -%}</div></aside>
+
+        <div class="belofay-delivery__accordions">
+          {%- for block in section.blocks -%}{%- if block.type == 'accordion' -%}<details name="delivery-{{ section.id }}" {{ block.shopify_attributes }}><summary>{% render 'belofay-delivery-icon', name: block.settings.icon %}<strong>{{ block.settings.title }}</strong><small>{{ block.settings.summary }}</small><i aria-hidden="true"></i></summary><div class="belofay-delivery__accordion-content">{{ block.settings.content }}</div></details>{%- endif -%}{%- endfor -%}
+        </div>
+      </div>
+    </details>
+  </div>
+</section>
+
+{% stylesheet %}
+  .belofay-delivery { scroll-margin-top: 118px; color: var(--ds-text-strong); background: var(--ds-bg-page); font-family: var(--ds-font-body),Arial,sans-serif; }
+  .belofay-delivery *, .belofay-delivery *::before, .belofay-delivery *::after { box-sizing: border-box; }
+  .belofay-delivery__shell { max-width: 1600px; margin: 0 auto; padding: var(--ds-space-2xl) var(--ds-space-xl) var(--ds-space-section); }
+  .belofay-delivery h2, .belofay-delivery h3, .belofay-delivery p { margin-top: 0; }
+  .belofay-delivery__icon { width: 40px; height: 40px; display: block; fill: none; stroke: currentColor; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+  .belofay-delivery__icon--asset { display: grid; place-items: center; fill: currentColor; stroke: none; }
+  .belofay-delivery__icon--asset svg { width: 100%; height: 100%; display: block; }
+  .belofay-delivery__icon--asset path { fill: currentColor; }
+  .belofay-delivery__outer-summary { display: none; }
+  .belofay-delivery__header { display: flex; justify-content: space-between; align-items: end; gap: var(--ds-space-xl); margin-bottom: var(--ds-space-lg); }
+  .belofay-delivery__eyebrow { margin-bottom: 8px; color: var(--ds-text-supporting); font-size: var(--ds-text-sm); font-weight: var(--ds-weight-semibold); letter-spacing: .2em; text-transform: uppercase; }
+  .belofay-delivery__header h2 { margin-bottom: 10px; color: var(--ds-text-heading); font-family: var(--ds-font-heading),Arial,sans-serif; font-size: clamp(30px,2.25vw,42px); font-weight: var(--ds-weight-bold); line-height: 1.08; letter-spacing: -.03em; }
+  .belofay-delivery__header > div > p:last-child { max-width: 820px; margin: 0; color: var(--ds-text-supporting); font-family: var(--ds-font-body),Arial,sans-serif; font-size: 19px; font-weight: var(--ds-weight-regular); line-height: 1.45; }
+  .belofay-delivery__header aside { display: flex; align-items: center; gap: var(--ds-space-md); max-width: 300px; color: var(--ds-text-heading); }
+  .belofay-delivery__header aside::before { width: 28px; height: 1px; content: ''; background: var(--ds-border-default); }
+  .belofay-delivery__benefits { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: var(--ds-space-sm); }
+  .belofay-delivery__benefits article { min-width: 0; min-height: 128px; display: grid; grid-template-columns: 64px minmax(0,1fr); align-items: center; gap: var(--ds-space-md); padding: var(--ds-space-md); border: 1px solid var(--ds-border-default); border-radius: var(--ds-radius-card); background: var(--ds-bg-page); }
+  .belofay-delivery__benefits article > span, .belofay-delivery__support article > span { width: 60px; height: 60px; display: grid; place-items: center; border-radius: 50%; color: var(--ds-text-heading); background: var(--ds-bg-success); }
+  .belofay-delivery__benefits article div { min-width: 0; display: grid; gap: 4px; }
+  .belofay-delivery__benefits strong { color: var(--ds-text-heading); font-size: var(--ds-text-md); }
+  .belofay-delivery small { color: var(--ds-text-supporting); font-size: var(--ds-text-sm); line-height: 1.4; }
+  .belofay-delivery a { color: var(--ds-action-primary-hover); font-weight: var(--ds-weight-semibold); text-underline-offset: 3px; }
+  .belofay-delivery__main { display: grid; grid-template-columns: minmax(0,1.18fr) minmax(560px,1fr); gap: var(--ds-space-md); margin-top: var(--ds-space-md); }
+  .belofay-delivery__journey-card, .belofay-delivery__policies > article, .belofay-delivery__support { min-width: 0; padding: var(--ds-space-lg); border: 1px solid var(--ds-border-default); border-radius: var(--ds-radius-card); background: var(--ds-bg-page); }
+  .belofay-delivery__journey-head { display: flex; justify-content: space-between; gap: var(--ds-space-lg); }
+  .belofay-delivery h3 { margin-bottom: 5px; color: var(--ds-text-heading); font-size: var(--ds-text-xl); line-height: 1.15; }
+  .belofay-delivery__journey-head p { margin-bottom: 0; color: var(--ds-text-supporting); font-size: var(--ds-text-md); }
+  .belofay-delivery__estimate { display: grid; grid-template-columns: 38px minmax(0,1fr); gap: var(--ds-space-sm); }
+  .belofay-delivery__estimate .belofay-delivery__icon { width: 34px; height: 34px; }
+  .belofay-delivery__estimate span { display: grid; }
+  .belofay-delivery__estimate strong { color: var(--ds-text-heading); font-size: var(--ds-text-lg); }
+  .belofay-delivery__estimate b { margin-top: 8px; color: var(--ds-action-primary-hover); font-size: var(--ds-text-md); }
+  .belofay-delivery__timeline { position: relative; display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: var(--ds-space-md); margin: var(--ds-space-xl) 0; padding: 0; list-style: none; }
+  .belofay-delivery__timeline::before { position: absolute; top: 20px; right: 10%; left: 10%; height: 1px; content: ''; background: var(--ds-border-default); }
+  .belofay-delivery__timeline li { position: relative; min-width: 0; display: grid; justify-items: start; gap: 7px; }
+  .belofay-delivery__timeline li > b { z-index: 1; width: 42px; height: 42px; display: grid; place-items: center; border: 5px solid var(--ds-bg-success); border-radius: 50%; color: var(--ds-text-on-primary); background: var(--ds-action-primary); }
+  .belofay-delivery__timeline li > span { display: grid; gap: 4px; }
+  .belofay-delivery__timeline strong { color: var(--ds-text-heading); font-size: var(--ds-text-md); }
+  .belofay-delivery__timeline .mobile-title { display: none; }
+  .belofay-delivery__parcels { display: grid; grid-template-columns: 1fr 1.2fr; align-items: center; gap: var(--ds-space-lg); padding-top: var(--ds-space-lg); border-top: 1px solid var(--ds-border-default); }
+  .belofay-delivery__parcel-images { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: var(--ds-space-sm); }
+  .belofay-delivery__parcel-images figure { min-width: 0; margin: 0; text-align: center; }
+  .belofay-delivery__parcel-images figure > img, .belofay-delivery__parcel-images figure > svg { width: 100%; height: 135px; object-fit: contain; }
+  .belofay-delivery__parcel-images figcaption { color: var(--ds-text-supporting); font-size: var(--ds-text-xs); }
+  .belofay-delivery__parcels > div:last-child strong { color: var(--ds-text-heading); }
+  .belofay-delivery__parcels p { margin: 10px 0; color: var(--ds-text-supporting); }
+  .belofay-delivery__policies { min-width: 0; display: grid; gap: var(--ds-space-sm); container-type: inline-size; }
+  .belofay-delivery__policies > article { display: grid; grid-template-columns: 88px minmax(0,1fr); gap: var(--ds-space-md); }
+  .belofay-delivery__policies > article > span { display: grid; place-items: center; align-content: center; gap: 6px; border-right: 1px solid var(--ds-border-default); }
+  .belofay-delivery__returns { background: var(--ds-bg-attention) !important; border-color: color-mix(in srgb,var(--ds-action-attention),transparent 65%) !important; }
+  .belofay-delivery__damage { background: var(--ds-bg-danger-soft) !important; border-color: var(--ds-border-danger-soft) !important; }
+  .belofay-delivery__policies ul { display: grid; gap: 6px; margin: var(--ds-space-md) 0; padding: 0; list-style: none; }
+  .belofay-delivery__policies li { color: var(--ds-text-strong); font-size: var(--ds-text-sm); }
+  .belofay-delivery__returns li { color: var(--ds-action-primary-hover); }
+  .belofay-delivery__policies a, .belofay-delivery__damage a { min-height: 44px; display: flex; align-items: center; justify-content: center; margin-top: var(--ds-space-md); padding: 10px 14px; border: 1px solid currentColor; border-radius: var(--ds-radius-control); background: var(--ds-bg-page); text-decoration: none; transition: transform var(--motion-duration-fast) var(--motion-ease-standard), background-color var(--motion-duration-fast) var(--motion-ease-standard); }
+  .belofay-delivery__policies a:hover { background: var(--ds-control-selected-bg); transform: translateY(var(--motion-hover-lift)); }
+  .belofay-delivery__damage ol { display: grid; grid-template-columns: repeat(3,minmax(130px,1fr)); gap: var(--ds-space-sm); margin: var(--ds-space-md) 0; padding: 0; list-style: none; }
+  .belofay-delivery__damage li { min-width: 0; display: grid; grid-template-columns: 36px minmax(0,1fr); gap: 8px; }
+  .belofay-delivery__damage li .belofay-delivery__icon { width: 34px; height: 34px; padding: 7px; border-radius: 50%; background: var(--ds-bg-success); }
+  .belofay-delivery__damage li span { min-width: 0; display: grid; gap: 4px; }
+  .belofay-delivery__damage li strong { color: var(--ds-text-heading); font-size: var(--ds-text-sm); font-weight: var(--ds-weight-semibold); line-height: 1.25; }
+  .belofay-delivery__damage li small { font-size: var(--ds-text-sm); line-height: 1.4; }
+  .belofay-delivery__support { display: none; margin-top: var(--ds-space-sm); }
+  .belofay-delivery__support > div:last-child { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: var(--ds-space-sm); }
+  .belofay-delivery__support article { min-width: 0; display: grid; grid-template-columns: 48px minmax(0,1fr); gap: var(--ds-space-sm); }
+  .belofay-delivery__support article > span { width: 46px; height: 46px; }
+  .belofay-delivery__support article .belofay-delivery__icon { width: 28px; height: 28px; }
+  .belofay-delivery__support article div { min-width: 0; display: grid; }
+  .belofay-delivery__accordions { display: grid; gap: 8px; margin-top: var(--ds-space-sm); }
+  .belofay-delivery__accordions details { overflow: clip; border: 1px solid var(--ds-border-default); border-radius: var(--ds-radius-control); background: var(--ds-bg-page); transition: border-color var(--motion-duration-base) var(--motion-ease-standard), background-color var(--motion-duration-base) var(--motion-ease-standard); }
+  .belofay-delivery__accordions details[open] { border-color: color-mix(in srgb,var(--ds-action-primary),var(--ds-border-default) 50%); background: var(--ds-surface-expanded); }
+  .belofay-delivery__accordions summary { min-height: 60px; display: grid; grid-template-columns: 44px 220px minmax(0,1fr) auto; align-items: center; gap: var(--ds-space-md); padding: 8px var(--ds-space-md); cursor: pointer; list-style: none; transition: color var(--motion-duration-fast) var(--motion-ease-standard), background-color var(--motion-duration-fast) var(--motion-ease-standard), transform var(--motion-duration-fast) var(--motion-ease-standard); }
+  .belofay-delivery summary::-webkit-details-marker { display: none; }
+  .belofay-delivery__accordions summary:hover { color: var(--ds-action-primary-hover); background: var(--ds-control-selected-bg); }
+  .belofay-delivery__accordions summary:active { transform: scale(var(--motion-press-scale)); }
+  .belofay-delivery summary i, .belofay-delivery__outer-summary i { width: 10px; height: 10px; border-right: 2px solid; border-bottom: 2px solid; transform: rotate(45deg); transition: transform var(--motion-duration-base) var(--motion-ease-standard); }
+  .belofay-delivery details[open] > summary i { transform: rotate(225deg); }
+  .belofay-delivery__accordion-content { padding: 0 68px var(--ds-space-md); color: var(--ds-text-supporting); }
+  .belofay-delivery a:focus-visible, .belofay-delivery summary:focus-visible { outline: 3px solid color-mix(in srgb,var(--ds-action-primary),transparent 55%); outline-offset: 2px; }
+  @supports selector(details::details-content) { .belofay-delivery details::details-content { block-size: 0; opacity: 0; overflow: clip; transition: block-size var(--motion-duration-base) var(--motion-ease-emphasized), opacity var(--motion-duration-fast) var(--motion-ease-standard), content-visibility var(--motion-duration-base) allow-discrete; } .belofay-delivery details[open]::details-content { block-size: auto; opacity: 1; } }
+  @container (max-width: 519px) { .belofay-delivery__policies > article { grid-template-columns: 72px minmax(0,1fr); } .belofay-delivery__damage ol { grid-template-columns: 1fr; } }
+  @media (max-width: 1320px) and (min-width: 1025px) { .belofay-delivery__benefits { grid-template-columns: 1fr 1fr; } .belofay-delivery__main { grid-template-columns: 1fr; } .belofay-delivery__policies { grid-template-columns: 1fr 1fr; } .belofay-delivery__policies > article { grid-template-columns: 84px minmax(0,1fr); } }
+  @media (max-width: 1024px) {
+    .belofay-delivery { scroll-margin-top: 104px; }
+    .belofay-delivery__shell { padding: 6px var(--ds-space-md); }
+    .belofay-delivery__outer { overflow: clip; border: 1px solid var(--ds-control-border); border-radius: var(--ds-radius-card); background: var(--ds-bg-page); transition: border-color var(--motion-duration-base) var(--motion-ease-standard), background-color var(--motion-duration-base) var(--motion-ease-standard); }
+    .belofay-delivery__outer[open] { border-color: color-mix(in srgb,var(--ds-action-primary),var(--ds-border-default) 55%); background: color-mix(in srgb,var(--ds-bg-surface),var(--ds-bg-page) 65%); }
+    .belofay-delivery__outer-summary { min-height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 16px; cursor: pointer; list-style: none; transition: color var(--motion-duration-fast) var(--motion-ease-standard), background-color var(--motion-duration-fast) var(--motion-ease-standard), transform var(--motion-duration-fast) var(--motion-ease-standard); }
+    .belofay-delivery__outer-summary:hover { color: var(--ds-action-primary-hover); background: var(--ds-control-selected-bg); }
+    .belofay-delivery__outer-summary:active { transform: scale(var(--motion-press-scale)); }
+    .belofay-delivery__outer-summary > span { display: grid; }
+    .belofay-delivery__outer-summary strong { color: var(--ds-text-heading); font-family: var(--ds-font-heading),Arial,sans-serif; font-size: 19px; font-weight: var(--ds-weight-semibold); line-height: 1.2; }
+    .belofay-delivery__outer-summary small { margin-top: 2px; color: var(--ds-text-supporting); font-family: var(--ds-font-body),Arial,sans-serif; font-size: var(--ds-text-sm); font-weight: var(--ds-weight-regular); line-height: 1.25; }
+    .belofay-delivery__body { padding: 10px; border-top: 1px solid var(--ds-border-default); }
+    .belofay-delivery__header { display: none; }
+    .belofay-delivery__benefits { grid-template-columns: repeat(3,minmax(0,1fr)); gap: 8px; }
+    .belofay-delivery__benefits article { min-height: 132px; display: flex; flex-direction: column; justify-content: center; gap: 8px; padding: 10px; text-align: center; }
+    .belofay-delivery__benefits article > span { width: 58px; height: 58px; }
+    .belofay-delivery__benefits article div { justify-items: center; }
+    .belofay-delivery__benefits .is-desktop-only, .belofay-delivery__timeline .is-desktop-only { display: none; }
+    .belofay-delivery__main { grid-template-columns: 1fr; gap: 10px; margin-top: 10px; }
+    .belofay-delivery__journey-card, .belofay-delivery__policies > article, .belofay-delivery__support { padding: var(--ds-space-md); }
+    .belofay-delivery__journey-head { display: grid; gap: var(--ds-space-md); }
+    .belofay-delivery__journey-head > div:first-child { order: 2; }
+    .belofay-delivery__estimate { order: 1; padding: var(--ds-space-md); border-radius: var(--ds-radius-card); background: var(--ds-surface-expanded); }
+    .belofay-delivery__estimate strong { font-size: var(--ds-text-lg); }
+    .belofay-delivery__timeline { grid-template-columns: repeat(3,minmax(0,1fr)); gap: 8px; margin: var(--ds-space-lg) 0; }
+    .belofay-delivery__timeline li { justify-items: center; text-align: center; }
+    .belofay-delivery__timeline li > span { justify-items: center; }
+    .belofay-delivery__timeline .desktop-title { display: none; }
+    .belofay-delivery__timeline .mobile-title { display: block; }
+    .belofay-delivery__parcels { grid-template-columns: 1fr; gap: var(--ds-space-md); }
+    .belofay-delivery__parcel-images { display: none; }
+    .belofay-delivery__parcels > div:last-child { padding: var(--ds-space-md); border-radius: var(--ds-radius-control); background: var(--ds-bg-surface); }
+    .belofay-delivery__policies > article { grid-template-columns: 90px minmax(0,1fr); }
+    .belofay-delivery__returns ul, .belofay-delivery__returns > span b, .belofay-delivery__returns > div > small, .belofay-delivery__damage ol { display: none; }
+    .belofay-delivery__support { display: grid; gap: var(--ds-space-md); }
+    .belofay-delivery__accordions summary { grid-template-columns: 38px minmax(0,1fr) auto; min-height: 68px; }
+    .belofay-delivery__accordions summary small { grid-column: 2; }
+    .belofay-delivery__accordions summary i { grid-column: 3; grid-row: 1 / 3; }
+    .belofay-delivery__accordion-content { padding: 0 var(--ds-space-md) var(--ds-space-md); }
+  }
+  @media (max-width: 560px) {
+    .belofay-delivery__benefits article { min-height: 122px; }
+    .belofay-delivery__benefits strong { font-size: 15px; line-height: 1.2; }
+    .belofay-delivery__benefits small { font-size: 12px; }
+    .belofay-delivery__policies > article { grid-template-columns: 64px minmax(0,1fr); gap: 12px; }
+    .belofay-delivery__policies > article > span { justify-content: start; border: 0; }
+    .belofay-delivery__damage .belofay-delivery__icon, .belofay-delivery__returns .belofay-delivery__icon { width: 50px; height: 50px; padding: 9px; border-radius: 50%; background: var(--ds-bg-success); }
+    .belofay-delivery__support > div:last-child { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) { .belofay-delivery *, .belofay-delivery *::before, .belofay-delivery *::after, .belofay-delivery *::details-content { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+{% endstylesheet %}
+
+{% javascript %}
+  (() => {
+    const desktop = window.matchMedia('(min-width: 1025px)');
+    const addDays = (date, amount, skipWeekends) => { const result = new Date(date); let added = 0; while (added < amount) { result.setDate(result.getDate() + 1); if (!skipWeekends || (result.getDay() !== 0 && result.getDay() !== 6)) added += 1; } return result; };
+    const formatEstimate = element => { const now = new Date(new Date().toLocaleString('en-US',{ timeZone: 'Europe/London' })); const skip = element.dataset.skipWeekends === 'true'; const start = addDays(now, Number(element.dataset.minDays || 1), skip); const end = addDays(now, Number(element.dataset.maxDays || 2), skip); const day = new Intl.DateTimeFormat('en-GB',{ weekday: 'short', day: 'numeric', timeZone: 'Europe/London' }); const month = new Intl.DateTimeFormat('en-GB',{ month: 'short', timeZone: 'Europe/London' }); element.textContent = start.getMonth() === end.getMonth() ? `${day.format(start)} – ${day.format(end)} ${month.format(end)}` : `${day.format(start)} ${month.format(start)} – ${day.format(end)} ${month.format(end)}`; };
+    const sync = root => { root.querySelectorAll('[data-delivery-outer]').forEach(item => { if (desktop.matches) item.open = true; }); root.querySelectorAll('[data-delivery-estimate]').forEach(formatEstimate); };
+    const init = root => sync(root);
+    init(document);
+    desktop.addEventListener('change', () => sync(document));
+    document.addEventListener('shopify:section:load', event => init(event.target));
+    document.addEventListener('click', event => { const link = event.target.closest('a[href="#delivery-returns"]'); if (!link) return; const outer = document.querySelector('#delivery-returns [data-delivery-outer]'); if (outer) outer.open = true; });
+  })();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name":"Belofay delivery",
+  "max_blocks":40,
+  "settings":[
+    {"type":"text","id":"eyebrow","label":"Eyebrow","default":"DELIVERY & RETURNS"},{"type":"text","id":"heading","label":"Heading","default":"Delivery & Returns"},{"type":"text","id":"mobile_summary","label":"Collapsed summary","default":"Shipping times, arrival details and easy returns."},{"type":"textarea","id":"intro","label":"Introduction","default":"Know what to expect before your Crawley arrives."},{"type":"text","id":"reassurance","label":"Header reassurance","default":"A smoother delivery for a better bathroom."},
+    {"type":"header","content":"Delivery estimate"},{"type":"text","id":"delivery_heading","label":"Heading","default":"Your delivery"},{"type":"text","id":"delivery_text","label":"Text","default":"From our warehouse to your bathroom."},{"type":"text","id":"estimate_label","label":"Estimate label","default":"Estimated delivery"},{"type":"text","id":"estimate_text","label":"Fallback estimate","default":"1–2 business days"},{"type":"range","id":"estimate_min_days","label":"Minimum business days","min":1,"max":7,"step":1,"default":1},{"type":"range","id":"estimate_max_days","label":"Maximum business days","min":1,"max":10,"step":1,"default":2},{"type":"checkbox","id":"skip_weekends","label":"Skip weekends","default":true},{"type":"text","id":"delivery_badge","label":"Delivery badge","default":"FREE UK DELIVERY"},
+    {"type":"header","content":"Separate parcels"},{"type":"image_picker","id":"parcel_image_one","label":"First parcel image"},{"type":"text","id":"parcel_image_one_alt","label":"First image alt","default":"Vanity cabinet parcel"},{"type":"text","id":"parcel_image_one_label","label":"First image label","default":"Vanity cabinet (in one parcel)"},{"type":"image_picker","id":"parcel_image_two","label":"Second parcel image"},{"type":"text","id":"parcel_image_two_alt","label":"Second image alt","default":"Ceramic basin parcel"},{"type":"text","id":"parcel_image_two_label","label":"Second image label","default":"Ceramic basin (may arrive separately)"},{"type":"text","id":"parcel_heading","label":"Heading","default":"Your order may arrive in separate parcels"},{"type":"textarea","id":"parcel_text","label":"Text","default":"Because of their weight, the cabinet and basin may be shipped separately. One parcel arriving first does not necessarily mean an item is missing."},{"type":"text","id":"parcel_note","label":"Note","default":"You’ll receive tracking for each parcel."},
+    {"type":"header","content":"Returns"},{"type":"text","id":"returns_badge","label":"Badge","default":"30 DAYS"},{"type":"text","id":"returns_heading","label":"Heading","default":"Changed your mind?"},{"type":"textarea","id":"returns_text","label":"Text","default":"You can return this item within 30 days."},{"type":"text","id":"returns_link_label","label":"Link label","default":"View full returns policy"},{"type":"url","id":"returns_link","label":"Returns link"},{"type":"text","id":"rights_note","label":"Rights note","default":"Your statutory consumer rights are not affected."},
+    {"type":"header","content":"Damage support"},{"type":"text","id":"damage_heading","label":"Heading","default":"Something damaged in transit?"},{"type":"textarea","id":"damage_text","label":"Text","default":"We’ll make it right."},{"type":"text","id":"damage_link_label","label":"Link label","default":"Report delivery damage"},{"type":"url","id":"damage_link","label":"Damage link"},
+    {"type":"header","content":"Support"},{"type":"text","id":"support_heading","label":"Heading","default":"Need help?"},{"type":"text","id":"support_text","label":"Text","default":"Our UK-based team is here for you."}
+  ],
+  "blocks":[
+    {"type":"benefit","name":"Delivery benefit","limit":6,"settings":[{"type":"select","id":"icon","label":"Placeholder icon","options":[{"value":"truck","label":"Truck"},{"value":"clock","label":"Clock"},{"value":"package","label":"Package"},{"value":"shield","label":"Shield"}],"default":"truck"},{"type":"text","id":"title","label":"Title","default":"Free UK Delivery"},{"type":"textarea","id":"text","label":"Text","default":"No standard delivery charge on this product."},{"type":"checkbox","id":"show_mobile","label":"Show on mobile","default":true},{"type":"text","id":"link_label","label":"Link label"},{"type":"url","id":"link","label":"Link"}]},
+    {"type":"delivery_step","name":"Delivery step","limit":6,"settings":[{"type":"text","id":"title","label":"Desktop title","default":"Order confirmed"},{"type":"text","id":"mobile_title","label":"Mobile title","default":"Order confirmed"},{"type":"textarea","id":"text","label":"Text","default":"We’ll send you an order confirmation."},{"type":"checkbox","id":"show_mobile","label":"Show on mobile","default":true}]},
+    {"type":"return_item","name":"Returns condition","limit":6,"settings":[{"type":"text","id":"text","label":"Text","default":"Item must be unused and in original packaging"}]},
+    {"type":"damage_step","name":"Damage-reporting step","limit":5,"settings":[{"type":"select","id":"icon","label":"Placeholder icon","options":[{"value":"camera","label":"Camera"},{"value":"mail","label":"Mail"},{"value":"check","label":"Check"}],"default":"camera"},{"type":"text","id":"title","label":"Title","default":"Take photos"},{"type":"textarea","id":"text","label":"Text","default":"Photo the packaging and damaged item."}]},
+    {"type":"support_item","name":"Support item","limit":5,"settings":[{"type":"select","id":"icon","label":"Placeholder icon","options":[{"value":"support","label":"Support"},{"value":"shield","label":"Shield"},{"value":"mail","label":"Mail"}],"default":"support"},{"type":"text","id":"title","label":"Title","default":"UK support"},{"type":"text","id":"text","label":"Text","default":"Mon–Fri, 9am–5pm"}]},
+    {"type":"accordion","name":"Information accordion","limit":6,"settings":[{"type":"select","id":"icon","label":"Placeholder icon","options":[{"value":"truck","label":"Truck"},{"value":"return","label":"Return"},{"value":"package","label":"Package"},{"value":"help","label":"Help"}],"default":"truck"},{"type":"text","id":"title","label":"Title","default":"Delivery details"},{"type":"text","id":"summary","label":"Summary","default":"Couriers, delivery times, tracking and failed deliveries."},{"type":"richtext","id":"content","label":"Content","default":"<p>Add the full delivery information here.</p>"}]}
+  ],
+  "presets":[{"name":"Belofay delivery","blocks":[{"type":"benefit"},{"type":"benefit"},{"type":"benefit"},{"type":"benefit"},{"type":"delivery_step"},{"type":"delivery_step"},{"type":"delivery_step"},{"type":"delivery_step"},{"type":"return_item"},{"type":"return_item"},{"type":"return_item"},{"type":"damage_step"},{"type":"damage_step"},{"type":"damage_step"},{"type":"support_item"},{"type":"support_item"},{"type":"support_item"},{"type":"accordion"},{"type":"accordion"},{"type":"accordion"}]}]
+}
+{% endschema %}

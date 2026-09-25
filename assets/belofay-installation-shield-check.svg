@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 64 64" role="img" aria-label="shield check">
+  
+<path d="M32 8c7 4 13 4 18 5v16c0 11-7.4 19.5-18 25-10.6-5.5-18-14-18-25V13c5-1 11-1 18-5z" stroke="#1E2745" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+<path d="M24 31l6 6 10-10" stroke="#1E2745" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+</svg>
+

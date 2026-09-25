@@ -1,0 +1,27 @@
+{% doc %}
+Renders an icon for the Belofay delivery section.
+@param {string} name - Icon name.
+@example
+{% render 'belofay-delivery-icon', name: 'truck' %}
+{% enddoc %}
+{%- if name == 'truck' -%}
+  <span class="belofay-delivery__icon belofay-delivery__icon--asset" aria-hidden="true">{{ 'delivery_truck.svg' | inline_asset_content }}</span>
+{%- elsif name == 'shield' -%}
+  <span class="belofay-delivery__icon belofay-delivery__icon--asset" aria-hidden="true">{{ 'shield_check.svg' | inline_asset_content }}</span>
+{%- else -%}
+<svg class="belofay-delivery__icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+  {%- case name -%}
+    {%- when 'clock' -%}<circle cx="24" cy="24" r="17"/><path d="M24 14v11l7 4"/>
+    {%- when 'package' -%}<path d="m9 16 15-8 15 8-15 8-15-8Zm0 0v17l15 8 15-8V16M24 24v17"/>
+    {%- when 'calendar' -%}<rect x="8" y="11" width="32" height="29" rx="4"/><path d="M8 19h32M16 7v8M32 7v8"/>
+    {%- when 'return' -%}<path d="M16 13 8 21l8 8M9 21h19c8 0 12 4 12 11 0 5-3 8-7 10"/>
+    {%- when 'damage' -%}<path d="M12 8h24l-2 28H14L12 8Zm6 0 2-4h8l2 4M24 13l-4 8 6 2-4 9"/>
+    {%- when 'camera' -%}<rect x="7" y="14" width="34" height="25" rx="4"/><circle cx="24" cy="26" r="7"/><path d="m15 14 3-5h12l3 5"/>
+    {%- when 'mail' -%}<rect x="6" y="10" width="36" height="28" rx="4"/><path d="m8 14 16 12 16-12"/>
+    {%- when 'support' -%}<path d="M9 27v-5a15 15 0 0 1 30 0v5M9 27h6v11H9V27Zm24 0h6v11h-6V27ZM33 40c-2 3-5 4-9 4"/>
+    {%- when 'check' -%}<path d="m12 25 8 8 16-18"/>
+    {%- when 'help' -%}<circle cx="24" cy="24" r="18"/><path d="M18 18a6 6 0 1 1 8 6c-2 1-2 3-2 5M24 36h.01"/>
+    {%- else -%}<path d="M7 30h5l4-14h18l4 14h3M15 30h22M17 35a4 4 0 1 0 0 .1M35 35a4 4 0 1 0 0 .1M16 18H9v12"/>
+  {%- endcase -%}
+</svg>
+{%- endif -%}

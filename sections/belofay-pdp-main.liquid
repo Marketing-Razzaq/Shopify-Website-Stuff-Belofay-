@@ -38,12 +38,14 @@
       <article class="belofay-pdp__card belofay-pdp-hero__panel"><h2>{{ section.settings.included_heading }}</h2><ul class="belofay-pdp__check-list"><li><span class="belofay-pdp__check" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="m5 10 3 3 7-7"/></svg></span>{{ section.settings.included_one }}</li><li><span class="belofay-pdp__check" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="m5 10 3 3 7-7"/></svg></span>{{ section.settings.included_two }}</li></ul></article>
       <article class="belofay-pdp__card belofay-pdp-hero__panel belofay-pdp-hero__panel--attention"><h2>{{ section.settings.warning_heading }}</h2><ul class="belofay-pdp__check-list"><li><span class="belofay-pdp__check belofay-pdp__check--warning" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M10 5v6m0 3v.1"/></svg></span><span>{{ section.settings.warning_one }}<br><a class="belofay-pdp-hero__tap-link" href="{{ section.settings.tap_url | default: '/collections/taps' }}">{{ section.settings.tap_link_text }} <span aria-hidden="true">→</span></a></span></li><li><span class="belofay-pdp__check belofay-pdp__check--info" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M10 9v6m0-10v.1"/></svg></span><span><strong>{{ section.settings.warning_two }}</strong><br><span class="belofay-pdp-hero__detail">{{ section.settings.warning_detail }}</span></span></li></ul></article>
     </div>
-    {% render 'belofay-pdp-tap-suggestions', blocks: section.blocks, heading: section.settings.suggestions_heading %}
     <div class="belofay-pdp-delivery-strip">
       <span class="belofay-pdp-delivery-strip__item">{% render 'belofay-pdp-icon', name: 'delivery' %}<span><strong>{{ section.settings.delivery_heading }}</strong><br>{{ section.settings.delivery_text }}</span></span>
       <a class="belofay-pdp-delivery-strip__returns" href="{{ section.settings.returns_link | default: '/policies/refund-policy' }}">{% render 'belofay-pdp-icon', name: 'shield' %}<span>{{ section.settings.returns_link_text }}</span><span aria-hidden="true">→</span></a>
     </div>
     {% render 'belofay-pdp-buy-buttons', product: product, settings: section.settings %}
+  </div>
+  <div class="belofay-pdp__shell belofay-pdp-suggestions-row">
+    {% render 'belofay-pdp-tap-suggestions', blocks: section.blocks, heading: section.settings.suggestions_heading, description: section.settings.suggestions_description %}
   </div>
   <script type="application/json" data-belofay-variants>
     [
@@ -99,6 +101,7 @@
     {"type":"text","id":"returns_text","label":"Returns text","default":"Shop with confidence"},
     {"type":"header","content":"Tap recommendations"},
     {"type":"text","id":"suggestions_heading","label":"Heading","default":"Complete the look"},
+    {"type":"text","id":"suggestions_description","label":"Description","default":"Compatible accessories for this product"},
     {"type":"header","content":"Hero colors"},
     {"type":"color","id":"action_color","label":"Action green","default":"#20a957"},
     {"type":"color","id":"accent_color","label":"Accent orange","default":"#ff6b00"},

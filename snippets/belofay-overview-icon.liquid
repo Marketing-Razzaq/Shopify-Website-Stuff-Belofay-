@@ -1,0 +1,29 @@
+{% doc %}
+Renders an inline icon for the Belofay product overview section.
+@param {string} name - Icon identifier.
+@example
+{% render 'belofay-overview-icon', name: 'ruler' %}
+{% enddoc %}
+
+{%- case name -%}
+  {%- when 'ruler' -%}
+    <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M6 15h36v20H6zM11 15v8m6-8v5m6-5v8m6-8v5m6-5v8M11 30h16"/></svg>
+  {%- when 'moisture' -%}
+    <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 5S12 19 12 28a12 12 0 0 0 24 0C36 19 24 5 24 5Z"/><path d="M29 31a6 6 0 0 1-6 4"/></svg>
+  {%- when 'soft-close' -%}
+    <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M7 14h13l10-7v34l-10-7H7zM36 18l7 7m0-7-7 7"/></svg>
+  {%- when 'basin' -%}
+    <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M7 21h34c0 10-7 17-17 17S7 31 7 21Zm17 17v5m-7 0h14M20 21v-7a5 5 0 0 1 10 0v2"/></svg>
+  {%- when 'waste' -%}
+    <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M15 8h18l-2 7H17zM18 15h12l-2 25h-8zM20 21h8m-8 7h8m-7 7h6"/></svg>
+  {%- when 'cabinet' -%}
+    <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M10 6h28v36H10zM24 6v36M20 24h1m6 0h1"/></svg>
+  {%- when 'materials' -%}
+    <svg viewBox="0 0 48 48" aria-hidden="true"><path d="m24 5 18 10-18 10L6 15 24 5Zm18 18L24 33 6 23m36 8L24 41 6 31"/></svg>
+  {%- when 'check' -%}
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 12 4 4 8-9"/></svg>
+  {%- when 'info' -%}
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 11v6m0-10v.1"/></svg>
+  {%- when 'warning' -%}
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6v7m0 4v.1"/></svg>
+{%- endcase -%}

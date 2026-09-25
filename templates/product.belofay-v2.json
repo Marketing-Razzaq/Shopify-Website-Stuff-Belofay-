@@ -10,7 +10,137 @@
       },
       "block_order": ["tap_suggestion_1", "tap_suggestion_2", "tap_suggestion_3"],
       "settings": {}
+    },
+    "product_navigation": {
+      "type": "belofay-product-navigation",
+      "settings": {}
+    },
+    "overview": {
+      "type": "belofay-product-overview",
+      "blocks": {
+        "rating_5": {"type":"rating_bar","settings":{"stars":5,"percent":68}},
+        "rating_4": {"type":"rating_bar","settings":{"stars":4,"percent":20}},
+        "rating_3": {"type":"rating_bar","settings":{"stars":3,"percent":8}},
+        "rating_2": {"type":"rating_bar","settings":{"stars":2,"percent":3}},
+        "rating_1": {"type":"rating_bar","settings":{"stars":1,"percent":1}}
+      },
+      "block_order": ["rating_5", "rating_4", "rating_3", "rating_2", "rating_1"],
+      "settings": {}
+    },
+    "dimensions": {
+      "type": "belofay-product-dimensions",
+      "blocks": {
+        "view_front": {"type":"view","settings":{"label":"Front view"}},
+        "view_side": {"type":"view","settings":{"label":"Side view"}},
+        "view_top": {"type":"view","settings":{"label":"Top view"}},
+        "view_inside": {"type":"view","settings":{"label":"Inside cabinet"}},
+        "size_400": {"type":"size","settings":{"title":"400mm","measurements":"400 (W) × 197 (D) × 750 (H)","best_for":"Compact spaces"}},
+        "size_500": {"type":"size","settings":{"title":"500mm","measurements":"500 (W) × 388 (D) × 800 (H)","best_for":"Smaller bathrooms"}},
+        "size_600": {"type":"size","settings":{"title":"600mm","measurements":"600 (W) × 388 (D) × 800 (H)","best_for":"More storage space","current":true}},
+        "panel_basin": {"type":"detail_panel","settings":{"icon":"basin","title":"Basin measurements","summary":"Detailed dimensions for the ceramic basin.","heading_1":"Overall basin size","text_1":"610mm (W) × 390mm (D)","heading_2":"Bowl depth","text_2":"Internal bowl depth: 178mm","heading_3":"Tap hole & overflow","text_3":"1 pre-drilled tap hole (Ø35mm). Overflow included.","heading_4":"Included chrome waste","text_4":"Designed for the basin’s overflow configuration."}},
+        "panel_cabinet": {"type":"detail_panel","settings":{"icon":"cabinet","title":"Internal cabinet space","summary":"Storage capacity, shelf clearance and plumbing space.","heading_1":"Usable internal width","text_1":"Approx. 540mm across the cabinet.","heading_2":"Usable internal depth","text_2":"Approx. 320mm from front to back.","heading_3":"Shelf clearance","text_3":"Upper 245mm · Lower 260mm · One full-width shelf.","heading_4":"Plumbing zone","text_4":"Keep this area clear for basin waste, trap and pipework."}},
+        "panel_space": {"type":"detail_panel","settings":{"icon":"measure","title":"Space you’ll need","summary":"Clearances, door swing and access space.","heading_1":"Width clearance","text_1":"Allow at least 600mm of clear wall space.","heading_2":"Projection / depth","text_2":"Allow 388mm from the wall including basin.","heading_3":"Front clearance","text_3":"Leave comfortable standing space in front.","heading_4":"Door movement / access","text_4":"Ensure enough room for everyday use and cleaning."}},
+        "panel_installation": {"type":"detail_panel","settings":{"icon":"wrench","title":"Installation details","summary":"Fitting information and what’s included.","heading_1":"Water connections","text_1":"Confirm hot and cold supply positions before installation.","heading_2":"Waste connection","text_2":"Allow space for the basin waste, trap and pipework.","heading_3":"Wall fixing","text_3":"Secure the cabinet using fixings suitable for your wall.","heading_4":"Professional fitting","text_4":"Professional plumbing installation is recommended."}}
+      },
+      "block_order": ["view_front","view_side","view_top","view_inside","size_400","size_500","size_600","panel_basin","panel_cabinet","panel_space","panel_installation"],
+      "settings": {}
+    },
+    "installation": {
+      "type": "belofay-product-installation",
+      "blocks": {
+        "install_guide": {"type":"link_card","settings":{"style":"action","icon":"screwdriver","title":"Straightforward installation","text":"Simple preparation now helps you avoid delays later."}},
+        "install_pdf": {"type":"link_card","settings":{"style":"download","icon":"document","title":"Assembly guide & technical drawing","text":"Download the PDF guide and full dimensions."}},
+        "install_video": {"type":"video_card","settings":{"title":"Watch installation video","text":"Step-by-step guide · Approx. 3 min","label":"Watch guide"}},
+        "glance_floor": {"type":"glance","settings":{"icon":"package","tone":"success","title":"Floor-standing","text":"Sits on the floor, no wall mounting required."}},
+        "glance_assembly": {"type":"glance","settings":{"icon":"screwdriver","tone":"success","title":"Assembly required","text":"Simple assembly with clear instructions."}},
+        "glance_plumbing": {"type":"glance","settings":{"icon":"level","tone":"success","title":"Plumbing connection required","text":"Connects to your existing water and waste."}},
+        "glance_tap": {"type":"glance","settings":{"icon":"document","tone":"attention","title":"Tap not included","text":"Choose a compatible basin mixer."}},
+        "included_cabinet": {"type":"included","settings":{"title":"Vanity cabinet"}},
+        "included_basin": {"type":"included","settings":{"title":"Ceramic basin"}},
+        "included_waste": {"type":"included","settings":{"title":"Chrome waste kit"}},
+        "included_hardware": {"type":"included","settings":{"title":"Cabinet fittings & instructions"}},
+        "required_tap": {"type":"requirement","settings":{"icon":"screwdriver","title":"Compatible mono basin mixer","text":"Single-hole tap sold separately."}},
+        "required_tools": {"type":"requirement","settings":{"icon":"drill","title":"Basic tools","text":"See the complete tools list below."}},
+        "required_sealant": {"type":"requirement","settings":{"icon":"sealant","title":"Silicone sealant","text":"For a watertight seal."}},
+        "required_plumbing": {"type":"requirement","settings":{"icon":"level","title":"Existing plumbing connections","text":"Hot and cold water plus waste."}},
+        "step_1": {"type":"step","settings":{"title":"Assemble cabinet","text":"Follow the included instructions to build your cabinet."}},
+        "step_2": {"type":"step","settings":{"title":"Position & level","text":"Place the unit in position and check it is level."}},
+        "step_3": {"type":"step","settings":{"title":"Fit tap & waste","text":"Install your chosen tap and the supplied waste."}},
+        "step_4": {"type":"step","settings":{"title":"Seat & seal basin","text":"Place the basin on the cabinet and seal with silicone."}},
+        "step_5": {"type":"step","settings":{"title":"Connect & test","text":"Connect the water and waste, then check for leaks."}},
+        "tool_tape": {"type":"tool","settings":{"icon":"level","title":"Tape measure","text":"For accurate positioning and measurements."}},
+        "tool_level": {"type":"tool","settings":{"icon":"level","title":"Spirit level","text":"To ensure the unit is level."}},
+        "tool_driver": {"type":"tool","settings":{"icon":"screwdriver","title":"Screwdriver","text":"For assembling and fitting components."}},
+        "tool_drill": {"type":"tool","settings":{"icon":"drill","title":"Drill / driver","text":"For wall fixings when required."}},
+        "tool_sealant": {"type":"tool","settings":{"icon":"sealant","title":"Sanitary silicone","text":"For sealing basin and cabinet edges."}},
+        "note_level": {"type":"note","settings":{"title":"Level before fitting the basin","text":"Use a spirit level and adjust the position before sealing or connecting plumbing."}},
+        "note_secure": {"type":"note","settings":{"title":"Secure for stability","text":"Use fixings suitable for your wall construction."}},
+        "note_seal": {"type":"note","settings":{"title":"Seal against moisture","text":"Apply sanitary silicone where required between the basin, cabinet and wall."}},
+        "note_test": {"type":"note","settings":{"title":"Final water test","text":"Check all water and waste connections carefully before regular use."}},
+        "accessory_1": {"type":"accessory","settings":{"placeholder_title":"Compatible basin tap"}},
+        "accessory_2": {"type":"accessory","settings":{"placeholder_title":"Compatible bottle trap"}}
+      },
+      "block_order": ["install_guide","install_pdf","install_video","glance_floor","glance_assembly","glance_plumbing","glance_tap","included_cabinet","included_basin","included_waste","included_hardware","required_tap","required_tools","required_sealant","required_plumbing","step_1","step_2","step_3","step_4","step_5","tool_tape","tool_level","tool_driver","tool_drill","tool_sealant","note_level","note_secure","note_seal","note_test","accessory_1","accessory_2"],
+      "settings": {}
+    },
+    "delivery": {
+      "type": "belofay-product-delivery",
+      "blocks": {
+        "benefit_free": {"type":"benefit","settings":{"icon":"truck","title":"Free UK Delivery","text":"No standard delivery charge on this product.","show_mobile":true}},
+        "benefit_fast": {"type":"benefit","settings":{"icon":"clock","title":"Fast Dispatch","text":"Order before 2pm (Mon–Fri) for same-day dispatch where applicable.","show_mobile":false}},
+        "benefit_tracked": {"type":"benefit","settings":{"icon":"package","title":"Tracked Delivery","text":"Tracking details sent after dispatch.","show_mobile":true}},
+        "benefit_returns": {"type":"benefit","settings":{"icon":"shield","title":"30-Day Returns","text":"Return within 30 days, unused and in original packaging.","show_mobile":true,"link_label":"View returns policy"}},
+        "delivery_confirmed": {"type":"delivery_step","settings":{"title":"Order confirmed","mobile_title":"Order confirmed","text":"We’ll send you an order confirmation.","show_mobile":true}},
+        "delivery_dispatched": {"type":"delivery_step","settings":{"title":"Dispatched","mobile_title":"Dispatched with tracking","text":"Your order leaves our warehouse.","show_mobile":true}},
+        "delivery_tracking": {"type":"delivery_step","settings":{"title":"Tracking sent","mobile_title":"Tracking sent","text":"You’ll receive tracking details by email.","show_mobile":false}},
+        "delivery_delivered": {"type":"delivery_step","settings":{"title":"Delivered","mobile_title":"Delivered to your address","text":"Your order arrives at your address.","show_mobile":true}},
+        "return_unused": {"type":"return_item","settings":{"text":"Item must be unused and in original packaging"}},
+        "return_postage": {"type":"return_item","settings":{"text":"Return postage is paid by the customer for change-of-mind returns"}},
+        "return_refund": {"type":"return_item","settings":{"text":"Refunds are processed after we receive the item"}},
+        "damage_photos": {"type":"damage_step","settings":{"icon":"camera","title":"Take photos","text":"Photo the packaging and damaged item."}},
+        "damage_contact": {"type":"damage_step","settings":{"icon":"mail","title":"Contact us","text":"Get in touch within 48 hours."}},
+        "damage_resolve": {"type":"damage_step","settings":{"icon":"check","title":"We resolve it","text":"We’ll arrange a replacement or refund as quickly as possible."}},
+        "support_uk": {"type":"support_item","settings":{"icon":"support","title":"UK support","text":"Mon–Fri, 9am–5pm"}},
+        "support_secure": {"type":"support_item","settings":{"icon":"shield","title":"Secure & trusted","text":"Shop with confidence"}},
+        "support_email": {"type":"support_item","settings":{"icon":"mail","title":"Email support","text":"help@belofay.co.uk"}},
+        "accordion_delivery": {"type":"accordion","settings":{"icon":"truck","title":"Delivery details","summary":"Couriers, delivery times, tracking, failed deliveries and more.","content":"<p>Add courier, delivery-time, tracking and failed-delivery information here.</p>"}},
+        "accordion_returns": {"type":"accordion","settings":{"icon":"return","title":"Returns & refunds","summary":"Eligibility, return process, refund timelines and more.","content":"<p>Add the complete returns and refunds information here.</p>"}},
+        "accordion_damage": {"type":"accordion","settings":{"icon":"package","title":"Damaged or missing items","summary":"How to report, what to do and our resolution process.","content":"<p>Add the damaged and missing items process here.</p>"}}
+      },
+      "block_order": ["benefit_free","benefit_fast","benefit_tracked","benefit_returns","delivery_confirmed","delivery_dispatched","delivery_tracking","delivery_delivered","return_unused","return_postage","return_refund","damage_photos","damage_contact","damage_resolve","support_uk","support_secure","support_email","accordion_delivery","accordion_returns","accordion_damage"],
+      "settings": {}
+    },
+    "reviews": {
+      "type": "belofay-product-reviews",
+      "blocks": {
+        "review_1": {"type":"review","settings":{"name":"Sarah M.","rating":5,"date":"2026-09-12","verified":true,"title":"Excellent quality and looks beautiful","body":"<p>Really pleased with this vanity unit. The build quality feels solid and the finish looks premium. It fitted perfectly in our bathroom and gives us plenty of storage.</p>","variant":"600mm · Crawley Grey"}},
+        "review_2": {"type":"review","settings":{"name":"Mark T.","rating":4,"date":"2026-09-05","verified":true,"title":"Great value for money","body":"<p>Looks exactly like the pictures. Easy to install and feels very sturdy. The basin is high quality and the soft-close doors are a nice touch.</p>","variant":"600mm · Matt White"}},
+        "review_3": {"type":"review","settings":{"name":"Emma L.","rating":5,"date":"2026-08-28","verified":true,"title":"Stylish and practical","body":"<p>Love the design and it looks great in our new bathroom. Delivery was on time and everything was well packaged.</p>","variant":"600mm · Crawley Grey","response":"<p>Thanks for your feedback, Emma. We’re delighted that the vanity works so well in your new bathroom.</p>"}},
+        "review_4": {"type":"review","settings":{"name":"James R.","rating":5,"date":"2026-08-18","verified":true,"title":"Perfect for our ensuite","body":"<p>A compact unit with a surprising amount of storage. The doors close smoothly and the grey finish looks excellent.</p>","variant":"600mm · Crawley Grey"}},
+        "review_5": {"type":"review","settings":{"name":"Laura K.","rating":4,"date":"2026-08-09","verified":true,"title":"Good unit and helpful service","body":"<p>Very pleased overall. We needed some fitting advice and the customer service team responded quickly.</p>","variant":"600mm · Sage Green"}},
+        "review_6": {"type":"review","settings":{"name":"David P.","rating":3,"date":"2026-07-26","verified":false,"title":"Looks good once assembled","body":"<p>The finished vanity looks smart and feels solid. Assembly took a little longer than expected, but the result is worth it.</p>","variant":"600mm · Anthracite Grey"}}
+      },
+      "block_order": ["review_1","review_2","review_3","review_4","review_5","review_6"],
+      "settings": {}
+    },
+    "faq": {
+      "type": "belofay-product-faq",
+      "blocks": {
+        "faq_1": {"type":"faq","settings":{"question":"What’s included with the Crawley 600mm vanity?","answer":"<p>The Crawley 600mm includes a floor-standing vanity cabinet, ceramic basin and chrome pop-up waste. All necessary fittings and assembly instructions are also included.</p>","open":true,"image_1_label":"Vanity cabinet","image_2_label":"Ceramic basin","image_3_label":"Chrome waste","link_label":"View included parts & fittings"}},
+        "faq_2": {"type":"faq","settings":{"question":"What are the dimensions of the 600mm model?","answer":"<p>The overall dimensions are 600mm wide × 388mm deep × 800mm high.</p>"}},
+        "faq_3": {"type":"faq","settings":{"question":"Does the basin have a tap hole?","answer":"<p>Yes. The ceramic basin has one pre-drilled 35mm tap hole.</p>"}},
+        "faq_4": {"type":"faq","settings":{"question":"Is the vanity supplied assembled?","answer":"<p>The cabinet requires straightforward self-assembly. Instructions and cabinet fittings are included.</p>"}},
+        "faq_5": {"type":"faq","settings":{"question":"Is the cabinet suitable for a bathroom environment?","answer":"<p>Yes. It has a painted moisture-resistant finish designed for normal bathroom use.</p>"}},
+        "faq_6": {"type":"faq","settings":{"question":"Will the cabinet and basin arrive together?","answer":"<p>They may arrive in separate parcels because of their weight. Tracking is supplied for each parcel.</p>"}},
+        "faq_7": {"type":"faq","settings":{"question":"What happens if my order arrives damaged?","answer":"<p>Photograph the packaging and damaged item, then contact our team within 48 hours so we can help resolve it.</p>"}},
+        "faq_8": {"type":"faq","settings":{"question":"Can I return the product if I change my mind?","answer":"<p>Yes. Unused products in their original packaging can be returned within 30 days, subject to the returns policy.</p>"}},
+        "customer_1": {"type":"customer_question","settings":{"question":"Will this work with pipes coming through the floor?","answer":"<p>Yes, the Crawley vanity can work with floor pipework. There is space inside the cabinet for standard floor connections.</p>","byline":"Answered by BELOFAY"}},
+        "customer_2": {"type":"customer_question","settings":{"question":"Can the internal shelf be adjusted or removed?","answer":"<p>The internal shelf can be adapted during installation where plumbing access requires it.</p>","byline":"Answered by BELOFAY"}},
+        "customer_3": {"type":"customer_question","settings":{"question":"Which tap do you recommend for this basin?","answer":"<p>Choose a compatible single-hole mono basin mixer.</p>","byline":"Answered by BELOFAY"}}
+      },
+      "block_order": ["faq_1","faq_2","faq_3","faq_4","faq_5","faq_6","faq_7","faq_8","customer_1","customer_2","customer_3"],
+      "settings": {"popular_link":"/pages/contact","help_link":"/pages/contact"}
     }
   },
-  "order": ["main"]
+  "order": ["main", "product_navigation", "overview", "dimensions", "installation", "delivery", "reviews", "faq"]
 }

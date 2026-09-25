@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 64 64" role="img" aria-label="sealant tube">
+  
+<g transform="rotate(-45 32 32)">
+  <path d="M26 14h12v26H26z" stroke="#1E2745" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <path d="M26 14l2.5-4h7L38 14" stroke="#1E2745" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <path d="M29 40h6v6h-6z" stroke="#1E2745" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <path d="M30.5 46h3" stroke="#1E2745" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <path d="M31.2 8.5h1.6v1.5l2.8 3" stroke="#1E2745" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <line x1="32" y1="2" x2="32" y2="8.5" stroke="#1E2745" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+</g>
+
+</svg>
+

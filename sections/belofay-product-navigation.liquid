@@ -1,0 +1,55 @@
+<nav class="belofay-product-nav" aria-label="Product information">
+  <div class="belofay-product-nav__inner">
+    <a href="#overview" data-product-nav-link="overview">{{ section.settings.overview_label }}</a>
+    <a href="#dimensions-fit" data-product-nav-link="dimensions-fit">{{ section.settings.dimensions_label }}</a>
+    <a href="#installation" data-product-nav-link="installation">{{ section.settings.installation_label }}</a>
+    <a href="#delivery-returns" data-product-nav-link="delivery-returns">{{ section.settings.delivery_label }}</a>
+    <a href="#reviews" data-product-nav-link="reviews">{{ section.settings.reviews_label }}</a>
+    <a href="#faqs" data-product-nav-link="faqs">{{ section.settings.faq_label }}</a>
+  </div>
+</nav>
+
+{% stylesheet %}
+  .section-belofay-product-navigation { position: sticky; top: var(--header-height, 0px); z-index: 30; }
+  .belofay-product-nav { border-bottom: 1px solid #dce2e8; background: rgba(255,255,255,.96); font-family: var(--pdp-font-family, Arial, sans-serif); backdrop-filter: blur(12px); }
+  .belofay-product-nav__inner { max-width: 1600px; display: flex; gap: clamp(28px, 5vw, 78px); margin: 0 auto; padding: 0 32px; overflow-x: auto; scrollbar-width: none; }
+  .belofay-product-nav__inner::-webkit-scrollbar { display: none; }
+  .belofay-product-nav a { position: relative; flex: 0 0 auto; padding: 18px 8px 16px; color: #536784; font-size: 16px; line-height: 1; text-decoration: none; white-space: nowrap; }
+  .belofay-product-nav a:hover, .belofay-product-nav a:focus-visible, .belofay-product-nav a.is-active { color: #149b45; }
+  .belofay-product-nav a.is-active::after { content: ''; position: absolute; right: 0; bottom: -1px; left: 0; height: 3px; border-radius: 3px 3px 0 0; background: #149b45; }
+  .belofay-product-nav a:focus-visible { outline: 2px solid #149b45; outline-offset: -2px; }
+  @media (max-width: 1024px) {
+    .belofay-product-nav__inner { gap: 28px; padding: 0 16px; }
+    .belofay-product-nav a { padding: 15px 0 13px; font-size: 14px; }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  (() => {
+    const links = Array.from(document.querySelectorAll('[data-product-nav-link]'));
+    if (!links.length) return;
+    const sections = links.map(link => document.getElementById(link.dataset.productNavLink)).filter(Boolean);
+    const setActive = id => links.forEach(link => link.classList.toggle('is-active', link.dataset.productNavLink === id));
+    const observer = new IntersectionObserver(entries => {
+      const visible = entries.filter(entry => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (visible) setActive(visible.target.id);
+    }, { rootMargin: '-18% 0px -65% 0px', threshold: [0, .1, .25, .5] });
+    sections.forEach(section => observer.observe(section));
+    setActive(location.hash.slice(1) || 'overview');
+  })();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name":"Belofay PDP navigation","tag":"section","class":"section-belofay-product-navigation",
+  "settings":[
+    {"type":"text","id":"overview_label","label":"Overview label","default":"Overview"},
+    {"type":"text","id":"dimensions_label","label":"Dimensions label","default":"Dimensions & Fit"},
+    {"type":"text","id":"installation_label","label":"Installation label","default":"Installation"},
+    {"type":"text","id":"delivery_label","label":"Delivery label","default":"Delivery & Returns"},
+    {"type":"text","id":"reviews_label","label":"Reviews label","default":"Reviews"},
+    {"type":"text","id":"faq_label","label":"FAQ label","default":"FAQs"}
+  ],
+  "presets":[{"name":"Belofay PDP navigation"}]
+}
+{% endschema %}

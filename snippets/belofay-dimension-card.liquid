@@ -1,0 +1,17 @@
+{% doc %}
+Renders a Dimensions & Fit image card.
+@param {image} [image] - Diagram uploaded in the theme editor.
+@param {string} heading - Card heading.
+@param {string} text - Supporting measurement text.
+{% enddoc %}
+<article class="belofay-dimensions__measurement-card">
+  <h4>{{ heading }}</h4>
+  <div class="belofay-dimensions__measurement-image">
+    {%- if image != blank -%}
+      {{ image | image_url: width: 900 | image_tag: widths: '300,450,600,900', sizes: '(min-width: 1025px) 24vw, 50vw', loading: 'lazy', alt: heading }}
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag }}
+    {%- endif -%}
+  </div>
+  <p>{{ text }}</p>
+</article>

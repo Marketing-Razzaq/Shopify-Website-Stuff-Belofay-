@@ -1,0 +1,288 @@
+<section id="dimensions-fit" class="belofay-dimensions">
+  <div class="belofay-dimensions__shell">
+    <details class="belofay-dimensions__outer" data-dimensions-outer>
+      <summary class="belofay-dimensions__outer-summary">
+        <span><strong>{{ section.settings.heading }}</strong><small>{{ section.settings.mobile_summary }}</small></span>
+        <i aria-hidden="true"></i>
+      </summary>
+
+      <div class="belofay-dimensions__body">
+        <header class="belofay-dimensions__header">
+          <div class="belofay-dimensions__intro">
+            <p class="belofay-dimensions__eyebrow">{{ section.settings.eyebrow }}</p>
+            <h2>{{ section.settings.heading }}</h2>
+            <p>{{ section.settings.intro }}</p>
+          </div>
+          <a class="belofay-dimensions__measure-callout{% if section.settings.measure_link == blank %} is-disabled{% endif %}"{% if section.settings.measure_link != blank %} href="{{ section.settings.measure_link }}"{% else %} aria-disabled="true"{% endif %}>
+            {% render 'belofay-dimensions-icon', name: 'measure-solid' %}
+            <span><strong>{{ section.settings.measure_heading }}</strong><small>{{ section.settings.measure_text }}</small></span>
+            <i aria-hidden="true"></i>
+          </a>
+          <div class="belofay-dimensions__utility">
+            <p>{{ section.settings.disclaimer }}</p>
+            <a class="belofay-dimensions__download{% if section.settings.drawing_link == blank %} is-disabled{% endif %}"{% if section.settings.drawing_link != blank %} href="{{ section.settings.drawing_link }}" target="_blank" rel="noopener"{% else %} aria-disabled="true"{% endif %}>
+              {% render 'belofay-dimensions-icon', name: 'download' %}
+              <span><strong>{{ section.settings.drawing_label }}</strong><small>{{ section.settings.drawing_note }}</small></span>
+              <b aria-hidden="true">↓</b>
+            </a>
+          </div>
+        </header>
+
+        <div class="belofay-dimensions__dashboard">
+          <article class="belofay-dimensions__card belofay-dimensions__overall">
+            <h3>{{ section.settings.overall_heading }}</h3><p>{{ section.settings.overall_text }}</p>
+            <div class="belofay-dimensions__hero-image">
+              {%- if section.settings.overall_image != blank -%}{{ section.settings.overall_image | image_url: width: 1000 | image_tag: widths: '400,600,800,1000', sizes: '(min-width: 1025px) 25vw, 100vw', loading: 'lazy', alt: section.settings.overall_alt }}{%- else -%}{{ 'product-1' | placeholder_svg_tag }}{%- endif -%}
+              <b class="is-width">{{ section.settings.width }}</b><b class="is-height">{{ section.settings.height }}</b><b class="is-depth">{{ section.settings.depth }}</b>
+            </div>
+          </article>
+
+          <article class="belofay-dimensions__card belofay-dimensions__views" data-dimension-views>
+            <h3>{{ section.settings.views_heading }}</h3><p>{{ section.settings.views_text }}</p>
+            <div class="belofay-dimensions__tabs" role="tablist" aria-label="{{ section.settings.views_heading | escape }}">
+              {%- assign first_view = true -%}
+              {%- for block in section.blocks -%}{%- if block.type == 'view' -%}<button id="DimensionTab-{{ section.id }}-{{ block.id }}" type="button" role="tab" aria-selected="{% if first_view %}true{% else %}false{% endif %}" aria-controls="DimensionPanel-{{ section.id }}-{{ block.id }}" tabindex="{% if first_view %}0{% else %}-1{% endif %}" data-view-tab="{{ block.id }}" {{ block.shopify_attributes }}>{{ block.settings.label }}</button>{%- assign first_view = false -%}{%- endif -%}{%- endfor -%}
+            </div>
+            <div class="belofay-dimensions__view-stage">
+              {%- assign first_panel = true -%}
+              {%- for block in section.blocks -%}{%- if block.type == 'view' -%}<div id="DimensionPanel-{{ section.id }}-{{ block.id }}" role="tabpanel" aria-labelledby="DimensionTab-{{ section.id }}-{{ block.id }}" data-view-panel="{{ block.id }}" {% unless first_panel %}hidden{% endunless %}>{%- if block.settings.image != blank -%}{{ block.settings.image | image_url: width: 1000 | image_tag: widths: '400,600,800,1000', sizes: '(min-width: 1025px) 25vw, 100vw', loading: 'lazy', alt: block.settings.alt }}{%- else -%}{{ 'product-2' | placeholder_svg_tag }}{%- endif -%}</div>{%- assign first_panel = false -%}{%- endif -%}{%- endfor -%}
+            </div>
+          </article>
+
+          <article class="belofay-dimensions__card belofay-dimensions__room">
+            <h3>{{ section.settings.room_heading }}</h3><p>{{ section.settings.room_text }}</p>
+            <div class="belofay-dimensions__room-image">{%- if section.settings.room_image != blank -%}{{ section.settings.room_image | image_url: width: 1000 | image_tag: widths: '400,600,800,1000', sizes: '(min-width: 1025px) 22vw, 100vw', loading: 'lazy', alt: section.settings.room_alt }}{%- else -%}{{ 'lifestyle-1' | placeholder_svg_tag }}{%- endif -%}<span>{{ section.settings.room_caption }}</span></div>
+          </article>
+
+          <article class="belofay-dimensions__card belofay-dimensions__specs">
+            <h3>{{ section.settings.key_heading }}</h3>
+            <dl><div><dt>{{ section.settings.width_label }}</dt><dd>{{ section.settings.width }}</dd></div><div><dt>{{ section.settings.depth_label }}</dt><dd>{{ section.settings.depth }}</dd></div><div><dt>{{ section.settings.height_label }}</dt><dd>{{ section.settings.height }}</dd></div></dl>
+            <h4>{{ section.settings.basin_label }}</h4><p>{{ section.settings.basin_summary }}</p>
+            <h4>{{ section.settings.cabinet_label }}</h4><p>{{ section.settings.cabinet_summary }}</p>
+          </article>
+        </div>
+
+        <div class="belofay-dimensions__compare">
+          <div class="belofay-dimensions__compare-intro"><h3>{{ section.settings.compare_heading }}</h3><p>{{ section.settings.compare_text }}</p></div>
+          {%- for block in section.blocks -%}{%- if block.type == 'size' -%}
+            <article class="belofay-dimensions__size{% if block.settings.current %} is-current{% endif %}" {{ block.shopify_attributes }}>
+              <div>{%- if block.settings.image != blank -%}{{ block.settings.image | image_url: width: 320 | image_tag: widths: '160,240,320', loading: 'lazy', alt: block.settings.title }}{%- else -%}{{ 'product-1' | placeholder_svg_tag }}{%- endif -%}</div>
+              <span><strong>{{ block.settings.title }}</strong><small>{{ block.settings.measurements }}</small><b>{{ block.settings.best_for }}</b></span>
+              {%- if block.settings.current -%}<em>{{ section.settings.current_product_label }}</em>{%- elsif block.settings.product != blank -%}<a href="{{ block.settings.product.url }}">{{ section.settings.view_product_label }} <span aria-hidden="true">→</span></a>{%- endif -%}
+            </article>
+          {%- endif -%}{%- endfor -%}
+        </div>
+
+        <div class="belofay-dimensions__subaccordions">
+          {%- for block in section.blocks -%}{%- if block.type == 'detail_panel' -%}
+            <details name="dimensions-{{ section.id }}" {{ block.shopify_attributes }}>
+              <summary>{% render 'belofay-dimensions-icon', name: block.settings.icon %}<span><strong>{{ block.settings.title }}</strong><small>{{ block.settings.summary }}</small></span><i aria-hidden="true"></i></summary>
+              <div class="belofay-dimensions__accordion-content">
+                <div class="belofay-dimensions__panel-grid">
+                  {% render 'belofay-dimension-card', image: block.settings.image_1, heading: block.settings.heading_1, text: block.settings.text_1 %}
+                  {% render 'belofay-dimension-card', image: block.settings.image_2, heading: block.settings.heading_2, text: block.settings.text_2 %}
+                  {% render 'belofay-dimension-card', image: block.settings.image_3, heading: block.settings.heading_3, text: block.settings.text_3 %}
+                  {% render 'belofay-dimension-card', image: block.settings.image_4, heading: block.settings.heading_4, text: block.settings.text_4 %}
+                </div>
+              </div>
+            </details>
+          {%- endif -%}{%- endfor -%}
+        </div>
+      </div>
+    </details>
+  </div>
+</section>
+
+{% stylesheet %}
+  .belofay-dimensions { scroll-margin-top: 118px; color: var(--ds-text-strong); background: var(--ds-bg-page); font-family: var(--ds-font-body), Arial, sans-serif; }
+  .belofay-dimensions *, .belofay-dimensions *::before, .belofay-dimensions *::after { box-sizing: border-box; }
+  .belofay-dimensions__shell { max-width: 1600px; margin: 0 auto; padding: 34px 32px 48px; }
+  .belofay-dimensions h2, .belofay-dimensions h3, .belofay-dimensions h4, .belofay-dimensions p { margin-top: 0; }
+  .belofay-dimensions__icon { display: block; object-fit: contain; }
+  .belofay-dimensions__outer-summary { display: none; }
+  .belofay-dimensions__header { display: grid; grid-template-columns: minmax(0,1.25fr) minmax(300px,.7fr) minmax(290px,.55fr); gap: 24px; align-items: end; margin-bottom: 22px; }
+  .belofay-dimensions__eyebrow { margin-bottom: 10px; color: var(--ds-text-strong); letter-spacing: .24em; font-size: var(--ds-text-sm); font-weight: var(--ds-weight-semibold); }
+  .belofay-dimensions__intro h2 { margin-bottom: 10px; color: var(--ds-text-heading); font-family: var(--ds-font-heading),Arial,sans-serif; font-size: clamp(30px,2.25vw,42px); font-weight: var(--ds-weight-bold); line-height: 1.08; letter-spacing: -.03em; }
+  .belofay-dimensions__intro > p:last-child { max-width: 820px; margin-bottom: 0; color: var(--ds-text-supporting); font-family: var(--ds-font-body),Arial,sans-serif; font-size: 19px; font-weight: var(--ds-weight-regular); line-height: 1.45; }
+  .belofay-dimensions__measure-callout { min-height: 94px; display: flex; gap: 16px; align-items: center; padding: 18px 20px; border: 1px solid transparent; border-radius: var(--ds-radius-card); color: inherit; background: var(--ds-surface-measurement); text-decoration: none; transition: transform var(--motion-duration-fast) var(--motion-ease-standard), border-color var(--motion-duration-fast) var(--motion-ease-standard), background-color var(--motion-duration-base) var(--motion-ease-standard), box-shadow var(--motion-duration-fast) var(--motion-ease-standard); }
+  .belofay-dimensions__measure-callout:not(.is-disabled):hover { border-color: var(--ds-action-primary); background: var(--ds-control-selected-bg); transform: translateY(var(--motion-hover-lift)); }
+  .belofay-dimensions__measure-callout:not(.is-disabled):active { transform: scale(var(--motion-press-scale)); }
+  .belofay-dimensions__measure-callout.is-disabled, .belofay-dimensions__download.is-disabled { cursor: default; }
+  .belofay-dimensions__measure-callout .belofay-dimensions__icon { width: 58px; height: 50px; flex: 0 0 58px; }
+  .belofay-dimensions__measure-callout span, .belofay-dimensions__download > span { display: grid; }
+  .belofay-dimensions__measure-callout strong { color: var(--ds-text-heading); font-size: var(--ds-text-lg); font-weight: var(--ds-weight-bold); line-height: 1.25; }
+  .belofay-dimensions__measure-callout > i { width: 10px; height: 10px; margin-left: auto; border-top: 2px solid var(--ds-text-strong); border-right: 2px solid var(--ds-text-strong); transform: rotate(45deg); }
+  .belofay-dimensions small { color: var(--ds-text-supporting); font-size: var(--ds-text-sm); font-weight: var(--ds-weight-regular); line-height: 1.4; }
+  .belofay-dimensions__utility { display: grid; gap: 10px; }
+  .belofay-dimensions__utility p { margin: 0; color: var(--ds-text-supporting); font-size: var(--ds-text-sm); }
+  .belofay-dimensions__download { min-height: 78px; display: grid; grid-template-columns: 38px minmax(0,1fr) 48px; align-items: center; gap: 14px; padding: 12px 14px; border: 1px solid var(--ds-control-border); border-radius: var(--ds-radius-card); color: var(--ds-text-strong); background: var(--ds-bg-page); text-decoration: none; transition: transform var(--motion-duration-fast) var(--motion-ease-standard), border-color var(--motion-duration-fast) var(--motion-ease-standard), background-color var(--motion-duration-base) var(--motion-ease-standard); }
+  .belofay-dimensions__download:not(.is-disabled):hover { border-color: var(--ds-action-primary); background: var(--ds-bg-surface); transform: translateY(var(--motion-hover-lift)); }
+  .belofay-dimensions__download:not(.is-disabled):active { transform: scale(var(--motion-press-scale)); }
+  .belofay-dimensions__download .belofay-dimensions__icon { width: 36px; height: 40px; }
+  .belofay-dimensions__download strong { color: var(--ds-text-heading); font-size: 17px; font-weight: var(--ds-weight-semibold); }
+  .belofay-dimensions__download b { width: 44px; height: 44px; display: grid; place-items: center; border-radius: var(--ds-radius-control); color: var(--ds-text-on-primary); background: var(--ds-text-strong); font-size: 24px; }
+  .belofay-dimensions__dashboard { display: grid; grid-template-columns: 1fr 1fr .9fr .95fr; gap: 14px; }
+  .belofay-dimensions__card { min-width: 0; overflow: hidden; padding: 16px; border: 1px solid var(--ds-border-default); border-radius: var(--ds-radius-card); background: var(--ds-bg-page); }
+  .belofay-dimensions__card h3 { margin-bottom: 3px; color: var(--ds-text-heading); font-size: var(--ds-text-lg); }
+  .belofay-dimensions__card > p { margin-bottom: 12px; color: var(--ds-text-supporting); font-size: var(--ds-text-sm); }
+  .belofay-dimensions__hero-image, .belofay-dimensions__room-image { position: relative; height: 380px; }
+  .belofay-dimensions__hero-image img, .belofay-dimensions__hero-image > svg, .belofay-dimensions__room-image img, .belofay-dimensions__room-image > svg, .belofay-dimensions__view-stage img, .belofay-dimensions__view-stage svg { width: 100%; height: 100%; display: block; object-fit: contain; }
+  .belofay-dimensions__hero-image b { position: absolute; color: #101827; }
+  .belofay-dimensions__hero-image .is-width { top: 4px; left: 50%; transform: translateX(-50%); }
+  .belofay-dimensions__hero-image .is-height { top: 50%; right: 0; transform: rotate(90deg) translateX(50%); transform-origin: right center; }
+  .belofay-dimensions__hero-image .is-depth { right: 4px; bottom: 4px; }
+  .belofay-dimensions__tabs { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 6px; margin-bottom: 10px; }
+  .belofay-dimensions__tabs button { min-height: 44px; padding: 6px; border: 1px solid var(--ds-control-border); border-radius: var(--ds-radius-control); color: var(--ds-text-strong); background: var(--ds-bg-page); font: 600 var(--ds-text-sm)/1.2 var(--ds-font-body); cursor: pointer; transition: transform var(--motion-duration-fast) var(--motion-ease-standard), border-color var(--motion-duration-fast) var(--motion-ease-standard), color var(--motion-duration-fast) var(--motion-ease-standard), background-color var(--motion-duration-base) var(--motion-ease-standard); }
+  .belofay-dimensions__tabs button:hover { border-color: var(--ds-action-primary); color: var(--ds-action-primary-hover); transform: translateY(var(--motion-hover-lift)); }
+  .belofay-dimensions__tabs button:active { transform: scale(var(--motion-press-scale)); }
+  .belofay-dimensions__tabs button[aria-selected=true] { border-color: var(--ds-action-primary); color: var(--ds-action-primary-hover); background: var(--ds-control-selected-bg); }
+  .belofay-dimensions__view-stage { height: 330px; }
+  .belofay-dimensions__view-stage > div { height: 100%; animation: belofay-dimension-view-in var(--motion-duration-base) var(--motion-ease-standard); }
+  .belofay-dimensions__room-image img, .belofay-dimensions__room-image > svg { object-fit: cover; }
+  .belofay-dimensions__room-image span { position: absolute; bottom: 12px; left: 12px; max-width: calc(100% - 24px); padding: 8px 10px; border-radius: 7px; color: #fff; background: rgba(8,14,24,.76); font-size: 13px; }
+  .belofay-dimensions__specs dl { margin: 14px 0; }
+  .belofay-dimensions__specs dl div { display: grid; grid-template-columns: 1fr auto; gap: 12px; padding: 9px 0; border-bottom: 1px solid #e3e8ed; }
+  .belofay-dimensions__specs dt { color: var(--ds-text-spec-label); font-weight: var(--ds-weight-medium); }
+  .belofay-dimensions__specs dd { margin: 0; color: var(--ds-text-spec-value); font-weight: var(--ds-weight-semibold); }
+  .belofay-dimensions__specs h4 { margin: 16px 0 5px; color: var(--ds-text-heading); font-size: var(--ds-text-md); }
+  .belofay-dimensions__specs p { color: var(--ds-text-supporting); font-size: var(--ds-text-sm); line-height: 1.4; }
+  .belofay-dimensions__compare { display: grid; grid-template-columns: 1.1fr repeat(3,1fr); gap: 10px; margin-top: 18px; padding: 11px; border: 1px solid #dbe2e8; border-radius: 10px; }
+  .belofay-dimensions__compare-intro { padding: 10px; }
+  .belofay-dimensions__compare h3 { margin-bottom: 4px; font-size: 20px; }
+  .belofay-dimensions__compare p { color: var(--ds-text-supporting); font-size: var(--ds-text-sm); }
+  .belofay-dimensions__size { display: grid; grid-template-columns: 96px 1fr; grid-template-rows: 1fr auto; gap: 7px 10px; padding: 9px; border: 1px solid #dbe2e8; border-radius: 8px; }
+  .belofay-dimensions__size.is-current { border-color: var(--ds-action-primary); background: var(--ds-control-selected-bg); }
+  .belofay-dimensions__size > div { grid-row: 1 / 3; }
+  .belofay-dimensions__size img, .belofay-dimensions__size svg { width: 100%; height: 88px; object-fit: contain; }
+  .belofay-dimensions__size span { display: grid; align-content: center; }
+  .belofay-dimensions__size small, .belofay-dimensions__size b { display: block; }
+  .belofay-dimensions__size a, .belofay-dimensions__size em { min-height: 28px; display: grid; place-items: center; border: 1px solid #c9d3dd; border-radius: 5px; color: #101827; font-size: 12px; font-style: normal; text-decoration: none; }
+  .belofay-dimensions__size em { border: 0; background: #dfe6eb; }
+  .belofay-dimensions__subaccordions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+  .belofay-dimensions__subaccordions details { min-width: 0; overflow: clip; border: 1px solid var(--ds-border-default); border-radius: var(--ds-radius-card); background: var(--ds-bg-page); transition: border-color var(--motion-duration-base) var(--motion-ease-standard), background-color var(--motion-duration-base) var(--motion-ease-standard), box-shadow var(--motion-duration-base) var(--motion-ease-standard); }
+  .belofay-dimensions__subaccordions details[open] { border-color: color-mix(in srgb,var(--ds-action-primary),var(--ds-border-default) 45%); background: var(--ds-surface-expanded); box-shadow: 0 8px 24px rgb(20 35 58 / 6%); }
+  .belofay-dimensions__subaccordions summary { min-height: 68px; display: flex; gap: 14px; align-items: center; padding: 12px 18px; cursor: pointer; list-style: none; transition: color var(--motion-duration-fast) var(--motion-ease-standard), background-color var(--motion-duration-fast) var(--motion-ease-standard), transform var(--motion-duration-fast) var(--motion-ease-standard); }
+  .belofay-dimensions__subaccordions summary:hover { color: var(--ds-action-primary-hover); background: color-mix(in srgb,var(--ds-control-selected-bg),transparent 45%); }
+  .belofay-dimensions__subaccordions summary:active { transform: scale(var(--motion-press-scale)); }
+  .belofay-dimensions summary::-webkit-details-marker { display: none; }
+  .belofay-dimensions__subaccordions summary > .belofay-dimensions__icon { width: 38px; height: 38px; flex: 0 0 38px; }
+  .belofay-dimensions__subaccordions summary span { display: grid; }
+  .belofay-dimensions__subaccordions summary strong { color: var(--ds-text-heading); font-size: 17px; font-weight: var(--ds-weight-semibold); }
+  .belofay-dimensions summary i { width: 10px; height: 10px; margin-left: auto; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(45deg); transition: transform var(--motion-duration-base) var(--motion-ease-standard); }
+  .belofay-dimensions details[open] > summary i { transform: rotate(225deg); }
+  .belofay-dimensions__accordion-content { overflow: clip; }
+  .belofay-dimensions__panel-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; padding: 0 12px 12px; }
+  .belofay-dimensions__measurement-card { min-width: 0; padding: 12px; border: 1px solid #e1e7ec; border-radius: 8px; }
+  .belofay-dimensions__measurement-card h4 { margin-bottom: 8px; color: #101827; font-size: 16px; }
+  .belofay-dimensions__measurement-image { height: 210px; }
+  .belofay-dimensions__measurement-image img, .belofay-dimensions__measurement-image svg { width: 100%; height: 100%; object-fit: contain; }
+  .belofay-dimensions__measurement-card p { margin: 10px 0 0; color: var(--ds-text-supporting); font-size: var(--ds-text-sm); line-height: 1.4; }
+  .belofay-dimensions button:focus-visible, .belofay-dimensions summary:focus-visible, .belofay-dimensions a:focus-visible { outline: 3px solid color-mix(in srgb,var(--ds-action-primary),transparent 55%); outline-offset: 2px; }
+  @supports selector(details::details-content) {
+    .belofay-dimensions__subaccordions details::details-content { block-size: 0; opacity: 0; overflow: clip; transition: block-size var(--motion-duration-base) var(--motion-ease-emphasized), opacity var(--motion-duration-fast) var(--motion-ease-standard), content-visibility var(--motion-duration-base) allow-discrete; }
+    .belofay-dimensions__subaccordions details[open]::details-content { block-size: auto; opacity: 1; }
+  }
+  @keyframes belofay-dimension-view-in { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+  @media (max-width: 1240px) and (min-width: 1025px) {
+    .belofay-dimensions__header { grid-template-columns: 1fr 1fr; }
+    .belofay-dimensions__utility { grid-column: 1 / -1; grid-template-columns: 1fr 1fr; }
+    .belofay-dimensions__dashboard { grid-template-columns: 1fr 1fr; }
+    .belofay-dimensions__compare { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 1024px) {
+    .belofay-dimensions { scroll-margin-top: 104px; }
+    .belofay-dimensions__shell { padding: 6px 16px; }
+    .belofay-dimensions__outer { overflow: clip; border: 1px solid var(--ds-border-default); border-radius: var(--ds-radius-card); background: var(--ds-bg-page); transition: border-color var(--motion-duration-base) var(--motion-ease-standard), background-color var(--motion-duration-base) var(--motion-ease-standard); }
+    .belofay-dimensions__outer[open] { border-color: color-mix(in srgb,var(--ds-action-primary),var(--ds-border-default) 55%); background: color-mix(in srgb,var(--ds-bg-surface),var(--ds-bg-page) 65%); }
+    .belofay-dimensions__outer-summary { min-height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 16px; cursor: pointer; list-style: none; }
+    .belofay-dimensions__outer-summary span { display: grid; }
+    .belofay-dimensions__outer-summary { transition: color var(--motion-duration-fast) var(--motion-ease-standard), background-color var(--motion-duration-fast) var(--motion-ease-standard), transform var(--motion-duration-fast) var(--motion-ease-standard); }
+    .belofay-dimensions__outer-summary:hover { color: var(--ds-action-primary-hover); background: var(--ds-control-selected-bg); }
+    .belofay-dimensions__outer-summary:active { transform: scale(var(--motion-press-scale)); }
+    .belofay-dimensions__outer-summary strong { color: var(--ds-text-heading); font-family: var(--ds-font-heading),Arial,sans-serif; font-size: 19px; font-weight: var(--ds-weight-semibold); line-height: 1.2; }
+    .belofay-dimensions__outer-summary small { margin-top: 2px; color: var(--ds-text-supporting); font-family: var(--ds-font-body),Arial,sans-serif; font-size: var(--ds-text-sm); font-weight: var(--ds-weight-regular); line-height: 1.25; }
+    .belofay-dimensions__body { padding: 10px; border-top: 1px solid #edf0f3; }
+    .belofay-dimensions__header { display: grid; grid-template-columns: 1fr; gap: 16px; align-items: stretch; margin-bottom: 16px; }
+    .belofay-dimensions__intro h2 { font-size: clamp(28px,6vw,34px); line-height: 1.08; }
+    .belofay-dimensions__intro > p:last-child { font-size: var(--ds-text-md); line-height: 1.5; }
+    .belofay-dimensions__measure-callout { min-height: 92px; }
+    .belofay-dimensions__utility { gap: 10px; }
+    .belofay-dimensions__dashboard { display: grid; grid-template-columns: 1fr; gap: 10px; margin-bottom: 12px; }
+    .belofay-dimensions__dashboard .belofay-dimensions__room, .belofay-dimensions__dashboard .belofay-dimensions__specs, .belofay-dimensions__compare { display: none; }
+    .belofay-dimensions__hero-image, .belofay-dimensions__view-stage { height: min(78vw,420px); }
+    .belofay-dimensions__tabs { grid-template-columns: repeat(2,minmax(0,1fr)); }
+    .belofay-dimensions__subaccordions { grid-template-columns: 1fr; gap: 10px; margin: 0; }
+    .belofay-dimensions__subaccordions summary { min-height: 74px; padding: 12px 14px; }
+    .belofay-dimensions__subaccordions summary > .belofay-dimensions__icon { width: 42px; height: 42px; flex-basis: 42px; }
+    .belofay-dimensions__subaccordions summary strong { font-size: 18px; }
+    .belofay-dimensions__panel-grid { gap: 8px; padding: 0 10px 10px; }
+    .belofay-dimensions__measurement-image { height: 160px; }
+    .belofay-dimensions__measurement-card p { font-size: 12px; }
+  }
+  @media (max-width: 520px) {
+    .belofay-dimensions__panel-grid { grid-template-columns: 1fr; }
+    .belofay-dimensions__measurement-image { height: 210px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .belofay-dimensions *, .belofay-dimensions *::before, .belofay-dimensions *::after, .belofay-dimensions *::details-content { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  (() => {
+    const breakpoint = window.matchMedia('(min-width: 1025px)');
+    const syncAccordions = root => root.querySelectorAll('[data-dimensions-outer]').forEach(outer => { outer.open = breakpoint.matches; });
+    const activateTab = tab => {
+      const component = tab.closest('[data-dimension-views]');
+      if (!component) return;
+      component.querySelectorAll('[data-view-tab]').forEach(item => {
+        const selected = item === tab;
+        item.setAttribute('aria-selected', String(selected));
+        item.tabIndex = selected ? 0 : -1;
+      });
+      component.querySelectorAll('[data-view-panel]').forEach(panel => { panel.hidden = panel.dataset.viewPanel !== tab.dataset.viewTab; });
+    };
+    syncAccordions(document);
+    breakpoint.addEventListener('change', () => syncAccordions(document));
+    document.addEventListener('click', event => {
+      const tab = event.target.closest('[data-view-tab]');
+      if (!tab) return;
+      activateTab(tab);
+    });
+    document.addEventListener('keydown', event => {
+      const tab = event.target.closest('[data-view-tab]');
+      if (!tab || !['ArrowLeft','ArrowRight','Home','End'].includes(event.key)) return;
+      const tabs = [...tab.closest('[role="tablist"]').querySelectorAll('[data-view-tab]')];
+      let index = tabs.indexOf(tab);
+      if (event.key === 'Home') index = 0;
+      if (event.key === 'End') index = tabs.length - 1;
+      if (event.key === 'ArrowLeft') index = (index - 1 + tabs.length) % tabs.length;
+      if (event.key === 'ArrowRight') index = (index + 1) % tabs.length;
+      event.preventDefault();
+      activateTab(tabs[index]);
+      tabs[index].focus();
+    });
+    document.addEventListener('shopify:section:load', event => syncAccordions(event.target));
+  })();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name":"Belofay dimensions & fit","tag":"section","class":"section-belofay-dimensions","max_blocks":24,
+  "settings":[
+    {"type":"text","id":"eyebrow","label":"Eyebrow","default":"BELOFAY"},{"type":"text","id":"heading","label":"Heading","default":"Dimensions & Fit"},{"type":"text","id":"mobile_summary","label":"Collapsed mobile summary","default":"Measurements, diagrams and fit information."},{"type":"textarea","id":"intro","label":"Introduction","default":"Check the measurements, diagrams and key fit information to make sure the Crawley 600mm is the right choice for your bathroom."},
+    {"type":"text","id":"measure_heading","label":"Measure heading","default":"Measure before ordering"},{"type":"text","id":"measure_text","label":"Measure text","default":"A few minutes now can save you time later."},{"type":"url","id":"measure_link","label":"Measure guide link"},{"type":"textarea","id":"disclaimer","label":"Disclaimer","default":"All dimensions in millimetres (mm). Measurements are approximate."},{"type":"url","id":"drawing_link","label":"Technical drawing PDF link"},{"type":"text","id":"drawing_label","label":"Drawing label","default":"Download technical drawing (PDF)"},{"type":"text","id":"drawing_note","label":"Drawing note","default":"Detailed dimensions for your plumber"},
+    {"type":"text","id":"overall_heading","label":"Overall heading","default":"Overall dimensions"},{"type":"text","id":"overall_text","label":"Overall text","default":"Complete unit (including ceramic basin)"},{"type":"image_picker","id":"overall_image","label":"Overall dimensions image"},{"type":"text","id":"overall_alt","label":"Overall image alt","default":"Crawley vanity overall dimensions"},{"type":"text","id":"width_label","label":"Width label","default":"Overall width"},{"type":"text","id":"width","label":"Width","default":"600mm"},{"type":"text","id":"depth_label","label":"Depth label","default":"Overall depth"},{"type":"text","id":"depth","label":"Depth","default":"388mm"},{"type":"text","id":"height_label","label":"Height label","default":"Overall height"},{"type":"text","id":"height","label":"Height","default":"800mm"},
+    {"type":"text","id":"views_heading","label":"Views heading","default":"Detailed views"},{"type":"text","id":"views_text","label":"Views text","default":"See the unit from different angles"},
+    {"type":"text","id":"room_heading","label":"Room heading","default":"In-room scale"},{"type":"text","id":"room_text","label":"Room text","default":"See how it looks in a real bathroom"},{"type":"image_picker","id":"room_image","label":"Room image"},{"type":"text","id":"room_alt","label":"Room image alt","default":"Crawley vanity shown in a bathroom"},{"type":"text","id":"room_caption","label":"Room caption","default":"Next to a standard toilet for real-world reference."},
+    {"type":"text","id":"key_heading","label":"Key heading","default":"Key measurements"},{"type":"text","id":"basin_label","label":"Basin heading","default":"Basin details"},{"type":"textarea","id":"basin_summary","label":"Basin summary","default":"1 pre-drilled tap hole (Ø35mm) · Overflow included · Ceramic integrated basin"},{"type":"text","id":"cabinet_label","label":"Cabinet heading","default":"Cabinet details"},{"type":"textarea","id":"cabinet_summary","label":"Cabinet summary","default":"2 soft-close doors · 1 adjustable shelf · Moisture-resistant finish"},
+    {"type":"text","id":"compare_heading","label":"Comparison heading","default":"Compare available sizes"},{"type":"text","id":"compare_text","label":"Comparison text","default":"Choose the size that fits your space."},{"type":"text","id":"current_product_label","label":"Current product label","default":"Current product"},{"type":"text","id":"view_product_label","label":"View product label","default":"View product"}
+  ],
+  "blocks":[
+    {"type":"view","name":"Detailed view","limit":6,"settings":[{"type":"text","id":"label","label":"Label","default":"Front view"},{"type":"image_picker","id":"image","label":"Image"},{"type":"text","id":"alt","label":"Image alt text","default":"Product dimension view"}]},
+    {"type":"size","name":"Size comparison","limit":6,"settings":[{"type":"text","id":"title","label":"Size","default":"600mm"},{"type":"text","id":"measurements","label":"Measurements","default":"600 (W) × 388 (D) × 800 (H)"},{"type":"text","id":"best_for","label":"Best for","default":"More storage space"},{"type":"image_picker","id":"image","label":"Image"},{"type":"product","id":"product","label":"Product"},{"type":"checkbox","id":"current","label":"Current product","default":false}]},
+    {"type":"detail_panel","name":"Detail accordion","limit":8,"settings":[{"type":"select","id":"icon","label":"Icon","options":[{"value":"measure","label":"Tape measure"},{"value":"basin","label":"Basin"},{"value":"cabinet","label":"Cabinet"},{"value":"wrench","label":"Wrench"},{"value":"width","label":"Width"},{"value":"framed-width","label":"Framed width"},{"value":"door","label":"Reversible door"},{"value":"ruler","label":"Ruler"}],"default":"measure"},{"type":"text","id":"title","label":"Title","default":"Space you’ll need"},{"type":"text","id":"summary","label":"Summary","default":"Clearances, door swing and access space."},{"type":"header","content":"Card one"},{"type":"image_picker","id":"image_1","label":"Image"},{"type":"text","id":"heading_1","label":"Heading","default":"Width clearance"},{"type":"textarea","id":"text_1","label":"Text","default":"Allow at least 600mm of clear wall space."},{"type":"header","content":"Card two"},{"type":"image_picker","id":"image_2","label":"Image"},{"type":"text","id":"heading_2","label":"Heading","default":"Projection / depth"},{"type":"textarea","id":"text_2","label":"Text","default":"Allow 388mm from the wall including basin."},{"type":"header","content":"Card three"},{"type":"image_picker","id":"image_3","label":"Image"},{"type":"text","id":"heading_3","label":"Heading","default":"Front clearance"},{"type":"textarea","id":"text_3","label":"Text","default":"Leave comfortable standing space in front."},{"type":"header","content":"Card four"},{"type":"image_picker","id":"image_4","label":"Image"},{"type":"text","id":"heading_4","label":"Heading","default":"Door movement / access"},{"type":"textarea","id":"text_4","label":"Text","default":"Ensure enough room for everyday use and cleaning."}]}
+  ],
+  "presets":[{"name":"Belofay dimensions & fit"}]
+}
+{% endschema %}

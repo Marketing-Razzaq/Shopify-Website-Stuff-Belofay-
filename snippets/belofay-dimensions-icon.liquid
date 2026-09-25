@@ -1,0 +1,17 @@
+{% doc %}
+Renders a Dimensions & Fit interface icon.
+@param {string} name - Icon name.
+{% enddoc %}
+{%- case name -%}
+  {%- when 'basin' -%}{%- assign icon_asset = 'belofay-dimension-basin.svg' -%}
+  {%- when 'cabinet' -%}{%- assign icon_asset = 'belofay-dimension-cabinet.svg' -%}
+  {%- when 'wrench' -%}{%- assign icon_asset = 'belofay-dimension-wrench.svg' -%}
+  {%- when 'download' -%}{%- assign icon_asset = 'belofay-dimension-download-file.svg' -%}
+  {%- when 'width' -%}{%- assign icon_asset = 'belofay-dimension-width.svg' -%}
+  {%- when 'framed-width' -%}{%- assign icon_asset = 'belofay-dimension-framed-width.svg' -%}
+  {%- when 'door' -%}{%- assign icon_asset = 'belofay-dimension-reversible-door.svg' -%}
+  {%- when 'ruler' -%}{%- assign icon_asset = 'belofay-dimension-ruler.svg' -%}
+  {%- when 'measure-solid' -%}{%- assign icon_asset = 'belofay-dimension-tape-measure.svg' -%}
+  {%- else -%}{%- assign icon_asset = 'belofay-dimension-tape-measure-outline.svg' -%}
+{%- endcase -%}
+<img class="belofay-dimensions__icon" src="{{ icon_asset | asset_url }}" alt="" width="64" height="64" aria-hidden="true">

@@ -1,0 +1,328 @@
+<section id="overview" class="belofay-overview" style="--overview-green: {{ section.settings.green }}; --overview-orange: {{ section.settings.orange }}; --overview-text: {{ section.settings.text_color }}; --overview-muted: {{ section.settings.muted_color }};">
+  <div class="belofay-overview__shell">
+    <details class="belofay-overview__accordion" open>
+      <summary><span><strong>{{ section.settings.accordion_label }}</strong><small>{{ section.settings.accordion_summary }}</small></span><span class="belofay-overview__chevron" aria-hidden="true"></span></summary>
+      <div class="belofay-overview__content">
+        <div class="belofay-overview__intro">
+          <div class="belofay-overview__copy">
+            {%- if section.settings.eyebrow != blank -%}<p class="belofay-overview__eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
+            <h2>{{ section.settings.heading }}</h2>
+            <div class="belofay-overview__description">{{ section.settings.description }}</div>
+          </div>
+          <div class="belofay-overview__features">
+            <article class="belofay-overview__feature">
+              {% render 'belofay-overview-icon', name: 'soft-close' %}
+              <h3>{{ section.settings.feature_one_heading }}</h3>
+              <p>{{ section.settings.feature_one_text }}</p>
+            </article>
+            <article class="belofay-overview__feature belofay-overview__feature--wide">
+              {% render 'belofay-overview-icon', name: 'ruler' %}
+              <h3>{{ section.settings.feature_two_heading }}</h3>
+              <p>{{ section.settings.feature_two_text }}</p>
+              <small>{{ section.settings.feature_two_note }}</small>
+            </article>
+            <article class="belofay-overview__feature">
+              {% render 'belofay-overview-icon', name: 'moisture' %}
+              <h3>{{ section.settings.feature_three_heading }}</h3>
+              <p>{{ section.settings.feature_three_text }}</p>
+            </article>
+          </div>
+        </div>
+
+        <div class="belofay-overview__grid">
+          <figure class="belofay-overview__main-visual">
+            <div class="belofay-overview__image belofay-overview__image--main">
+              {%- assign main_image = section.settings.main_image | default: product.featured_image -%}
+              {%- if main_image != blank -%}
+                {{ main_image | image_url: width: 1600 | image_tag: loading: 'lazy', widths: '600, 900, 1200, 1600', sizes: '(min-width: 990px) 40vw, 100vw', alt: section.settings.main_image_alt }}
+              {%- else -%}
+                {{ 'product-1' | placeholder_svg_tag }}
+              {%- endif -%}
+              <span class="belofay-overview__image-label">{{ section.settings.main_image_label }}</span>
+            </div>
+            <figcaption><strong>{{ section.settings.main_caption_heading }}</strong><span>{{ section.settings.main_caption_text }}</span></figcaption>
+          </figure>
+
+          <figure class="belofay-overview__storage">
+            <div class="belofay-overview__image belofay-overview__image--storage">
+              {%- assign storage_image = section.settings.storage_image | default: product.media[1].preview_image -%}
+              {%- if storage_image != blank -%}
+                {{ storage_image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '360, 540, 720, 900', sizes: '(min-width: 990px) 18vw, 55vw', alt: section.settings.storage_image_alt }}
+              {%- else -%}
+                {{ 'product-2' | placeholder_svg_tag }}
+              {%- endif -%}
+            </div>
+            <figcaption><strong>{{ section.settings.storage_heading }}</strong><span>{{ section.settings.storage_text }}</span></figcaption>
+          </figure>
+
+          <div class="belofay-overview__cards">
+            <article class="belofay-overview__card belofay-overview__card--included">
+              <h3>{{ section.settings.included_heading }}</h3>
+              <ul>
+                <li><span class="belofay-overview__status">{% render 'belofay-overview-icon', name: 'check' %}</span>{% render 'belofay-overview-icon', name: 'basin' %}<span>{{ section.settings.included_one }}</span></li>
+                <li><span class="belofay-overview__status">{% render 'belofay-overview-icon', name: 'check' %}</span>{% render 'belofay-overview-icon', name: 'waste' %}<span>{{ section.settings.included_two }}</span></li>
+                <li><span class="belofay-overview__status">{% render 'belofay-overview-icon', name: 'check' %}</span>{% render 'belofay-overview-icon', name: 'cabinet' %}<span>{{ section.settings.included_three }}</span></li>
+              </ul>
+            </article>
+
+            <article class="belofay-overview__card belofay-overview__card--warning">
+              <h3>{{ section.settings.warning_heading }}</h3>
+              <ul>
+                <li><span class="belofay-overview__status belofay-overview__status--warning">{% render 'belofay-overview-icon', name: 'warning' %}</span><span><strong>{{ section.settings.warning_one_heading }}</strong><small>{{ section.settings.warning_one_text }}</small><a href="{{ section.settings.tap_link | default: '/collections/taps' }}">{{ section.settings.tap_link_label }} <span aria-hidden="true">→</span></a></span></li>
+                <li><span class="belofay-overview__status belofay-overview__status--info">{% render 'belofay-overview-icon', name: 'info' %}</span><span><strong>{{ section.settings.warning_two_heading }}</strong><small>{{ section.settings.warning_two_text }}</small></span></li>
+                <li><span class="belofay-overview__status belofay-overview__status--info">{% render 'belofay-overview-icon', name: 'info' %}</span><span><strong>{{ section.settings.warning_three_heading }}</strong><small>{{ section.settings.warning_three_text }}</small></span></li>
+              </ul>
+            </article>
+
+            <details class="belofay-overview__card belofay-overview__materials" open>
+              <summary>{% render 'belofay-overview-icon', name: 'materials' %}<span><strong>{{ section.settings.materials_heading }}</strong><small>{{ section.settings.materials_mobile_summary }}</small></span><span class="belofay-overview__chevron" aria-hidden="true"></span></summary>
+              <ul>
+                <li><span class="belofay-overview__status">{% render 'belofay-overview-icon', name: 'check' %}</span>{{ section.settings.material_one }}</li>
+                <li><span class="belofay-overview__status">{% render 'belofay-overview-icon', name: 'check' %}</span>{{ section.settings.material_two }}</li>
+                <li><span class="belofay-overview__status">{% render 'belofay-overview-icon', name: 'check' %}</span>{{ section.settings.material_three }}</li>
+                <li><span class="belofay-overview__status">{% render 'belofay-overview-icon', name: 'check' %}</span>{{ section.settings.material_four }}</li>
+              </ul>
+            </details>
+
+            <article class="belofay-overview__card belofay-overview__reviews" id="reviews">
+              <div class="belofay-overview__reviews-head"><h3>{{ section.settings.reviews_heading }}</h3><span class="belofay-overview__verified"><span class="belofay-overview__status">{% render 'belofay-overview-icon', name: 'check' %}</span>{{ section.settings.verified_label }}</span></div>
+              <div class="belofay-overview__review-grid">
+                <div><strong class="belofay-overview__rating">{{ section.settings.rating }}</strong><span class="belofay-overview__stars" aria-label="{{ section.settings.rating }} out of 5">★★★★★</span><span>{{ section.settings.rating_count }} ratings</span></div>
+                <div class="belofay-overview__bars" aria-label="Rating distribution">
+                  {%- for block in section.blocks -%}
+                    <div {{ block.shopify_attributes }}><span>{{ block.settings.stars }} ★</span><i><b style="width: {{ block.settings.percent }}%"></b></i><span>{{ block.settings.percent }}%</span></div>
+                  {%- endfor -%}
+                </div>
+              </div>
+              <blockquote>“{{ section.settings.review_quote }}”<footer>— {{ section.settings.review_author }} <span class="belofay-overview__verified"><span class="belofay-overview__status">{% render 'belofay-overview-icon', name: 'check' %}</span>{{ section.settings.verified_purchase }}</span></footer></blockquote>
+              <a class="belofay-overview__all-reviews" href="{{ section.settings.reviews_link | default: '#reviews' }}">{{ section.settings.all_reviews_label }} <span aria-hidden="true">→</span></a>
+            </article>
+          </div>
+        </div>
+      </div>
+    </details>
+  </div>
+</section>
+
+{% stylesheet %}
+  .belofay-overview { color: var(--overview-text); font-family: var(--pdp-font-family, Arial, sans-serif); background: #fff; }
+  .belofay-overview *, .belofay-overview *::before, .belofay-overview *::after { box-sizing: border-box; }
+  .belofay-overview__tabs { position: sticky; top: var(--header-height, 0px); z-index: 20; background: rgba(255,255,255,.96); border-bottom: 1px solid #dce2e8; backdrop-filter: blur(12px); }
+  .belofay-overview__tabs-inner { max-width: 1600px; margin: 0 auto; padding: 0 32px; display: flex; gap: clamp(32px, 5vw, 80px); overflow-x: auto; scrollbar-width: none; }
+  .belofay-overview__tabs-inner::-webkit-scrollbar { display: none; }
+  .belofay-overview__tabs a { position: relative; flex: 0 0 auto; padding: 18px 10px 16px; color: var(--overview-muted); text-decoration: none; font-size: 17px; line-height: 1; white-space: nowrap; }
+  .belofay-overview__tabs a:hover, .belofay-overview__tabs a:focus-visible, .belofay-overview__tabs a.is-active { color: var(--overview-green); }
+  .belofay-overview__tabs a.is-active::after { content: ''; position: absolute; right: 0; bottom: -1px; left: 0; height: 3px; border-radius: 3px 3px 0 0; background: var(--overview-green); }
+  .belofay-overview__tabs a:focus-visible { outline: 2px solid var(--overview-green); outline-offset: -2px; }
+  .belofay-overview__shell { max-width: 1600px; margin: 0 auto; padding: 32px; }
+  .belofay-overview__accordion > summary { display: none; }
+  .belofay-overview__intro { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(600px, .95fr); gap: 46px; align-items: center; margin-bottom: 26px; }
+  .belofay-overview__copy h2 { margin: 0 0 10px; color: #070b12; font-size: clamp(30px, 2.25vw, 42px); line-height: 1.08; letter-spacing: -.03em; }
+  .belofay-overview__eyebrow { display: none; margin: 0 0 8px; letter-spacing: .25em; font-size: 13px; }
+  .belofay-overview__description { max-width: 820px; color: var(--overview-muted); font-size: 19px; line-height: 1.45; }
+  .belofay-overview__description p { margin: 0; }
+  .belofay-overview__features { display: grid; grid-template-columns: .8fr 1.6fr 1.1fr; gap: 12px; }
+  .belofay-overview__feature { min-height: 174px; padding: 20px 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; border-radius: 12px; background: linear-gradient(135deg, #f4fbf7, #eaf7ee); }
+  .belofay-overview__feature > svg { width: 54px; height: 54px; margin-bottom: 10px; fill: none; stroke: #0b101b; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+  .belofay-overview__feature h3 { margin: 0 0 6px; color: #070b12; font-size: 20px; line-height: 1.15; }
+  .belofay-overview__feature p, .belofay-overview__feature small { margin: 0; color: var(--overview-muted); font-size: 16px; line-height: 1.35; }
+  .belofay-overview__grid { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(240px, .7fr) minmax(500px, 1.55fr); gap: 16px; align-items: start; }
+  .belofay-overview figure { margin: 0; }
+  .belofay-overview__image { position: relative; overflow: hidden; border-radius: 10px; background: #edf2ef; }
+  .belofay-overview__image img, .belofay-overview__image .placeholder-svg { width: 100%; height: 100%; display: block; object-fit: cover; }
+  .belofay-overview__image--main { aspect-ratio: 1.12 / 1; }
+  .belofay-overview__image--storage { aspect-ratio: .86 / 1; }
+  .belofay-overview__image-label { position: absolute; top: 16px; left: 16px; max-width: calc(100% - 32px); padding: 10px 14px; border-radius: 9px; background: rgba(255,255,255,.9); color: #14233a; font-weight: 700; font-size: 16px; backdrop-filter: blur(8px); }
+  .belofay-overview figcaption { display: flex; flex-direction: column; padding: 10px 6px 0; color: var(--overview-muted); font-size: 15px; line-height: 1.35; }
+  .belofay-overview figcaption strong { color: #0b1320; font-size: 18px; }
+  .belofay-overview__cards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .belofay-overview__card { min-width: 0; padding: 22px 24px; border: 1px solid #dbe2e8; border-radius: 10px; background: #fff; }
+  .belofay-overview__card--included { background: linear-gradient(135deg, #f4fbf7, #f7fcf9); }
+  .belofay-overview__card--warning { border-color: #ffd5bd; background: linear-gradient(135deg, #fffaf7, #fff7f2); }
+  .belofay-overview__card h3 { margin: 0 0 16px; color: #101827; font-size: 21px; line-height: 1.15; }
+  .belofay-overview__card ul { display: grid; gap: 14px; margin: 0; padding: 0; list-style: none; }
+  .belofay-overview__card li { display: flex; align-items: center; gap: 12px; color: var(--overview-muted); font-size: 15px; line-height: 1.3; }
+  .belofay-overview__card li > svg { width: 32px; height: 32px; flex: 0 0 32px; fill: none; stroke: #14233a; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .belofay-overview__card li strong, .belofay-overview__card li small { display: block; }
+  .belofay-overview__card li strong { color: #101827; font-size: 16px; }
+  .belofay-overview__card li small { color: var(--overview-muted); font-size: 14px; }
+  .belofay-overview__card li a { color: var(--overview-orange); text-underline-offset: 2px; }
+  .belofay-overview__status { width: 25px; height: 25px; flex: 0 0 25px; display: inline-grid; place-items: center; border-radius: 50%; color: #fff; background: var(--overview-green); }
+  .belofay-overview__status svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+  .belofay-overview__status--warning { background: var(--overview-orange); }
+  .belofay-overview__status--info { background: #607087; }
+  .belofay-overview__materials summary { display: flex; align-items: center; gap: 12px; list-style: none; }
+  .belofay-overview__materials summary::-webkit-details-marker { display: none; }
+  .belofay-overview__materials summary > svg { width: 34px; height: 34px; flex: 0 0 34px; fill: none; stroke: #14233a; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .belofay-overview__materials summary strong { display: block; color: #101827; font-size: 17px; }
+  .belofay-overview__materials summary small, .belofay-overview__materials .belofay-overview__chevron { display: none; }
+  .belofay-overview__materials ul { margin-top: 20px; }
+  .belofay-overview__reviews-head { display: flex; justify-content: space-between; gap: 12px; align-items: center; }
+  .belofay-overview__verified { display: inline-flex; align-items: center; gap: 6px; color: #168a45; font-size: 12px; white-space: nowrap; }
+  .belofay-overview__verified .belofay-overview__status { width: 20px; height: 20px; flex-basis: 20px; }
+  .belofay-overview__reviews { min-width: 0; overflow: hidden; }
+  .belofay-overview__reviews h3 { font-size: 18px; }
+  .belofay-overview__review-grid { min-width: 0; display: grid; grid-template-columns: 1fr; gap: 14px; align-items: center; }
+  .belofay-overview__review-grid > div:first-child { display: grid; grid-template-columns: auto 1fr; align-items: center; column-gap: 10px; }
+  .belofay-overview__rating { grid-row: 1 / 3; color: #05070b; font-size: 48px; line-height: 1; }
+  .belofay-overview__stars { color: var(--overview-orange); font-size: 21px; letter-spacing: 1px; }
+  .belofay-overview__bars { min-width: 0; display: grid; gap: 5px; }
+  .belofay-overview__bars > div { min-width: 0; display: grid; grid-template-columns: 36px minmax(24px, 1fr) 30px; gap: 6px; align-items: center; color: var(--overview-muted); font-size: 12px; }
+  .belofay-overview__bars i { height: 8px; overflow: hidden; border-radius: 10px; background: #e8ebef; }
+  .belofay-overview__bars b { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #1ba34d, #6abb70); }
+  .belofay-overview__reviews blockquote { margin: 14px 0 0; padding-top: 12px; border-top: 1px solid #dde3e8; color: var(--overview-muted); font-size: 14px; font-style: italic; }
+  .belofay-overview__reviews blockquote footer { display: flex; justify-content: space-between; gap: 8px; margin-top: 8px; font-style: normal; }
+  .belofay-overview__all-reviews { display: none; }
+
+  @media (max-width: 1199px) {
+    .belofay-overview__intro { grid-template-columns: 1fr; gap: 24px; }
+    .belofay-overview__grid { grid-template-columns: 1.4fr .8fr; }
+    .belofay-overview__cards { grid-column: 1 / -1; }
+  }
+
+  @media (max-width: 1024px) {
+    .belofay-overview__tabs { top: var(--header-height, 0px); }
+    .belofay-overview__tabs-inner { padding: 0 18px; gap: 28px; }
+    .belofay-overview__tabs a { padding: 15px 0 13px; font-size: 14px; }
+    .belofay-overview__shell { padding: 12px 16px 6px; }
+    .belofay-overview__accordion { overflow: clip; border: 1px solid var(--ds-control-border, #dde3e8); border-radius: var(--ds-radius-card, 10px); background: var(--ds-bg-page, #fff); transition: border-color var(--motion-duration-base, 240ms) var(--motion-ease-standard, ease), background-color var(--motion-duration-base, 240ms) var(--motion-ease-standard, ease); }
+    .belofay-overview__accordion[open] { border-color: color-mix(in srgb,var(--ds-action-primary, var(--overview-green)),var(--ds-border-default, #dde3e8) 55%); background: color-mix(in srgb,var(--ds-bg-surface, #f7f8fa),var(--ds-bg-page, #fff) 65%); }
+    .belofay-overview__accordion > summary { min-height: 64px; padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; gap: 16px; cursor: pointer; list-style: none; color: var(--ds-text-heading, #111927); transition: color var(--motion-duration-fast, 160ms) var(--motion-ease-standard, ease), background-color var(--motion-duration-fast, 160ms) var(--motion-ease-standard, ease), transform var(--motion-duration-fast, 160ms) var(--motion-ease-standard, ease); }
+    .belofay-overview__accordion > summary > span:first-child { display: grid; }
+    .belofay-overview__accordion > summary strong { color: var(--ds-text-heading); font-family: var(--ds-font-heading),Arial,sans-serif; font-size: 19px; font-weight: var(--ds-weight-semibold, 600); line-height: 1.2; }
+    .belofay-overview__accordion > summary small { margin-top: 2px; color: var(--ds-text-supporting); font-family: var(--ds-font-body),Arial,sans-serif; font-size: var(--ds-text-sm, 14px); font-weight: var(--ds-weight-regular, 400); line-height: 1.25; }
+    .belofay-overview__accordion > summary:hover { color: var(--ds-action-primary-hover, var(--overview-green)); background: var(--ds-control-selected-bg, #f1faf4); }
+    .belofay-overview__accordion > summary:active { transform: scale(var(--motion-press-scale, .99)); }
+    .belofay-overview__accordion > summary::-webkit-details-marker { display: none; }
+    .belofay-overview__chevron { width: 10px; height: 10px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(45deg); transition: transform .2s ease; }
+    .belofay-overview__accordion[open] > summary .belofay-overview__chevron, .belofay-overview__materials[open] .belofay-overview__chevron { transform: rotate(225deg); }
+    .belofay-overview__content { padding: 20px 14px 14px; border-top: 1px solid #edf0f3; }
+    .belofay-overview__intro { display: contents; }
+    .belofay-overview__copy { margin-bottom: 16px; }
+    .belofay-overview__eyebrow { display: block; }
+    .belofay-overview__copy h2 { font-size: 30px; }
+    .belofay-overview__description { font-size: 17px; line-height: 1.42; }
+    .belofay-overview__features { grid-template-columns: repeat(3, minmax(0,1fr)); gap: 8px; margin-bottom: 16px; }
+    .belofay-overview__feature { min-height: 154px; padding: 14px 10px; align-items: flex-start; justify-content: flex-start; text-align: left; }
+    .belofay-overview__feature > svg { width: 35px; height: 35px; margin-bottom: 12px; stroke: var(--overview-green); }
+    .belofay-overview__feature h3 { font-size: 16px; }
+    .belofay-overview__feature p, .belofay-overview__feature small { font-size: 14px; }
+    .belofay-overview__feature--wide { order: -1; }
+    .belofay-overview__feature--wide small { display: none; }
+    .belofay-overview__grid { display: flex; flex-direction: column; gap: 12px; }
+    .belofay-overview__main-visual, .belofay-overview__storage, .belofay-overview__cards { width: 100%; }
+    .belofay-overview__image--main { aspect-ratio: 1.7 / 1; }
+    .belofay-overview__image-label { top: auto; right: auto; bottom: 12px; left: 12px; padding: 8px 10px; color: #fff; background: rgba(12,18,28,.78); font-size: 13px; }
+    .belofay-overview__main-visual figcaption { display: none; }
+    .belofay-overview__storage { display: grid; grid-template-columns: .95fr 1.15fr; min-height: 180px; overflow: hidden; border-radius: 10px; background: linear-gradient(90deg, #f6f7f8, #eef1f2); }
+    .belofay-overview__storage .belofay-overview__image { grid-column: 2; grid-row: 1; border-radius: 0; aspect-ratio: auto; }
+    .belofay-overview__storage figcaption { grid-column: 1; grid-row: 1; justify-content: center; padding: 20px; }
+    .belofay-overview__storage figcaption strong { margin-bottom: 8px; font-size: 22px; line-height: 1.05; }
+    .belofay-overview__cards { display: flex; flex-direction: column; gap: 10px; }
+    .belofay-overview__card { padding: 18px; }
+    .belofay-overview__card h3 { font-size: 21px; }
+    .belofay-overview__card--included { position: relative; overflow: hidden; }
+    .belofay-overview__card li { font-size: 15px; }
+    .belofay-overview__card--included li > svg { display: none; }
+    .belofay-overview__materials { order: 3; padding: 14px 18px; }
+    .belofay-overview__materials summary { cursor: pointer; }
+    .belofay-overview__materials summary small { display: block; margin-top: 3px; color: var(--overview-muted); font-weight: 400; font-size: 12px; }
+    .belofay-overview__materials summary .belofay-overview__chevron { display: block; margin-left: auto; }
+    .belofay-overview__materials:not([open]) ul { display: none; }
+    .belofay-overview__reviews { order: 4; }
+    .belofay-overview__review-grid { grid-template-columns: 1fr; }
+    .belofay-overview__rating { font-size: 52px; }
+    .belofay-overview__reviews blockquote { padding: 14px; border: 0; border-radius: 9px; background: #f0faf4; }
+    .belofay-overview__all-reviews { display: inline-flex; margin-top: 14px; color: #075bbb; font-weight: 700; text-decoration: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .belofay-overview__chevron { transition: none; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Belofay product overview",
+  "tag": "section",
+  "class": "section-belofay-overview",
+  "settings": [
+    {"type":"header","content":"Sticky navigation"},
+    {"type":"text","id":"tab_overview","label":"Overview label","default":"Overview"},
+    {"type":"text","id":"tab_dimensions","label":"Dimensions label","default":"Dimensions & Fit"},
+    {"type":"url","id":"dimensions_link","label":"Dimensions link"},
+    {"type":"text","id":"tab_installation","label":"Installation label","default":"Installation"},
+    {"type":"url","id":"installation_link","label":"Installation link"},
+    {"type":"text","id":"tab_delivery","label":"Delivery label","default":"Delivery & Returns"},
+    {"type":"url","id":"delivery_link","label":"Delivery link"},
+    {"type":"text","id":"tab_reviews","label":"Reviews label","default":"Reviews"},
+    {"type":"url","id":"reviews_link","label":"Reviews link"},
+    {"type":"text","id":"tab_faq","label":"FAQ label","default":"FAQs"},
+    {"type":"url","id":"faq_link","label":"FAQ link"},
+    {"type":"text","id":"accordion_label","label":"Mobile accordion label","default":"Overview"},
+    {"type":"text","id":"accordion_summary","label":"Mobile accordion summary","default":"Product highlights, included items and reviews."},
+    {"type":"header","content":"Introduction"},
+    {"type":"text","id":"eyebrow","label":"Mobile eyebrow","default":"BELOFAY"},
+    {"type":"text","id":"heading","label":"Heading","default":"A compact vanity made for everyday bathrooms"},
+    {"type":"richtext","id":"description","label":"Description","default":"<p>The Crawley 600mm vanity unit with basin combines modern style with practical storage. Its clean, contemporary design and durable finish make it the perfect choice for cloakrooms, ensuites and smaller bathrooms.</p>"},
+    {"type":"header","content":"Feature cards"},
+    {"type":"text","id":"feature_one_heading","label":"Feature one heading","default":"Soft-close doors"},
+    {"type":"text","id":"feature_one_text","label":"Feature one text","default":"Quiet and smooth operation"},
+    {"type":"text","id":"feature_two_heading","label":"Feature two heading","default":"600mm compact fit"},
+    {"type":"text","id":"feature_two_text","label":"Feature two text","default":"600mm W × 388mm D × 800mm H"},
+    {"type":"text","id":"feature_two_note","label":"Feature two note","default":"Ideal for ensuites and smaller bathrooms."},
+    {"type":"text","id":"feature_three_heading","label":"Feature three heading","default":"Moisture-resistant finish"},
+    {"type":"text","id":"feature_three_text","label":"Feature three text","default":"Built for bathroom environments"},
+    {"type":"header","content":"Photography"},
+    {"type":"image_picker","id":"main_image","label":"Main lifestyle image"},
+    {"type":"text","id":"main_image_alt","label":"Main image alt text","default":"Crawley vanity in a bathroom"},
+    {"type":"text","id":"main_image_label","label":"Main image label","default":"Real bathroom context"},
+    {"type":"text","id":"main_caption_heading","label":"Main caption heading","default":"A perfect fit for modern homes"},
+    {"type":"text","id":"main_caption_text","label":"Main caption text","default":"The 600mm width is ideal for cloakrooms, ensuites and smaller bathrooms."},
+    {"type":"image_picker","id":"storage_image","label":"Storage image"},
+    {"type":"text","id":"storage_image_alt","label":"Storage image alt text","default":"Open Crawley vanity cabinet showing storage"},
+    {"type":"text","id":"storage_heading","label":"Storage heading","default":"Practical storage for everyday essentials"},
+    {"type":"textarea","id":"storage_text","label":"Storage text","default":"Keep your bathroom organised with a spacious cabinet, perfect for toiletries, towels and more."},
+    {"type":"header","content":"Included"},
+    {"type":"text","id":"included_heading","label":"Heading","default":"What’s included"},
+    {"type":"text","id":"included_one","label":"Item one","default":"Ceramic basin included"},
+    {"type":"text","id":"included_two","label":"Item two","default":"Chrome waste included"},
+    {"type":"text","id":"included_three","label":"Item three","default":"Vanity cabinet"},
+    {"type":"header","content":"Before buying"},
+    {"type":"text","id":"warning_heading","label":"Heading","default":"Before you buy"},
+    {"type":"text","id":"warning_one_heading","label":"First heading","default":"Tap not included"},
+    {"type":"text","id":"warning_one_text","label":"First detail","default":"You’ll need to purchase a basin tap separately."},
+    {"type":"text","id":"tap_link_label","label":"Tap link label","default":"Shop matching taps"},
+    {"type":"url","id":"tap_link","label":"Tap link"},
+    {"type":"text","id":"warning_two_heading","label":"Second heading","default":"Quick self-assembly"},
+    {"type":"text","id":"warning_two_text","label":"Second detail","default":"Approx. 30 minutes · Basic tools required."},
+    {"type":"text","id":"warning_three_heading","label":"Third heading","default":"Plumbing connection required"},
+    {"type":"text","id":"warning_three_text","label":"Third detail","default":"A plumber is needed for basin and waste connection."},
+    {"type":"header","content":"Materials"},
+    {"type":"text","id":"materials_heading","label":"Heading","default":"Premium materials & finish"},
+    {"type":"text","id":"materials_mobile_summary","label":"Collapsed summary","default":"Moisture-resistant painted cabinet · soft-close metal hinges · easy-clean surfaces"},
+    {"type":"text","id":"material_one","label":"Item one","default":"Durable, painted moisture-resistant cabinet"},
+    {"type":"text","id":"material_two","label":"Item two","default":"Easy-clean ceramic basin"},
+    {"type":"text","id":"material_three","label":"Item three","default":"Soft-close hinges"},
+    {"type":"text","id":"material_four","label":"Item four","default":"Smooth, modern matte finish in Crawley Grey"},
+    {"type":"header","content":"Reviews"},
+    {"type":"text","id":"reviews_heading","label":"Heading","default":"Customer reviews"},
+    {"type":"text","id":"rating","label":"Rating","default":"4.5"},
+    {"type":"number","id":"rating_count","label":"Rating count","default":121},
+    {"type":"text","id":"verified_label","label":"Verified label","default":"Verified reviews"},
+    {"type":"textarea","id":"review_quote","label":"Featured review","default":"Great quality unit, looks fantastic in our new bathroom. Solid build and easy to assemble."},
+    {"type":"text","id":"review_author","label":"Review author","default":"Sarah K."},
+    {"type":"text","id":"verified_purchase","label":"Purchase label","default":"Verified purchase"},
+    {"type":"text","id":"all_reviews_label","label":"All reviews label","default":"See all reviews"},
+    {"type":"header","content":"Colors"},
+    {"type":"color","id":"green","label":"Green","default":"#16a34a"},
+    {"type":"color","id":"orange","label":"Orange","default":"#ff6b00"},
+    {"type":"color","id":"text_color","label":"Text","default":"#14233a"},
+    {"type":"color","id":"muted_color","label":"Muted text","default":"#536784"}
+  ],
+  "blocks": [
+    {"type":"rating_bar","name":"Rating bar","limit":5,"settings":[{"type":"range","id":"stars","label":"Stars","min":1,"max":5,"step":1,"default":5},{"type":"range","id":"percent","label":"Percentage","min":0,"max":100,"step":1,"default":68}]}
+  ],
+  "presets": [{"name":"Belofay product overview","blocks":[{"type":"rating_bar","settings":{"stars":5,"percent":68}},{"type":"rating_bar","settings":{"stars":4,"percent":20}},{"type":"rating_bar","settings":{"stars":3,"percent":8}},{"type":"rating_bar","settings":{"stars":2,"percent":3}},{"type":"rating_bar","settings":{"stars":1,"percent":1}}]}]
+}
+{% endschema %}

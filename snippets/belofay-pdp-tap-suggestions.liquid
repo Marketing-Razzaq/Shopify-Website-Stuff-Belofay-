@@ -2,31 +2,69 @@
 Renders up to three merchant-selected tap recommendation cards.
 @param {object} blocks - Tap suggestion blocks from the parent section.
 @param {string} heading - Recommendation group heading.
+@param {string} description - Recommendation group description.
 @example
-{% render 'belofay-pdp-tap-suggestions', blocks: section.blocks, heading: section.settings.suggestions_heading %}
+{% render 'belofay-pdp-tap-suggestions', blocks: section.blocks, heading: section.settings.suggestions_heading, description: section.settings.suggestions_description %}
 {% enddoc %}
 
 {%- if blocks.size > 0 -%}
   <section class="belofay-pdp-suggestions" aria-labelledby="BelofayTapSuggestions">
-    <h2 id="BelofayTapSuggestions">{{ heading }}</h2>
+    <div class="belofay-pdp-suggestions__intro">
+      <h2 id="BelofayTapSuggestions">{{ heading }}</h2>
+      {%- if description != blank -%}<p>{{ description }}</p>{%- endif -%}
+    </div>
     <div class="belofay-pdp-suggestions__grid">
       {%- for block in blocks limit: 3 -%}
         {%- assign suggested_product = block.settings.product -%}
+        {%- assign suggested_variant = suggested_product.selected_or_first_available_variant -%}
         {%- assign card_image = block.settings.image | default: suggested_product.featured_image -%}
         {%- assign card_title = block.settings.title | default: suggested_product.title | default: 'Matching tap' -%}
         {%- assign card_url = block.settings.link | default: suggested_product.url | default: '/collections/taps' -%}
-        <article class="belofay-pdp-suggestion" {{ block.shopify_attributes }}>
-          <a class="belofay-pdp-suggestion__link" href="{{ card_url }}" aria-label="{{ card_title | escape }}">
-            <span class="belofay-pdp-suggestion__media">
-              {%- if card_image != blank -%}
-                {{ card_image | image_url: width: 480 | image_tag: loading: 'lazy', widths: '180, 260, 360, 480', sizes: '(max-width: 749px) 42vw, 240px', alt: card_title }}
-              {%- else -%}
-                {{ 'product-1' | placeholder_svg_tag }}
-              {%- endif -%}
-            </span>
-            <span class="belofay-pdp-suggestion__title">{{ card_title }}</span>
-            {%- if suggested_product != blank -%}<span class="belofay-pdp-suggestion__price">{{ suggested_product.price | money }}</span>{%- endif -%}
+        {%- assign suggestion_quantity = 0 -%}
+        {%- if suggested_variant != blank -%}
+          {%- for cart_item in cart.items -%}
+            {%- if cart_item.variant_id == suggested_variant.id -%}
+              {%- assign suggestion_quantity = suggestion_quantity | plus: cart_item.quantity -%}
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endif -%}
+        <article
+          class="belofay-pdp-suggestion"
+          data-upsell-card
+          data-upsell-variant-id="{{ suggested_variant.id }}"
+          data-upsell-quantity="{{ suggestion_quantity }}"
+          {{ block.shopify_attributes }}
+        >
+          <a class="belofay-pdp-suggestion__media" href="{{ card_url }}" aria-label="View {{ card_title | escape }}">
+            {%- if card_image != blank -%}
+              {{ card_image | image_url: width: 720 | image_tag: loading: 'lazy', widths: '240, 360, 480, 720', sizes: '(max-width: 749px) 78vw, (max-width: 1366px) 31vw, 360px', alt: card_title }}
+            {%- else -%}
+              {{ 'product-1' | placeholder_svg_tag }}
+            {%- endif -%}
           </a>
+          <div class="belofay-pdp-suggestion__overlay">
+            <a class="belofay-pdp-suggestion__title" href="{{ card_url }}">{{ card_title }}</a>
+            {%- if suggested_product != blank -%}<span class="belofay-pdp-suggestion__price">{{ suggested_variant.price | money }}</span>{%- endif -%}
+            {%- if suggested_variant != blank -%}
+              <div class="belofay-pdp-suggestion__actions">
+                <button
+                  class="belofay-pdp-suggestion__add"
+                  type="button"
+                  data-upsell-add
+                  {% if suggestion_quantity > 0 %}hidden{% endif %}
+                  {% unless suggested_variant.available %}disabled{% endunless %}
+                >
+                  {%- if suggested_variant.available -%}Add to cart{%- else -%}Sold out{%- endif -%}
+                </button>
+                <div class="belofay-pdp-suggestion__quantity" data-upsell-quantity-control {% if suggestion_quantity == 0 %}hidden{% endif %}>
+                  <button type="button" data-upsell-decrease aria-label="Decrease {{ card_title | escape }} quantity">−</button>
+                  <span data-upsell-quantity-value aria-live="polite">{{ suggestion_quantity }}</span>
+                  <button type="button" data-upsell-increase aria-label="Increase {{ card_title | escape }} quantity">+</button>
+                </div>
+              </div>
+              <p class="belofay-pdp-suggestion__status" data-upsell-status role="status" hidden></p>
+            {%- endif -%}
+          </div>
         </article>
       {%- endfor -%}
     </div>
