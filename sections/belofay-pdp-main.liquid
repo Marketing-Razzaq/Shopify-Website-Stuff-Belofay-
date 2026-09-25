@@ -13,7 +13,7 @@
 {%- endfor -%}
 <belofay-product
   class="belofay-pdp-hero"
-  style="--pdp-included-bg: {{ section.settings.included_background }}; --pdp-warning-bg: {{ section.settings.warning_background }}; --pdp-accent: {{ section.settings.accent_color }}; --pdp-action: {{ section.settings.action_color }}; --pdp-strong-text: {{ section.settings.strong_text_color }}; --pdp-muted-text: {{ section.settings.muted_text_color }};"
+  style="--pdp-included-bg: var(--ds-bg-success); --pdp-warning-bg: var(--ds-bg-attention); --pdp-accent: var(--ds-action-attention); --pdp-action: var(--ds-action-primary); --pdp-strong-text: var(--ds-text-heading); --pdp-muted-text: var(--ds-text-supporting);"
 >
   {%- if section.settings.show_breadcrumbs -%}
     <div class="belofay-pdp__shell">
@@ -35,8 +35,39 @@
       {% render 'belofay-pdp-variant-picker', product: product, section_id: section.id, settings: section.settings %}
     </div>
     <div class="belofay-pdp-hero__panels">
-      <article class="belofay-pdp__card belofay-pdp-hero__panel"><h2>{{ section.settings.included_heading }}</h2><ul class="belofay-pdp__check-list"><li><span class="belofay-pdp__check" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="m5 10 3 3 7-7"/></svg></span>{{ section.settings.included_one }}</li><li><span class="belofay-pdp__check" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="m5 10 3 3 7-7"/></svg></span>{{ section.settings.included_two }}</li></ul></article>
-      <article class="belofay-pdp__card belofay-pdp-hero__panel belofay-pdp-hero__panel--attention"><h2>{{ section.settings.warning_heading }}</h2><ul class="belofay-pdp__check-list"><li><span class="belofay-pdp__check belofay-pdp__check--warning" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M10 5v6m0 3v.1"/></svg></span><span>{{ section.settings.warning_one }}<br><a class="belofay-pdp-hero__tap-link" href="{{ section.settings.tap_url | default: '/collections/taps' }}">{{ section.settings.tap_link_text }} <span aria-hidden="true">→</span></a></span></li><li><span class="belofay-pdp__check belofay-pdp__check--info" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M10 9v6m0-10v.1"/></svg></span><span><strong>{{ section.settings.warning_two }}</strong><br><span class="belofay-pdp-hero__detail">{{ section.settings.warning_detail }}</span></span></li></ul></article>
+      {%- assign included_block_count = section.blocks | where: 'type', 'included_item' | size -%}
+      {%- assign notice_block_count = section.blocks | where: 'type', 'notice_item' | size -%}
+      {%- if section.settings.show_included_panel -%}
+        <article class="belofay-pdp__card belofay-pdp-hero__panel">
+          <h2>{{ section.settings.included_heading }}</h2>
+          <ul class="belofay-pdp__check-list">
+            {%- if included_block_count > 0 -%}
+              {%- for block in section.blocks -%}
+                {%- if block.type == 'included_item' -%}
+                  <li {{ block.shopify_attributes }}><span class="belofay-pdp__check" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="m5 10 3 3 7-7"/></svg></span>{{ block.settings.text }}</li>
+                {%- endif -%}
+              {%- endfor -%}
+            {%- endif -%}
+          </ul>
+        </article>
+      {%- endif -%}
+      {%- if section.settings.show_warning_panel -%}
+        <article class="belofay-pdp__card belofay-pdp-hero__panel belofay-pdp-hero__panel--attention">
+          <h2>{{ section.settings.warning_heading }}</h2>
+          <ul class="belofay-pdp__check-list">
+            {%- if notice_block_count > 0 -%}
+              {%- for block in section.blocks -%}
+                {%- if block.type == 'notice_item' -%}
+                  <li {{ block.shopify_attributes }}>
+                    <span class="belofay-pdp__check{% if block.settings.tone == 'warning' %} belofay-pdp__check--warning{% else %} belofay-pdp__check--info{% endif %}" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M10 9v6m0-10v.1"/></svg></span>
+                    <span><strong>{{ block.settings.heading }}</strong>{% if block.settings.text != blank %}<br><span class="belofay-pdp-hero__detail">{{ block.settings.text }}</span>{% endif %}{% if block.settings.link_label != blank and block.settings.link != blank %}<br><a class="belofay-pdp-hero__tap-link" href="{{ block.settings.link }}">{{ block.settings.link_label }} <span aria-hidden="true">→</span></a>{% endif %}</span>
+                  </li>
+                {%- endif -%}
+              {%- endfor -%}
+            {%- endif -%}
+          </ul>
+        </article>
+      {%- endif -%}
     </div>
     <div class="belofay-pdp-delivery-strip">
       <span class="belofay-pdp-delivery-strip__item">{% render 'belofay-pdp-icon', name: 'delivery' %}<span><strong>{{ section.settings.delivery_heading }}</strong><br>{{ section.settings.delivery_text }}</span></span>
@@ -75,15 +106,10 @@
     {"type":"text","id":"dimension_height","label":"Height","default":"800mm H"},
     {"type":"text","id":"option_error_text","label":"Selection error","default":"Please select an option"},
     {"type":"header","content":"Information panels"},
+    {"type":"checkbox","id":"show_included_panel","label":"Show included panel","default":true},
     {"type":"text","id":"included_heading","label":"Included heading","default":"What’s included"},
-    {"type":"text","id":"included_one","label":"Included item one","default":"Ceramic basin included"},
-    {"type":"text","id":"included_two","label":"Included item two","default":"Chrome waste included"},
+    {"type":"checkbox","id":"show_warning_panel","label":"Show before-you-buy panel","default":true},
     {"type":"text","id":"warning_heading","label":"Warning heading","default":"Before you buy"},
-    {"type":"text","id":"warning_one","label":"Warning one","default":"Tap not included"},
-    {"type":"text","id":"tap_link_text","label":"Tap link text","default":"Shop matching taps"},
-    {"type":"url","id":"tap_url","label":"Tap collection link"},
-    {"type":"text","id":"warning_two","label":"Warning two","default":"Quick self-assembly"},
-    {"type":"text","id":"warning_detail","label":"Assembly detail","default":"Approx. 30 min · Basic tools · Plumbing connection required"},
     {"type":"text","id":"delivery_heading","label":"Delivery heading","default":"FREE UK DELIVERY"},
     {"type":"text","id":"delivery_text","label":"Delivery text","default":"Cabinet and basin may arrive separately"},
     {"type":"text","id":"returns_link_text","label":"Returns link text","default":"30-day returns policy"},
@@ -101,16 +127,27 @@
     {"type":"text","id":"returns_text","label":"Returns text","default":"Shop with confidence"},
     {"type":"header","content":"Tap recommendations"},
     {"type":"text","id":"suggestions_heading","label":"Heading","default":"Complete the look"},
-    {"type":"text","id":"suggestions_description","label":"Description","default":"Compatible accessories for this product"},
-    {"type":"header","content":"Hero colors"},
-    {"type":"color","id":"action_color","label":"Action green","default":"#20a957"},
-    {"type":"color","id":"accent_color","label":"Accent orange","default":"#ff6b00"},
-    {"type":"color","id":"strong_text_color","label":"Strong text","default":"#14233a"},
-    {"type":"color","id":"muted_text_color","label":"Muted text","default":"#5f6d80"},
-    {"type":"color","id":"included_background","label":"Included panel background","default":"#effaf3"},
-    {"type":"color","id":"warning_background","label":"Before you buy background","default":"#fff4ed"}
+    {"type":"text","id":"suggestions_description","label":"Description","default":"Compatible accessories for this product"}
   ],
   "blocks": [
+    {
+      "type": "included_item",
+      "name": "Included item",
+      "settings": [
+        {"type":"text","id":"text","label":"Text","default":"Included item"}
+      ]
+    },
+    {
+      "type": "notice_item",
+      "name": "Before-you-buy item",
+      "settings": [
+        {"type":"select","id":"tone","label":"Style","options":[{"value":"warning","label":"Warning"},{"value":"info","label":"Information"}],"default":"info"},
+        {"type":"text","id":"heading","label":"Heading","default":"Important information"},
+        {"type":"text","id":"text","label":"Description"},
+        {"type":"text","id":"link_label","label":"Link label"},
+        {"type":"url","id":"link","label":"Link"}
+      ]
+    },
     {
       "type": "tap_suggestion",
       "name": "Tap suggestion",
@@ -123,6 +160,6 @@
       ]
     }
   ],
-  "max_blocks": 3
+  "max_blocks": 20
 }
 {% endschema %}

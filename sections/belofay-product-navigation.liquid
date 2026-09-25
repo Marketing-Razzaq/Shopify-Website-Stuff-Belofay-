@@ -1,11 +1,18 @@
 <nav class="belofay-product-nav" aria-label="Product information">
   <div class="belofay-product-nav__inner">
-    <a href="#overview" data-product-nav-link="overview">{{ section.settings.overview_label }}</a>
-    <a href="#dimensions-fit" data-product-nav-link="dimensions-fit">{{ section.settings.dimensions_label }}</a>
-    <a href="#installation" data-product-nav-link="installation">{{ section.settings.installation_label }}</a>
-    <a href="#delivery-returns" data-product-nav-link="delivery-returns">{{ section.settings.delivery_label }}</a>
-    <a href="#reviews" data-product-nav-link="reviews">{{ section.settings.reviews_label }}</a>
-    <a href="#faqs" data-product-nav-link="faqs">{{ section.settings.faq_label }}</a>
+    {%- if section.blocks.size > 0 -%}
+      {%- for block in section.blocks -%}
+        {%- assign target_id = block.settings.target | remove_first: '#' -%}
+        {%- if block.settings.label != blank and target_id != blank -%}<a href="#{{ target_id | escape }}" data-product-nav-link="{{ target_id | escape }}" {{ block.shopify_attributes }}>{{ block.settings.label }}</a>{%- endif -%}
+      {%- endfor -%}
+    {%- else -%}
+      <a href="#overview" data-product-nav-link="overview">{{ section.settings.overview_label }}</a>
+      <a href="#dimensions-fit" data-product-nav-link="dimensions-fit">{{ section.settings.dimensions_label }}</a>
+      <a href="#installation" data-product-nav-link="installation">{{ section.settings.installation_label }}</a>
+      <a href="#delivery-returns" data-product-nav-link="delivery-returns">{{ section.settings.delivery_label }}</a>
+      <a href="#reviews" data-product-nav-link="reviews">{{ section.settings.reviews_label }}</a>
+      <a href="#faqs" data-product-nav-link="faqs">{{ section.settings.faq_label }}</a>
+    {%- endif -%}
   </div>
 </nav>
 
@@ -50,6 +57,13 @@
     {"type":"text","id":"reviews_label","label":"Reviews label","default":"Reviews"},
     {"type":"text","id":"faq_label","label":"FAQ label","default":"FAQs"}
   ],
-  "presets":[{"name":"Belofay PDP navigation"}]
+  "blocks":[
+    {"type":"link","name":"Navigation link","limit":8,"settings":[
+      {"type":"text","id":"label","label":"Label","default":"Section"},
+      {"type":"text","id":"target","label":"Section ID","info":"Enter the section anchor without #, for example dimensions-fit.","default":"overview"}
+    ]}
+  ],
+  "max_blocks":8,
+  "presets":[{"name":"Belofay PDP navigation","blocks":[{"type":"link","settings":{"label":"Overview","target":"overview"}},{"type":"link","settings":{"label":"Dimensions & Fit","target":"dimensions-fit"}},{"type":"link","settings":{"label":"Installation","target":"installation"}},{"type":"link","settings":{"label":"Delivery & Returns","target":"delivery-returns"}},{"type":"link","settings":{"label":"Reviews","target":"reviews"}},{"type":"link","settings":{"label":"FAQs","target":"faqs"}}]}]
 }
 {% endschema %}

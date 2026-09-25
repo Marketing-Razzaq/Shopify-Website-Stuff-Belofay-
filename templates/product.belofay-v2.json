@@ -4,27 +4,53 @@
     "main": {
       "type": "belofay-pdp-main",
       "blocks": {
+        "included_basin": {"type":"included_item","settings":{"text":"Ceramic basin included"}},
+        "included_waste": {"type":"included_item","settings":{"text":"Chrome waste included"}},
+        "notice_tap": {"type":"notice_item","settings":{"tone":"warning","heading":"Tap not included","text":"","link_label":"Shop matching taps","link":"/collections/taps"}},
+        "notice_assembly": {"type":"notice_item","settings":{"tone":"info","heading":"Quick self-assembly","text":"Approx. 30 min · Basic tools · Plumbing connection required"}},
         "tap_suggestion_1": {"type": "tap_suggestion", "settings": {"title": "Matching basin tap", "link": "/collections/taps"}},
         "tap_suggestion_2": {"type": "tap_suggestion", "settings": {"title": "Chrome mixer tap", "link": "/collections/taps"}},
         "tap_suggestion_3": {"type": "tap_suggestion", "settings": {"title": "Modern mono tap", "link": "/collections/taps"}}
       },
-      "block_order": ["tap_suggestion_1", "tap_suggestion_2", "tap_suggestion_3"],
+      "block_order": ["included_basin", "included_waste", "notice_tap", "notice_assembly", "tap_suggestion_1", "tap_suggestion_2", "tap_suggestion_3"],
       "settings": {}
     },
     "product_navigation": {
       "type": "belofay-product-navigation",
+      "blocks": {
+        "nav_overview": {"type":"link","settings":{"label":"Overview","target":"overview"}},
+        "nav_dimensions": {"type":"link","settings":{"label":"Dimensions & Fit","target":"dimensions-fit"}},
+        "nav_installation": {"type":"link","settings":{"label":"Installation","target":"installation"}},
+        "nav_delivery": {"type":"link","settings":{"label":"Delivery & Returns","target":"delivery-returns"}},
+        "nav_reviews": {"type":"link","settings":{"label":"Reviews","target":"reviews"}},
+        "nav_faq": {"type":"link","settings":{"label":"FAQs","target":"faqs"}}
+      },
+      "block_order": ["nav_overview", "nav_dimensions", "nav_installation", "nav_delivery", "nav_reviews", "nav_faq"],
       "settings": {}
     },
     "overview": {
       "type": "belofay-product-overview",
       "blocks": {
+        "feature_soft_close": {"type":"feature","settings":{"icon":"soft-close","heading":"Soft-close doors","text":"Quiet and smooth operation","wide":false}},
+        "feature_compact": {"type":"feature","settings":{"icon":"ruler","heading":"600mm compact fit","text":"600mm W × 388mm D × 800mm H","note":"Ideal for ensuites and smaller bathrooms.","wide":true}},
+        "feature_moisture": {"type":"feature","settings":{"icon":"moisture","heading":"Moisture-resistant finish","text":"Built for bathroom environments","wide":false}},
+        "overview_included_basin": {"type":"included_item","settings":{"icon":"basin","text":"Ceramic basin included"}},
+        "overview_included_waste": {"type":"included_item","settings":{"icon":"waste","text":"Chrome waste included"}},
+        "overview_included_cabinet": {"type":"included_item","settings":{"icon":"cabinet","text":"Vanity cabinet"}},
+        "overview_notice_tap": {"type":"notice","settings":{"tone":"warning","heading":"Tap not included","text":"You’ll need to purchase a basin tap separately.","link_label":"Shop matching taps","link":"/collections/taps"}},
+        "overview_notice_assembly": {"type":"notice","settings":{"tone":"info","heading":"Quick self-assembly","text":"Approx. 30 minutes · Basic tools required."}},
+        "overview_notice_plumbing": {"type":"notice","settings":{"tone":"info","heading":"Plumbing connection required","text":"A plumber is needed for basin and waste connection."}},
+        "material_cabinet": {"type":"material","settings":{"text":"Durable, painted moisture-resistant cabinet"}},
+        "material_basin": {"type":"material","settings":{"text":"Easy-clean ceramic basin"}},
+        "material_hinges": {"type":"material","settings":{"text":"Soft-close hinges"}},
+        "material_finish": {"type":"material","settings":{"text":"Smooth, modern matte finish in Crawley Grey"}},
         "rating_5": {"type":"rating_bar","settings":{"stars":5,"percent":68}},
         "rating_4": {"type":"rating_bar","settings":{"stars":4,"percent":20}},
         "rating_3": {"type":"rating_bar","settings":{"stars":3,"percent":8}},
         "rating_2": {"type":"rating_bar","settings":{"stars":2,"percent":3}},
         "rating_1": {"type":"rating_bar","settings":{"stars":1,"percent":1}}
       },
-      "block_order": ["rating_5", "rating_4", "rating_3", "rating_2", "rating_1"],
+      "block_order": ["feature_soft_close", "feature_compact", "feature_moisture", "overview_included_basin", "overview_included_waste", "overview_included_cabinet", "overview_notice_tap", "overview_notice_assembly", "overview_notice_plumbing", "material_cabinet", "material_basin", "material_hinges", "material_finish", "rating_5", "rating_4", "rating_3", "rating_2", "rating_1"],
       "settings": {}
     },
     "dimensions": {
