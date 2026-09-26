@@ -222,11 +222,6 @@ if (!customElements.get('belofay-product')) {
       const productInfo = this.querySelector('.belofay-pdp-hero__info');
       const sticky = this.querySelector('.belofay-pdp-sticky');
       if (!purchase || !sticky || !('IntersectionObserver' in window)) return;
-      if (window.matchMedia('(max-width: 1366px)').matches) {
-        sticky.classList.add('is-visible');
-        sticky.setAttribute('aria-hidden', 'false');
-        return;
-      }
       const trigger = purchase.offsetParent === null ? productInfo : purchase;
       if (!trigger) return;
       this.purchaseObserver?.disconnect();
