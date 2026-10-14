@@ -472,6 +472,10 @@
   .belofay-mobile-policy-support > article + article { margin-top: 0; }
 }
 
+.belofay-pdp .belofay-faq__assurances,
+.belofay-pdp .belofay-faq__popular { display: none; }
+.belofay-pdp .belofay-faq__contact { grid-column: 1 / -1; }
+
 @media (prefers-reduced-motion: reduce) {
   .belofay-pdp *, .belofay-pdp *::before, .belofay-pdp *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
 }
