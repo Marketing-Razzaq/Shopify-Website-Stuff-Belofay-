@@ -505,6 +505,17 @@
   .belofay-pdp .belofay-delivery__accordions summary i { align-self: center; }
 }
 
+.belofay-pdp .belofay-dimensions__eyebrow,
+.belofay-pdp .belofay-installation__eyebrow,
+.belofay-pdp .belofay-delivery__eyebrow,
+.belofay-pdp .belofay-reviews__header > p,
+.belofay-pdp .belofay-faq__header > p { margin: 0 0 8px; font-family: Gilroy, Arial, sans-serif; font-size: 13px; font-weight: 400; color: #14233a; letter-spacing: .25em; }
+.belofay-pdp .belofay-dimensions__intro h2 { margin: 0 0 10px; }
+@media (max-width: 1024px) {
+  .belofay-pdp .belofay-dimensions__body { padding: 20px 14px 14px; }
+  .belofay-pdp .belofay-dimensions__intro > p:last-child { font-size: 16px; line-height: 1.45; margin: 0; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .belofay-pdp *, .belofay-pdp *::before, .belofay-pdp *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
 }
