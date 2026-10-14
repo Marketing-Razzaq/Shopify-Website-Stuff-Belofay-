@@ -12,6 +12,7 @@
   {% if source_products != blank %}
     <header class="belofay-similar__header"><div><h2>{{ section.settings.heading | escape }}</h2><p>{{ section.settings.subheading | escape }}</p></div>{% if section.settings.fallback_collection != blank %}<a href="{{ section.settings.fallback_collection.url }}">{{ section.settings.link_label | escape }} <span aria-hidden="true">→</span></a>{% endif %}</header>
     <div class="belofay-similar__carousel">
+      <p class="belofay-similar__swipe-hint"><span aria-hidden="true">↔</span> Swipe to see more vanities</p>
       <button type="button" class="belofay-similar__arrow belofay-similar__arrow--prev" data-carousel-direction="-1" aria-label="Previous suggested products" aria-controls="Similar-{{ section.id }}">‹</button>
       <ul id="Similar-{{ section.id }}" class="belofay-similar__track" tabindex="0" aria-label="Similar vanity units">
         {% assign shown = 0 %}
