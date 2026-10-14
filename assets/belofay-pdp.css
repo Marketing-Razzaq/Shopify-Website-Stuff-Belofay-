@@ -434,6 +434,8 @@
 }
 @media screen and (max-width: 749px) {
   .belofay-pdp { --ds-section-heading-size: 30px; }
+  .belofay-pdp .belofay-dimensions__measure-callout,
+  .belofay-pdp .belofay-dimensions__download { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
