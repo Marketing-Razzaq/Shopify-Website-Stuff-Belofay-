@@ -438,6 +438,10 @@
   .belofay-pdp .belofay-dimensions__download { display: none; }
 }
 
+.belofay-pdp .belofay-installation .belofay-installation__icon { object-fit: contain; padding: 0; border-radius: 0; background: transparent; }
+.belofay-pdp .belofay-installation__accordions summary .belofay-installation__icon,
+.belofay-pdp .belofay-dimensions__subaccordions summary .belofay-dimensions__icon { width: 42px; height: 42px; flex: 0 0 42px; object-fit: contain; padding: 0; border-radius: 0; background: transparent; }
+
 @media (prefers-reduced-motion: reduce) {
   .belofay-pdp *, .belofay-pdp *::before, .belofay-pdp *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
 }

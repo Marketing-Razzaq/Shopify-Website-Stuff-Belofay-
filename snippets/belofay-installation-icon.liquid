@@ -3,12 +3,12 @@ Renders an uploaded BELOFAY Installation icon.
 @param {string} name - Installation icon name.
 {% enddoc %}
 {%- case name -%}
-  {%- when 'document' -%}{%- assign icon_asset = 'belofay-installation-document.svg' -%}
-  {%- when 'drill' -%}{%- assign icon_asset = 'belofay-installation-drill.svg' -%}
-  {%- when 'package' -%}{%- assign icon_asset = 'belofay-installation-package-box.svg' -%}
-  {%- when 'sealant' -%}{%- assign icon_asset = 'belofay-installation-sealant-tube.svg' -%}
-  {%- when 'shield' -%}{%- assign icon_asset = 'belofay-installation-shield-check.svg' -%}
-  {%- when 'level' -%}{%- assign icon_asset = 'belofay-installation-spirit-level.svg' -%}
-  {%- else -%}{%- assign icon_asset = 'belofay-installation-screwdriver.svg' -%}
+  {%- when 'document' -%}{%- assign icon_asset = 'belofay-icon-file.webp' -%}
+  {%- when 'drill' -%}{%- assign icon_asset = 'belofay-icon-drill.webp' -%}
+  {%- when 'package' -%}{%- assign icon_asset = 'belofay-icon-box.webp' -%}
+  {%- when 'sealant' -%}{%- assign icon_asset = 'belofay-icon-si.webp' -%}
+  {%- when 'shield' -%}{%- assign icon_asset = 'belofay-icon-cyber-security.webp' -%}
+  {%- when 'level' -%}{%- assign icon_asset = 'belofay-icon-spirit-level.webp' -%}
+  {%- else -%}{%- assign icon_asset = 'belofay-icon-screw-driver.webp' -%}
 {%- endcase -%}
 <img class="belofay-installation__icon" src="{{ icon_asset | asset_url }}" alt="" width="64" height="64" aria-hidden="true">
