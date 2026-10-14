@@ -3,7 +3,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url("{{ 'gilroy-regular.woff2' | asset_url }}") format("woff2");
+  src: url("gilroy-regular.woff2") format("woff2");
 }
 
 @font-face {
@@ -11,7 +11,7 @@
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url("{{ 'gilroy-medium.woff2' | asset_url }}") format("woff2");
+  src: url("gilroy-medium.woff2") format("woff2");
 }
 
 @font-face {
@@ -19,7 +19,7 @@
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url("{{ 'gilroy-semibold.woff2' | asset_url }}") format("woff2");
+  src: url("gilroy-semibold.woff2") format("woff2");
 }
 
 @font-face {
@@ -27,5 +27,6 @@
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url("{{ 'gilroy-bold.woff2' | asset_url }}") format("woff2");
+  src: url("gilroy-bold.woff2") format("woff2");
 }
+

@@ -7,7 +7,7 @@ if (!customElements.get('belofay-product')) {
       this.updateSelectedVariant();
       requestAnimationFrame(() => this.updateSelectedVariant());
       this.syncStickyButton();
-      this.observeMainPurchaseActions();
+      this.showStickyPurchaseActions();
     }
 
     onClick(event) {
@@ -87,6 +87,7 @@ if (!customElements.get('belofay-product')) {
       if (!variant?.available || button.disabled) return;
       const error = this.querySelector('[data-purchase-error]');
       this.purchasePending = true;
+      const purchaseStartedAt = Date.now();
       this.querySelectorAll('[data-product-submit], [data-sticky-submit], [data-buy-now]').forEach((purchaseButton) => {
         purchaseButton.disabled = true;
       });
@@ -122,6 +123,7 @@ if (!customElements.get('belofay-product')) {
           error.hidden = false;
         }
       } finally {
+        await new Promise((resolve) => window.setTimeout(resolve, Math.max(0, 2000 - (Date.now() - purchaseStartedAt))));
         this.purchasePending = false;
         button.removeAttribute('aria-busy');
         this.updateSelectedVariant();
@@ -217,20 +219,11 @@ if (!customElements.get('belofay-product')) {
       sticky.disabled = main.disabled;
     }
 
-    observeMainPurchaseActions() {
-      const purchase = this.querySelector('[data-belofay-purchase]');
-      const productInfo = this.querySelector('.belofay-pdp-hero__info');
+    showStickyPurchaseActions() {
       const sticky = this.querySelector('.belofay-pdp-sticky');
-      if (!purchase || !sticky || !('IntersectionObserver' in window)) return;
-      const trigger = purchase.offsetParent === null ? productInfo : purchase;
-      if (!trigger) return;
-      this.purchaseObserver?.disconnect();
-      this.purchaseObserver = new IntersectionObserver(([entry]) => {
-        const hasScrolledPastPurchase = !entry.isIntersecting && entry.boundingClientRect.bottom < 0;
-        sticky.classList.toggle('is-visible', hasScrolledPastPurchase);
-        sticky.setAttribute('aria-hidden', String(!hasScrolledPastPurchase));
-      }, { threshold: 0.01 });
-      this.purchaseObserver.observe(trigger);
+      if (!sticky) return;
+      sticky.classList.add('is-visible');
+      sticky.removeAttribute('aria-hidden');
     }
 
   }

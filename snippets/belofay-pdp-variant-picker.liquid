@@ -36,12 +36,15 @@ Renders Color/Colour and Size product options for the Belofay PDP hero.
                       {%- elsif option_value.swatch.color != blank -%}
                         <span class="belofay-pdp-option__color" style="--swatch-color: {{ option_value.swatch.color }}"></span>
                       {%- else -%}
-                        <span class="belofay-pdp-option__placeholder">{{ option_value | slice: 0 }}</span>
+                        {%- assign color_name = option_value | downcase -%}
+                        {%- assign swatch_color = color_name -%}
+                        {%- if color_name == 'oak' -%}{%- assign swatch_color = '#b88a57' -%}{%- endif -%}
+                        <span class="belofay-pdp-option__color" style="--swatch-color: {{ swatch_color | escape }}"></span>
                       {%- endif -%}
                     </span>
                   {%- endif -%}
                   <span class="belofay-pdp-option__name">{{ option_value }}</span>
-                  {%- if option_value.variant.price != blank -%}<small>{{ option_value.variant.price | money }}</small>{%- endif -%}
+                  {%- unless is_color -%}{%- if option_value.variant.price != blank -%}<small>{{ option_value.variant.price | money }}</small>{%- endif -%}{%- endunless -%}
                 </label>
               </div>
             {%- endfor -%}
