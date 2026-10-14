@@ -439,6 +439,8 @@
 }
 
 .belofay-pdp .belofay-installation .belofay-installation__icon { object-fit: contain; padding: 0; border-radius: 0; background: transparent; }
+.belofay-pdp .belofay-installation__glance-card .belofay-installation__icon,
+.belofay-pdp .belofay-installation__glance-card.tone-attention .belofay-installation__icon { width: 44px; height: 44px; flex: 0 0 44px; padding: 0; border-radius: 0; background: transparent; object-fit: contain; overflow: visible; }
 .belofay-pdp .belofay-installation__accordions summary .belofay-installation__icon,
 .belofay-pdp .belofay-dimensions__subaccordions summary .belofay-dimensions__icon { width: 42px; height: 42px; flex: 0 0 42px; object-fit: contain; padding: 0; border-radius: 0; background: transparent; }
 
