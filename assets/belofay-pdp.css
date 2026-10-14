@@ -511,6 +511,12 @@
 .belofay-pdp .belofay-reviews__header > p,
 .belofay-pdp .belofay-faq__header > p { margin: 0 0 8px; font-family: Gilroy, Arial, sans-serif; font-size: 13px; font-weight: 400; color: var(--ds-text-heading); letter-spacing: .25em; }
 .belofay-pdp .belofay-dimensions__intro h2 { margin: 0 0 10px; }
+.belofay-pdp .belofay-dimensions__measure-callout,
+.belofay-pdp .belofay-dimensions__download { display: none; }
+.belofay-pdp .belofay-dimensions__header { grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 768px) {
+  .belofay-pdp .belofay-dimensions__utility { display: none; }
+}
 @media (max-width: 1024px) {
   .belofay-pdp .belofay-dimensions__body { padding: 20px 14px 14px; }
   .belofay-pdp .belofay-dimensions__intro > p:last-child { font-size: 16px; line-height: 1.45; margin: 0; }
