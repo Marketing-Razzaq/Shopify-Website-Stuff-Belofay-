@@ -420,6 +420,22 @@
 .belofay-pdp .belofay-pdp-suggestions__intro h2 { color: var(--purchase-ink); font-size: 22px; font-weight: 600; line-height: 1.25; letter-spacing: -.015em; }
 .belofay-pdp .belofay-pdp-suggestions__intro p { color: var(--purchase-muted); font-size: 14px; line-height: 1.5; }
 
+.belofay-pdp { --ds-section-heading-weight: 300; --ds-section-heading-size: clamp(30px, 2.25vw, 42px); }
+.belofay-pdp .belofay-overview__copy h2,
+.belofay-pdp .belofay-dimensions__intro h2,
+.belofay-pdp .belofay-installation__intro h2,
+.belofay-pdp .belofay-reviews__header h2,
+.belofay-pdp .belofay-faq__header h2 {
+  font-family: var(--ds-font-heading), Arial, sans-serif;
+  font-size: var(--ds-section-heading-size);
+  font-weight: var(--ds-section-heading-weight);
+  line-height: 1.08;
+  letter-spacing: -.03em;
+}
+@media screen and (max-width: 749px) {
+  .belofay-pdp { --ds-section-heading-size: 30px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .belofay-pdp *, .belofay-pdp *::before, .belofay-pdp *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
 }
