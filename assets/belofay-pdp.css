@@ -498,6 +498,11 @@
 @media (max-width: 1024px) {
   .belofay-pdp .belofay-delivery__support,
   .belofay-pdp .belofay-mobile-policy-support { padding: var(--ds-space-md); }
+  .belofay-pdp .belofay-delivery__accordions summary { grid-template-columns: 36px minmax(0, 1fr) 16px; column-gap: 12px; row-gap: 4px; padding: 16px; align-items: start; }
+  .belofay-pdp .belofay-delivery__accordions summary > .belofay-delivery__icon { grid-column: 1; grid-row: 1 / 3; width: 36px; height: 36px; object-fit: contain; align-self: start; background: transparent; }
+  .belofay-pdp .belofay-delivery__accordions summary strong { grid-column: 2; grid-row: 1; margin: 0; line-height: 1.35; }
+  .belofay-pdp .belofay-delivery__accordions summary small { grid-column: 2; grid-row: 2; margin: 0; line-height: 1.45; }
+  .belofay-pdp .belofay-delivery__accordions summary i { align-self: center; }
 }
 
 @media (prefers-reduced-motion: reduce) {
