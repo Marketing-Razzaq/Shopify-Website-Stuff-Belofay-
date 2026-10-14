@@ -517,6 +517,10 @@
 .belofay-pdp .belofay-installation__header > .belofay-installation__action,
 .belofay-pdp .belofay-installation__header > .belofay-installation__download { display: none; }
 .belofay-pdp .belofay-installation__header { grid-template-columns: minmax(0, 1fr); }
+@media (max-width: 767px), (min-width: 1025px) {
+  .belofay-pdp .belofay-installation__tools-strip,
+  .belofay-pdp .belofay-installation__reassurance { display: none; }
+}
 @media (min-width: 768px) {
   .belofay-pdp .belofay-dimensions__utility { display: none; }
 }
