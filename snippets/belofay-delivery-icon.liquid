@@ -4,7 +4,15 @@ Renders an icon for the Belofay delivery section.
 @example
 {% render 'belofay-delivery-icon', name: 'truck' %}
 {% enddoc %}
-{%- if name == 'truck' -%}
+{%- if name == 'calendar' or name == 'support' or name == 'mail' or name == 'shield' -%}
+  {%- assign delivery_asset = 'belofay-icon-calendar.webp' -%}
+  {%- case name -%}
+    {%- when 'support' -%}{%- assign delivery_asset = 'belofay-icon-headphones.webp' -%}
+    {%- when 'mail' -%}{%- assign delivery_asset = 'belofay-icon-mail.webp' -%}
+    {%- when 'shield' -%}{%- assign delivery_asset = 'belofay-icon-cyber-security.webp' -%}
+  {%- endcase -%}
+  <img class="belofay-delivery__icon" src="{{ delivery_asset | asset_url }}" width="36" height="36" alt="" loading="lazy">
+{%- elsif name == 'truck' -%}
   <span class="belofay-delivery__icon belofay-delivery__icon--asset" aria-hidden="true">{{ 'delivery_truck.svg' | inline_asset_content }}</span>
 {%- elsif name == 'shield' -%}
   <span class="belofay-delivery__icon belofay-delivery__icon--asset" aria-hidden="true">{{ 'shield_check.svg' | inline_asset_content }}</span>
