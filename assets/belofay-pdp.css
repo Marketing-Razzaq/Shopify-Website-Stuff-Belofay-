@@ -447,6 +447,25 @@
 .belofay-pdp .belofay-delivery__benefits article > span { background: transparent; border-radius: 0; padding: 0; }
 .belofay-pdp .belofay-delivery__benefits img.belofay-delivery__icon { width: 42px; height: 42px; object-fit: contain; padding: 0; border-radius: 0; background: transparent; }
 
+.belofay-mobile-policy-support { display: none; }
+@media screen and (max-width: 767px) {
+  .belofay-pdp .belofay-delivery__policies > .belofay-delivery__returns,
+  .belofay-pdp .belofay-delivery__policies > .belofay-delivery__damage { display: none; }
+  /* Match the brief's 16px rem reference without changing Craft's root size. */
+  .belofay-pdp .belofay-mobile-policy-support { display: block; width: 100%; background: #fff; font-family: Gilroy, Arial, sans-serif; }
+  .belofay-mobile-policy-support > h3 { margin: 0 0 4px; color: #111827; font-size: 18px; font-weight: 600; line-height: 1.3; }
+  .belofay-mobile-policy-support > p { margin: 0 0 16px; color: #475569; font-size: 13px; line-height: 1.5; }
+  .belofay-mobile-policy-support > article { display: flex; gap: 12px; padding: 16px; border: 1px solid #e5e7eb; border-radius: 12px; background: #fff; box-shadow: none; }
+  .belofay-mobile-policy-support > article + article { margin-top: 12px; }
+  .belofay-mobile-policy-support > article.belofay-mobile-policy-support__damage { background: #fff7ef; border-color: #f3dac4; }
+  .belofay-mobile-policy-support article > img { flex: 0 0 24px; width: 24px; height: 24px; object-fit: contain; padding: 0; background: transparent; border-radius: 0; }
+  .belofay-mobile-policy-support article > div { min-width: 0; flex: 1; }
+  .belofay-mobile-policy-support h4 { margin: 0 0 4px; color: #111827; font-size: 16px; font-weight: 600; line-height: 1.35; }
+  .belofay-mobile-policy-support article p { margin: 0; color: #475569; font-size: 14px; line-height: 1.45; }
+  .belofay-mobile-policy-support article a { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; margin-top: 12px; color: #166534; font-size: 14px; font-weight: 600; line-height: 1.4; text-decoration: none; }
+  .belofay-mobile-policy-support article a span { font-size: 16px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .belofay-pdp *, .belofay-pdp *::before, .belofay-pdp *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
 }

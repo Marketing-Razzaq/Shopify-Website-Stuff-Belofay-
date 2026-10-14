@@ -37,6 +37,18 @@
           </div>
 
           <div class="belofay-delivery__policies">
+            <section class="belofay-mobile-policy-support" aria-label="Returns and delivery support">
+              <h3>Returns &amp; delivery support</h3>
+              <p>Find the help you need, quickly.</p>
+              <article>
+                <img src="{{ 'belofay-icon-return.webp' | asset_url }}" width="24" height="24" alt="" loading="lazy">
+                <div><h4>30-day returns</h4><p>Check return eligibility and how to send an item back.</p><a{% if section.settings.returns_link != blank %} href="{{ section.settings.returns_link }}"{% else %} aria-disabled="true"{% endif %}>View returns policy <span aria-hidden="true">→</span></a></div>
+              </article>
+              <article class="belofay-mobile-policy-support__damage">
+                <img src="{{ 'belofay-icon-damaged-package.webp' | asset_url }}" width="24" height="24" alt="" loading="lazy">
+                <div><h4>Damaged on arrival?</h4><p>Find out how to get help with a damaged delivery.</p><a{% if section.settings.damage_link != blank %} href="{{ section.settings.damage_link }}"{% else %} aria-disabled="true"{% endif %}>Get delivery support <span aria-hidden="true">→</span></a></div>
+              </article>
+            </section>
             <article class="belofay-delivery__returns"><span>{% render 'belofay-delivery-icon', name: 'return' %}<b>{{ section.settings.returns_badge }}</b></span><div><h3>{{ section.settings.returns_heading }}</h3><p>{{ section.settings.returns_text }}</p><ul>{%- for block in section.blocks -%}{%- if block.type == 'return_item' -%}<li {{ block.shopify_attributes }}>✓ {{ block.settings.text }}</li>{%- endif -%}{%- endfor -%}</ul><a{% if section.settings.returns_link != blank %} href="{{ section.settings.returns_link }}"{% else %} aria-disabled="true"{% endif %}>{{ section.settings.returns_link_label }} →</a><small>{{ section.settings.rights_note }}</small></div></article>
             <article class="belofay-delivery__damage"><span>{% render 'belofay-delivery-icon', name: 'damage' %}</span><div><h3>{{ section.settings.damage_heading }}</h3><p>{{ section.settings.damage_text }}</p><ol>{%- assign damage_number = 0 -%}{%- for block in section.blocks -%}{%- if block.type == 'damage_step' -%}{%- assign damage_number = damage_number | plus: 1 -%}<li {{ block.shopify_attributes }}>{% render 'belofay-delivery-icon', name: block.settings.icon %}<span><strong>{{ damage_number }}. {{ block.settings.title }}</strong><small>{{ block.settings.text }}</small></span></li>{%- endif -%}{%- endfor -%}</ol><a{% if section.settings.damage_link != blank %} href="{{ section.settings.damage_link }}"{% else %} aria-disabled="true"{% endif %}>{{ section.settings.damage_link_label }} →</a></div></article>
           </div>
