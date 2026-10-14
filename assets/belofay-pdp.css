@@ -514,6 +514,9 @@
 .belofay-pdp .belofay-dimensions__measure-callout,
 .belofay-pdp .belofay-dimensions__download { display: none; }
 .belofay-pdp .belofay-dimensions__header { grid-template-columns: minmax(0, 1fr); }
+.belofay-pdp .belofay-installation__header > .belofay-installation__action,
+.belofay-pdp .belofay-installation__header > .belofay-installation__download { display: none; }
+.belofay-pdp .belofay-installation__header { grid-template-columns: minmax(0, 1fr); }
 @media (min-width: 768px) {
   .belofay-pdp .belofay-dimensions__utility { display: none; }
 }
