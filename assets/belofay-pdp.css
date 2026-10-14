@@ -447,8 +447,7 @@
 .belofay-pdp .belofay-delivery__benefits article > span { background: transparent; border-radius: 0; padding: 0; }
 .belofay-pdp .belofay-delivery__benefits img.belofay-delivery__icon { width: 42px; height: 42px; object-fit: contain; padding: 0; border-radius: 0; background: transparent; }
 
-.belofay-mobile-policy-support { display: none; }
-@media screen and (max-width: 767px) {
+/* Returns and delivery support across mobile, tablet and desktop. */
   .belofay-pdp .belofay-delivery__policies > .belofay-delivery__returns,
   .belofay-pdp .belofay-delivery__policies > .belofay-delivery__damage { display: none; }
   /* Match the brief's 16px rem reference without changing Craft's root size. */
@@ -464,6 +463,12 @@
   .belofay-mobile-policy-support article p { margin: 0; color: #475569; font-size: 14px; line-height: 1.45; }
   .belofay-mobile-policy-support article a { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; margin-top: 12px; color: #166534; font-size: 14px; font-weight: 600; line-height: 1.4; text-decoration: none; }
   .belofay-mobile-policy-support article a span { font-size: 16px; }
+@media screen and (min-width: 768px) {
+  .belofay-pdp .belofay-mobile-policy-support { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; grid-column: 1 / -1; }
+  .belofay-mobile-policy-support > h3, .belofay-mobile-policy-support > p { grid-column: 1 / -1; }
+  .belofay-mobile-policy-support > h3 { margin-bottom: -8px; }
+  .belofay-mobile-policy-support > p { margin-bottom: 4px; }
+  .belofay-mobile-policy-support > article + article { margin-top: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
