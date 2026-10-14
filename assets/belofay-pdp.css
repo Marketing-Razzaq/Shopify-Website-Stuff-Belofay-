@@ -410,8 +410,8 @@
 .belofay-pdp .belofay-pdp-buy__submit svg { width: 28px; height: 28px; }
 .belofay-pdp .belofay-pdp-buy__reassurance { display: flex; flex-direction: column; gap: var(--purchase-row-gap); margin-top: 24px; background: #fff; }
 .belofay-pdp .belofay-pdp-reassurance { display: flex; align-items: flex-start; gap: 16px; padding: 0; border: 0; }
-.belofay-pdp .belofay-pdp-reassurance > .belofay-pdp__icon { flex: 0 0 24px; width: 24px; height: 22px; margin-top: 0; color: var(--purchase-green); }
-.belofay-pdp .belofay-pdp-reassurance svg { width: 22px; height: 22px; margin: 0; color: var(--purchase-green); }
+.belofay-pdp .belofay-pdp-reassurance > .belofay-pdp__icon { flex: 0 0 44px; display: grid; place-items: center; width: 44px; height: 44px; margin-top: 0; color: var(--purchase-green); }
+.belofay-pdp .belofay-pdp-reassurance svg { width: 44px; height: 44px; margin: 0; color: var(--purchase-green); }
 .belofay-pdp .belofay-pdp-reassurance svg [fill]:not([fill="none"]) { fill: var(--purchase-green); }
 .belofay-pdp .belofay-pdp-reassurance > span:last-child { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
 .belofay-pdp .belofay-pdp-reassurance strong { margin: 0; color: var(--purchase-ink); font-size: 16px; font-weight: 600; line-height: 1.3; }
