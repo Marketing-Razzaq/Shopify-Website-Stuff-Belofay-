@@ -444,6 +444,9 @@
 .belofay-pdp .belofay-installation__accordions summary .belofay-installation__icon,
 .belofay-pdp .belofay-dimensions__subaccordions summary .belofay-dimensions__icon { width: 42px; height: 42px; flex: 0 0 42px; object-fit: contain; padding: 0; border-radius: 0; background: transparent; }
 
+.belofay-pdp .belofay-delivery__benefits article > span { background: transparent; border-radius: 0; padding: 0; }
+.belofay-pdp .belofay-delivery__benefits img.belofay-delivery__icon { width: 42px; height: 42px; object-fit: contain; padding: 0; border-radius: 0; background: transparent; }
+
 @media (prefers-reduced-motion: reduce) {
   .belofay-pdp *, .belofay-pdp *::before, .belofay-pdp *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
 }

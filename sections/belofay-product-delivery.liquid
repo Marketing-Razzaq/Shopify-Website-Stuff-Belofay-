@@ -12,7 +12,13 @@
 
         <div class="belofay-delivery__benefits">
           {%- for block in section.blocks -%}{%- if block.type == 'benefit' -%}
-            <article class="{% unless block.settings.show_mobile %}is-desktop-only{% endunless %}" {{ block.shopify_attributes }}><span>{% render 'belofay-delivery-icon', name: block.settings.icon %}</span><div><strong>{{ block.settings.title }}</strong><small>{{ block.settings.text }}</small>{% if block.settings.link != blank %}<a href="{{ block.settings.link }}">{{ block.settings.link_label }} →</a>{% endif %}</div></article>
+            {%- assign benefit_icon = 'belofay-icon-box.webp' -%}
+            {%- case block.settings.icon -%}
+              {%- when 'package' -%}{%- assign benefit_icon = 'belofay-icon-package.webp' -%}
+              {%- when 'shield' -%}{%- assign benefit_icon = 'belofay-icon-return.webp' -%}
+              {%- when 'clock' -%}{%- assign benefit_icon = 'belofay-icon-calendar.webp' -%}
+            {%- endcase -%}
+            <article class="{% unless block.settings.show_mobile %}is-desktop-only{% endunless %}" {{ block.shopify_attributes }}><span><img class="belofay-delivery__icon" src="{{ benefit_icon | asset_url }}" width="42" height="42" alt="" loading="lazy"></span><div><strong>{{ block.settings.title }}</strong><small>{{ block.settings.text }}</small>{% if block.settings.link != blank %}<a href="{{ block.settings.link }}">{{ block.settings.link_label }} →</a>{% endif %}</div></article>
           {%- endif -%}{%- endfor -%}
         </div>
 
