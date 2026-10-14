@@ -463,6 +463,7 @@
   .belofay-mobile-policy-support article p { margin: 0; color: #475569; font-size: 14px; line-height: 1.45; }
   .belofay-mobile-policy-support article a { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; margin-top: 12px; color: #166534; font-size: 14px; font-weight: 600; line-height: 1.4; text-decoration: none; }
   .belofay-mobile-policy-support article a span { font-size: 16px; }
+.belofay-pdp .belofay-delivery__accordions summary img.belofay-delivery__icon { width: 42px; height: 42px; object-fit: contain; padding: 0; border-radius: 0; background: transparent; }
 @media screen and (min-width: 768px) {
   .belofay-pdp .belofay-mobile-policy-support { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; grid-column: 1 / -1; }
   .belofay-mobile-policy-support > h3, .belofay-mobile-policy-support > p { grid-column: 1 / -1; }
