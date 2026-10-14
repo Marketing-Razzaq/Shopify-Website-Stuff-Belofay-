@@ -1,0 +1,34 @@
+{% comment %}Scoped presentation around Craft's product card and Quick Add components.{% endcomment %}
+<article class="belofay-similar__card">
+  <a class="belofay-similar__media-link" href="{{ card_product.url }}" aria-label="View {{ card_product.title | escape }}"></a>
+  <button class="belofay-similar__wish" type="button" data-wishlist-id="{{ card_product.id }}" aria-label="Save {{ card_product.title | escape }} to wishlist" aria-pressed="false">
+    <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
+  </button>
+  {% render 'card-product', card_product: card_product, section_id: section_id, media_aspect_ratio: 'square', show_rating: true, show_vendor: false, quick_add: 'standard' %}
+  {% assign chosen_variant = card_product.selected_or_first_available_variant %}
+  {% if chosen_variant.compare_at_price > chosen_variant.price %}
+    {% assign saving = chosen_variant.compare_at_price | minus: chosen_variant.price | times: 100.0 | divided_by: chosen_variant.compare_at_price | round %}
+    <span class="belofay-similar__saving">Save {{ saving }}%</span>
+  {% endif %}
+  <div class="belofay-similar__specs">
+    {% assign product_title_lower = card_product.title | downcase %}
+    {% assign title_words = card_product.title | split: ' ' %}
+    {% for word in title_words %}{% if word contains 'mm' %}<span>{{ word | escape }}</span>{% break %}{% endif %}{% endfor %}
+    {% if product_title_lower contains 'floor standing' %}<span>Floor-standing</span>{% elsif product_title_lower contains 'wall hung' or product_title_lower contains 'wall mounted' %}<span>Wall-hung</span>{% endif %}
+    {% if product_title_lower contains 'with basin' %}<span>Basin included</span>{% endif %}
+  </div>
+  {% for option in card_product.options_with_values %}
+    {% assign option_name_lower = option.name | downcase %}
+    {% if option_name_lower == 'color' or option_name_lower == 'colour' %}
+      <div class="belofay-similar__colours" aria-label="{{ option.values.size }} colours available">
+        {% for value in option.values limit: 4 %}
+          {% assign colour_variant = nil %}
+          {% for variant in card_product.variants %}{% if variant.options contains value %}{% assign colour_variant = variant %}{% break %}{% endif %}{% endfor %}
+          {% if colour_variant.featured_image %}<img src="{{ colour_variant.featured_image | image_url: width: 48 }}" width="20" height="20" alt="{{ value | escape }}" loading="lazy">{% endif %}
+        {% endfor %}
+        <span>{{ option.values.size }} colours</span>
+      </div>
+    {% endif %}
+  {% endfor %}
+  <a class="belofay-similar__view" href="{{ card_product.url }}">View product <span aria-hidden="true">→</span></a>
+</article>

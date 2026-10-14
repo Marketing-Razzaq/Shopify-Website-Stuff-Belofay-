@@ -1,0 +1,38 @@
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+{{ 'quick-add.css' | asset_url | stylesheet_tag }}
+{{ 'belofay-similar-vanities.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'quick-add.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'belofay-similar-vanities.js' | asset_url }}" defer="defer"></script>
+<product-recommendations class="belofay-similar" data-url="{{ routes.product_recommendations_url }}?limit=10&intent=related" data-section-id="{{ section.id }}" data-product-id="{{ product.id }}">
+  {% assign source_products = recommendations.products %}
+  {% if recommendations.products_count > 0 and section.settings.fallback_collection != blank %}{% assign source_products = source_products | concat: section.settings.fallback_collection.products %}{% endif %}
+  {% if recommendations.products_count == 0 %}{% assign source_products = section.settings.fallback_collection.products %}{% endif %}
+  {% if source_products != blank %}
+    <header class="belofay-similar__header"><div><h2>{{ section.settings.heading | escape }}</h2><p>{{ section.settings.subheading | escape }}</p></div>{% if section.settings.fallback_collection != blank %}<a href="{{ section.settings.fallback_collection.url }}">{{ section.settings.link_label | escape }} <span aria-hidden="true">→</span></a>{% endif %}</header>
+    <div class="belofay-similar__carousel">
+      <button type="button" class="belofay-similar__arrow belofay-similar__arrow--prev" data-carousel-direction="-1" aria-label="Previous suggested products" aria-controls="Similar-{{ section.id }}">‹</button>
+      <ul id="Similar-{{ section.id }}" class="belofay-similar__track" tabindex="0" aria-label="Similar vanity units">
+        {% assign shown = 0 %}
+        {% assign rendered_ids = ',' %}
+        {% for suggestion in source_products %}
+          {% capture suggestion_key %},{{ suggestion.id }},{% endcapture %}
+          {% if suggestion.id != product.id and suggestion.available %}
+            {% assign eligible = true %}
+            {% if section.settings.fallback_collection != blank %}
+              {% assign eligible = false %}
+              {% for suggestion_collection in suggestion.collections %}{% if suggestion_collection.id == section.settings.fallback_collection.id %}{% assign eligible = true %}{% break %}{% endif %}{% endfor %}
+            {% endif %}
+            {% unless rendered_ids contains suggestion_key %}{% if eligible %}<li>{% render 'belofay-recommendation-card', card_product: suggestion, section_id: section.id %}</li>{% assign shown = shown | plus: 1 %}{% assign rendered_ids = rendered_ids | append: suggestion.id | append: ',' %}{% endif %}{% endunless %}
+          {% endif %}
+          {% if shown >= section.settings.product_limit %}{% break %}{% endif %}
+        {% endfor %}
+      </ul>
+      <button type="button" class="belofay-similar__arrow belofay-similar__arrow--next" data-carousel-direction="1" aria-label="Next suggested products" aria-controls="Similar-{{ section.id }}">›</button>
+    </div>
+  {% endif %}
+</product-recommendations>
+{% schema %}
+{"name":"Similar vanity units","settings":[{"type":"text","id":"heading","label":"Heading","default":"Similar vanity units"},{"type":"text","id":"subheading","label":"Description","default":"More options with comparable sizes and features."},{"type":"collection","id":"fallback_collection","label":"Vanity collection (filter and fallback)"},{"type":"text","id":"link_label","label":"Collection link label","default":"View all vanity units"},{"type":"range","id":"product_limit","label":"Products","min":4,"max":10,"step":1,"default":8}],"presets":[{"name":"Similar vanity units"}]}
+{% endschema %}

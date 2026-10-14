@@ -166,7 +166,8 @@
       },
       "block_order": ["faq_1","faq_2","faq_3","faq_4","faq_5","faq_6","faq_7","faq_8","customer_1","customer_2","customer_3"],
       "settings": {"popular_link":"/pages/contact","help_link":"/pages/contact"}
-    }
+    },
+    "similar_vanities": {"type":"belofay-similar-vanities","settings":{"fallback_collection":"vanity-units"}}
   },
-  "order": ["main", "product_navigation", "overview", "dimensions", "installation", "delivery", "reviews", "faq"]
+  "order": ["main", "product_navigation", "overview", "dimensions", "installation", "delivery", "reviews", "faq", "similar_vanities"]
 }
