@@ -18,13 +18,13 @@
 
 {% stylesheet %}
   .section-belofay-product-navigation { position: sticky; top: var(--header-height, 0px); z-index: 30; }
-  .belofay-product-nav { border-bottom: 1px solid #dce2e8; background: rgba(255,255,255,.96); font-family: var(--pdp-font-family, Arial, sans-serif); backdrop-filter: blur(12px); }
+  .belofay-product-nav { border-bottom: 1px solid var(--ds-border-default); background: var(--ds-overlay-white-96); font-family: var(--pdp-font-family, Arial, sans-serif); backdrop-filter: blur(12px); }
   .belofay-product-nav__inner { max-width: 1600px; display: flex; gap: clamp(28px, 5vw, 78px); margin: 0 auto; padding: 0 32px; overflow-x: auto; scrollbar-width: none; }
   .belofay-product-nav__inner::-webkit-scrollbar { display: none; }
-  .belofay-product-nav a { position: relative; flex: 0 0 auto; padding: 18px 8px 16px; color: #536784; font-size: 16px; line-height: 1; text-decoration: none; white-space: nowrap; }
-  .belofay-product-nav a:hover, .belofay-product-nav a:focus-visible, .belofay-product-nav a.is-active { color: #149b45; }
-  .belofay-product-nav a.is-active::after { content: ''; position: absolute; right: 0; bottom: -1px; left: 0; height: 3px; border-radius: 3px 3px 0 0; background: #149b45; }
-  .belofay-product-nav a:focus-visible { outline: 2px solid #149b45; outline-offset: -2px; }
+  .belofay-product-nav a { position: relative; flex: 0 0 auto; padding: 18px 8px 16px; color: var(--ds-text-supporting); font-size: 16px; line-height: 1; text-decoration: none; white-space: nowrap; }
+  .belofay-product-nav a:hover, .belofay-product-nav a:focus-visible, .belofay-product-nav a.is-active { color: var(--ds-action-primary-hover); }
+  .belofay-product-nav a.is-active::after { content: ''; position: absolute; right: 0; bottom: -1px; left: 0; height: 3px; border-radius: 3px 3px 0 0; background: var(--ds-action-primary); }
+  .belofay-product-nav a:focus-visible { outline: 2px solid var(--ds-action-primary-hover); outline-offset: -2px; }
   @media (max-width: 1024px) {
     .belofay-product-nav__inner { gap: 28px; padding: 0 16px; }
     .belofay-product-nav a { padding: 15px 0 13px; font-size: 14px; }
