@@ -476,7 +476,9 @@
 .belofay-pdp .belofay-faq__popular { display: none; }
 .belofay-pdp .belofay-faq__contact { grid-column: 1 / -1; }
 
-.belofay-pdp .belofay-delivery__support { padding: 0; border: 0; margin-top: 24px; background: #fff; }
+.belofay-pdp .belofay-delivery__support,
+.belofay-pdp .belofay-mobile-policy-support { box-sizing: border-box; padding: var(--ds-space-lg); border: 1px solid transparent; }
+.belofay-pdp .belofay-delivery__support { margin-top: 24px; background: #fff; }
 .belofay-pdp .belofay-delivery__support > div:first-child h3,
 .belofay-pdp .belofay-mobile-policy-support > h3 { margin: 0 0 4px; font: 600 18px/1.3 Gilroy, Arial, sans-serif; color: #111827; }
 .belofay-pdp .belofay-delivery__support > div:first-child p { margin: 0 0 16px; font-size: 13px; line-height: 1.5; }
@@ -491,6 +493,11 @@
   .belofay-pdp .belofay-delivery__timeline li > span { display: grid; gap: 4px; min-width: 0; }
   .belofay-pdp .belofay-delivery__timeline strong { font-size: 14px; line-height: 1.35; }
   .belofay-pdp .belofay-delivery__timeline small { font-size: 12px; line-height: 1.45; }
+}
+
+@media (max-width: 1024px) {
+  .belofay-pdp .belofay-delivery__support,
+  .belofay-pdp .belofay-mobile-policy-support { padding: var(--ds-space-md); }
 }
 
 @media (prefers-reduced-motion: reduce) {
