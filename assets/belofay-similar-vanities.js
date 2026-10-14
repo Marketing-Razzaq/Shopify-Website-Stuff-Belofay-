@@ -15,7 +15,16 @@
     track.scrollBy({left: Number(arrow.dataset.carouselDirection) * track.clientWidth, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'});
   });
   document.addEventListener('scroll', event => { if (event.target.classList?.contains('belofay-similar__track')) arrows(event.target.closest('.belofay-similar')); }, true);
-  const refresh = () => { sync(); document.querySelectorAll('.belofay-similar').forEach(arrows); };
+  const refresh = () => {
+    document.querySelectorAll('.belofay-similar__card').forEach(card => {
+      const info = card.querySelector('.card > .card__content .card__information');
+      const reviews = card.querySelector('.belofay-similar__reviews');
+      const prices = card.querySelector('.belofay-similar__price-row');
+      if (info && reviews && reviews.parentElement !== info) info.prepend(reviews);
+      if (info && prices && prices.parentElement !== info) info.append(prices);
+    });
+    sync(); document.querySelectorAll('.belofay-similar').forEach(arrows);
+  };
   new MutationObserver(refresh).observe(document.querySelector('main') || document.body, {childList:true,subtree:true});
   window.addEventListener('resize', refresh); window.addEventListener('storage', refresh); refresh();
 })();

@@ -4,12 +4,17 @@
   <button class="belofay-similar__wish" type="button" data-wishlist-id="{{ card_product.id }}" aria-label="Save {{ card_product.title | escape }} to wishlist" aria-pressed="false">
     <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
   </button>
-  {% render 'card-product', card_product: card_product, section_id: section_id, media_aspect_ratio: 'square', show_rating: true, show_vendor: false, quick_add: 'standard' %}
+  {% render 'card-product', card_product: card_product, section_id: section_id, media_aspect_ratio: 'square', show_rating: false, show_vendor: false, quick_add: 'standard' %}
+  {% comment %}Temporary review presentation requested for development; replace with review metafields later.{% endcomment %}
+  <div class="belofay-similar__reviews" aria-label="4.6 out of 5, 84 reviews"><span class="belofay-similar__stars" aria-hidden="true">★★★★☆</span><span>4.6</span><span>84 reviews</span></div>
+  <div class="belofay-similar__price-row">
+  {% render 'price', product: card_product, use_variant: true, show_badges: false %}
   {% assign chosen_variant = card_product.selected_or_first_available_variant %}
   {% if chosen_variant.compare_at_price > chosen_variant.price %}
     {% assign saving = chosen_variant.compare_at_price | minus: chosen_variant.price | times: 100.0 | divided_by: chosen_variant.compare_at_price | round %}
     <span class="belofay-similar__saving">Save {{ saving }}%</span>
   {% endif %}
+  </div>
   <div class="belofay-similar__specs">
     {% assign product_title_lower = card_product.title | downcase %}
     {% assign title_words = card_product.title | split: ' ' %}
