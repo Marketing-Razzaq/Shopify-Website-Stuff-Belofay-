@@ -8,6 +8,7 @@
 !.env.example
 # Local logs, OS files, and editor state
 *.log
+*.diff
 .DS_Store
 Thumbs.db
 /.idea/
