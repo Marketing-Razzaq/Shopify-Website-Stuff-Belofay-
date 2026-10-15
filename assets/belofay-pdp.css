@@ -424,6 +424,7 @@
 .belofay-pdp .belofay-overview__copy h2,
 .belofay-pdp .belofay-dimensions__intro h2,
 .belofay-pdp .belofay-installation__intro h2,
+.belofay-pdp .belofay-delivery__header h2,
 .belofay-pdp .belofay-reviews__header h2,
 .belofay-pdp .belofay-faq__header h2 {
   font-family: var(--ds-font-heading), Arial, sans-serif;
@@ -431,6 +432,35 @@
   font-weight: var(--ds-section-heading-weight);
   line-height: 1.08;
   letter-spacing: -.03em;
+  color: var(--ds-text-heading);
+  margin: 0 0 10px;
+}
+
+.belofay-pdp .belofay-overview__description,
+.belofay-pdp .belofay-overview__description p,
+.belofay-pdp .belofay-dimensions__intro > p:last-child,
+.belofay-pdp .belofay-installation__intro > p:last-child,
+.belofay-pdp .belofay-delivery__header > div > p:last-child,
+.belofay-pdp .belofay-reviews__header > div,
+.belofay-pdp .belofay-reviews__header > div p,
+.belofay-pdp .belofay-faq__header > div,
+.belofay-pdp .belofay-faq__header > div p {
+  max-width: 820px;
+  margin: 0;
+  color: var(--ds-text-supporting);
+  font-family: var(--ds-font-body), Gilroy, Arial, sans-serif;
+  font-size: 19px;
+  font-weight: 400;
+  line-height: 1.45;
+}
+
+.belofay-pdp .belofay-overview__intro,
+.belofay-pdp .belofay-dimensions__header,
+.belofay-pdp .belofay-installation__header,
+.belofay-pdp .belofay-delivery__header,
+.belofay-pdp .belofay-reviews__header,
+.belofay-pdp .belofay-faq__header {
+  margin-bottom: var(--ds-space-lg, 24px);
 }
 @media screen and (max-width: 749px) {
   .belofay-pdp { --ds-section-heading-size: 30px; }
@@ -505,11 +535,12 @@
   .belofay-pdp .belofay-delivery__accordions summary i { align-self: center; }
 }
 
+.belofay-pdp .belofay-overview__eyebrow,
 .belofay-pdp .belofay-dimensions__eyebrow,
 .belofay-pdp .belofay-installation__eyebrow,
 .belofay-pdp .belofay-delivery__eyebrow,
 .belofay-pdp .belofay-reviews__header > p,
-.belofay-pdp .belofay-faq__header > p { margin: 0 0 8px; font-family: Gilroy, Arial, sans-serif; font-size: 13px; font-weight: 400; color: var(--ds-text-heading); letter-spacing: .25em; }
+.belofay-pdp .belofay-faq__header > p { margin: 0 0 8px; font-family: Gilroy, Arial, sans-serif; font-size: 13px; font-weight: 400; color: var(--ds-text-heading); letter-spacing: .25em; text-transform: uppercase; }
 .belofay-pdp .belofay-dimensions__intro h2 { margin: 0 0 10px; }
 .belofay-pdp .belofay-dimensions__measure-callout,
 .belofay-pdp .belofay-dimensions__download { display: none; }
