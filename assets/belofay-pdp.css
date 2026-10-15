@@ -535,6 +535,17 @@
   .belofay-pdp-gallery__thumb img { width: 100%; height: 100%; object-fit: cover; }
 }
 
+@media (max-width: 767px) {
+  .belofay-pdp .belofay-pdp-sticky { grid-template-columns: minmax(0, 1fr) minmax(132px, .9fr); gap: var(--ds-space-xs); }
+  .belofay-pdp .belofay-pdp-sticky__summary { grid-template-columns: 44px minmax(0, 1fr); gap: var(--ds-space-xs); min-width: 0; }
+  .belofay-pdp .belofay-pdp-sticky__summary > span { display: grid; gap: 3px; min-width: 0; }
+  .belofay-pdp .belofay-pdp-sticky__summary img,
+  .belofay-pdp .belofay-pdp-sticky__summary svg { width: 44px; height: 44px; aspect-ratio: 1; object-fit: cover; }
+  .belofay-pdp .belofay-pdp-sticky__variant { display: block; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: var(--ds-text-xs); line-height: 1.3; }
+  .belofay-pdp .belofay-pdp-sticky__price { display: block; font-size: var(--ds-text-md); line-height: 1.3; white-space: nowrap; }
+  .belofay-pdp .belofay-pdp-sticky__button { min-width: 0; width: 100%; padding-inline: var(--ds-space-xs); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .belofay-pdp *, .belofay-pdp *::before, .belofay-pdp *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
 }
