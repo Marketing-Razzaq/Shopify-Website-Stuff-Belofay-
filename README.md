@@ -10,6 +10,34 @@ The custom product page uses `templates/product.belofay-v2.json`, `sections/belo
 
 ## Local development and preview server
 
+### Simple Windows CMD commands — draft product UI
+
+Open CMD in this repository. Start one server:
+
+```cmd
+server-live.cmd
+```
+
+For red instead:
+
+```cmd
+server-live.cmd --red
+```
+
+Once Shopify prints that the server is ready, open a second CMD in the same folder:
+
+```cmd
+open-draft.cmd
+```
+
+Or, for the red server:
+
+```cmd
+open-draft.cmd --red
+```
+
+These open `/products_preview` with `view=belofay-v2`, rather than the normal product URL which cannot reliably display a draft. On first use, paste the product's current Shopify `preview_key` value when prompted. It is saved only in ignored `.preview/draft-preview-key.txt`; it is never uploaded to GitHub. You can also set `BELOFAY_DRAFT_PREVIEW_KEY` in your terminal. If Shopify expires the key, update that local file or environment variable with a fresh draft preview key. Each developer needs store access and a valid key; the repository cannot create or renew draft preview keys automatically. Stop the previous server with Ctrl+C before switching colours.
+
 ### Green and red preview commands (Windows PowerShell)
 
 ```powershell

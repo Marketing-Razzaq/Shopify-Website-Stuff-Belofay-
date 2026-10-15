@@ -8,3 +8,6 @@ font.zip
 docs/**
 .preview/**
 server-live.ps1
+server-live.cmd
+open-draft.cmd
+open-draft.ps1
