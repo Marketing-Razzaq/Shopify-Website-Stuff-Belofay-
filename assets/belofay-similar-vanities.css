@@ -26,6 +26,11 @@
 .belofay-similar__card > .belofay-similar__wish {z-index:5;}
 .belofay-similar .rating-star {--color-rating:var(--ds-action-attention);}
 .belofay-similar .rating,.belofay-similar .rating-text,.belofay-similar .rating-count {display:none;}
+/* Review apps can append a second badge inside Craft's card heading. */
+.belofay-similar .card__heading > :not(a),
+.belofay-similar .jdgm-widget,
+.belofay-similar .spr-badge,
+.belofay-similar .loox-rating {display:none!important;}
 .belofay-similar .card__badge {display:none;}
 .belofay-similar__specs,.belofay-similar__colours {display:flex;flex-wrap:wrap;align-items:center;gap:var(--ds-space-xs);margin:var(--ds-space-xs) 0;color:var(--ds-text-supporting);font-size:var(--ds-text-compact);}
 .belofay-similar__colours img {border-radius:50%;object-fit:cover;border:1px solid var(--ds-border-default);}
