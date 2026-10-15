@@ -18,14 +18,14 @@
     "product_navigation": {
       "type": "belofay-product-navigation",
       "blocks": {
-        "nav_overview": {"type":"link","settings":{"label":"Overview","target":"overview"}},
-        "nav_dimensions": {"type":"link","settings":{"label":"Dimensions & Fit","target":"dimensions-fit"}},
-        "nav_installation": {"type":"link","settings":{"label":"Installation","target":"installation"}},
-        "nav_delivery": {"type":"link","settings":{"label":"Delivery & Returns","target":"delivery-returns"}},
-        "nav_reviews": {"type":"link","settings":{"label":"Reviews","target":"reviews"}},
-        "nav_faq": {"type":"link","settings":{"label":"FAQs","target":"faqs"}}
+        "nav_overview": {"type":"link","settings":{"label":"Overview","target":"overview","icon":"overview"}},
+        "nav_details": {"type":"link","settings":{"label":"Product Details","target":"installation","icon":"product-details"}},
+        "nav_specs": {"type":"link","settings":{"label":"Specifications","target":"dimensions-fit","icon":"specifications"}},
+        "nav_delivery": {"type":"link","settings":{"label":"Delivery & Returns","target":"delivery-returns","icon":"delivery"}},
+        "nav_reviews": {"type":"link","settings":{"label":"Reviews","target":"reviews","icon":"reviews"}},
+        "nav_faq": {"type":"link","settings":{"label":"FAQs","target":"faqs","icon":"faqs"}}
       },
-      "block_order": ["nav_overview", "nav_dimensions", "nav_installation", "nav_delivery", "nav_reviews", "nav_faq"],
+      "block_order": ["nav_overview", "nav_details", "nav_specs", "nav_delivery", "nav_reviews", "nav_faq"],
       "settings": {}
     },
     "overview": {
@@ -169,5 +169,5 @@
     },
     "similar_vanities": {"type":"belofay-similar-vanities","settings":{"fallback_collection":"vanity-units"}}
   },
-  "order": ["main", "product_navigation", "overview", "dimensions", "installation", "delivery", "reviews", "faq", "similar_vanities"]
+  "order": ["main", "product_navigation", "overview", "installation", "dimensions", "delivery", "reviews", "faq", "similar_vanities"]
 }

@@ -1,33 +1,195 @@
-<nav class="belofay-product-nav" aria-label="Product information">
+<nav class="belofay-product-nav" aria-label="Product navigation">
   <div class="belofay-product-nav__inner">
     {%- if section.blocks.size > 0 -%}
       {%- for block in section.blocks -%}
         {%- assign target_id = block.settings.target | remove_first: '#' -%}
-        {%- if block.settings.label != blank and target_id != blank -%}<a href="#{{ target_id | escape }}" data-product-nav-link="{{ target_id | escape }}" {{ block.shopify_attributes }}>{{ block.settings.label }}</a>{%- endif -%}
+        {%- if block.settings.label != blank and target_id != blank -%}
+          {%- assign icon_file = '' -%}
+          {%- case block.settings.icon -%}
+            {%- when 'overview' -%}{%- assign icon_file = 'belofay-nav-overview.webp' -%}
+            {%- when 'product-details' -%}{%- assign icon_file = 'belofay-nav-product-details.webp' -%}
+            {%- when 'specifications' -%}{%- assign icon_file = 'belofay-nav-specifications.webp' -%}
+            {%- when 'delivery' -%}{%- assign icon_file = 'belofay-nav-delivery.webp' -%}
+            {%- when 'reviews' -%}{%- assign icon_file = 'belofay-nav-reviews.webp' -%}
+            {%- when 'faqs' -%}{%- assign icon_file = 'belofay-nav-faqs.webp' -%}
+            {%- else -%}
+              {%- assign label_down = block.settings.label | downcase -%}
+              {%- assign target_down = target_id | downcase -%}
+              {%- if label_down contains 'overview' or target_down contains 'overview' -%}
+                {%- assign icon_file = 'belofay-nav-overview.webp' -%}
+              {%- elsif label_down contains 'detail' or label_down contains 'product' or target_down contains 'installation' -%}
+                {%- assign icon_file = 'belofay-nav-product-details.webp' -%}
+              {%- elsif label_down contains 'spec' or label_down contains 'dimension' or target_down contains 'dimension' -%}
+                {%- assign icon_file = 'belofay-nav-specifications.webp' -%}
+              {%- elsif label_down contains 'deliver' or label_down contains 'return' or target_down contains 'delivery' -%}
+                {%- assign icon_file = 'belofay-nav-delivery.webp' -%}
+              {%- elsif label_down contains 'review' or target_down contains 'review' -%}
+                {%- assign icon_file = 'belofay-nav-reviews.webp' -%}
+              {%- elsif label_down contains 'faq' or target_down contains 'faq' -%}
+                {%- assign icon_file = 'belofay-nav-faqs.webp' -%}
+              {%- else -%}
+                {%- assign icon_file = 'belofay-nav-overview.webp' -%}
+              {%- endif -%}
+          {%- endcase -%}
+          <div class="belofay-product-nav__item" {{ block.shopify_attributes }}>
+            <a href="#{{ target_id | escape }}" class="belofay-product-nav__link" data-product-nav-link="{{ target_id | escape }}">
+              <span class="belofay-product-nav__icon" style="--nav-icon-url: url('{{ icon_file | asset_url }}');" aria-hidden="true"></span>
+              <span class="belofay-product-nav__label">{{ block.settings.label }}</span>
+            </a>
+          </div>
+        {%- endif -%}
       {%- endfor -%}
     {%- else -%}
-      <a href="#overview" data-product-nav-link="overview">{{ section.settings.overview_label }}</a>
-      <a href="#dimensions-fit" data-product-nav-link="dimensions-fit">{{ section.settings.dimensions_label }}</a>
-      <a href="#installation" data-product-nav-link="installation">{{ section.settings.installation_label }}</a>
-      <a href="#delivery-returns" data-product-nav-link="delivery-returns">{{ section.settings.delivery_label }}</a>
-      <a href="#reviews" data-product-nav-link="reviews">{{ section.settings.reviews_label }}</a>
-      <a href="#faqs" data-product-nav-link="faqs">{{ section.settings.faq_label }}</a>
+      <div class="belofay-product-nav__item">
+        <a href="#overview" class="belofay-product-nav__link is-active" data-product-nav-link="overview">
+          <span class="belofay-product-nav__icon" style="--nav-icon-url: url('{{ 'belofay-nav-overview.webp' | asset_url }}');" aria-hidden="true"></span>
+          <span class="belofay-product-nav__label">Overview</span>
+        </a>
+      </div>
+      <div class="belofay-product-nav__item">
+        <a href="#installation" class="belofay-product-nav__link" data-product-nav-link="installation">
+          <span class="belofay-product-nav__icon" style="--nav-icon-url: url('{{ 'belofay-nav-product-details.webp' | asset_url }}');" aria-hidden="true"></span>
+          <span class="belofay-product-nav__label">Product Details</span>
+        </a>
+      </div>
+      <div class="belofay-product-nav__item">
+        <a href="#dimensions-fit" class="belofay-product-nav__link" data-product-nav-link="dimensions-fit">
+          <span class="belofay-product-nav__icon" style="--nav-icon-url: url('{{ 'belofay-nav-specifications.webp' | asset_url }}');" aria-hidden="true"></span>
+          <span class="belofay-product-nav__label">Specifications</span>
+        </a>
+      </div>
+      <div class="belofay-product-nav__item">
+        <a href="#delivery-returns" class="belofay-product-nav__link" data-product-nav-link="delivery-returns">
+          <span class="belofay-product-nav__icon" style="--nav-icon-url: url('{{ 'belofay-nav-delivery.webp' | asset_url }}');" aria-hidden="true"></span>
+          <span class="belofay-product-nav__label">Delivery & Returns</span>
+        </a>
+      </div>
+      <div class="belofay-product-nav__item">
+        <a href="#reviews" class="belofay-product-nav__link" data-product-nav-link="reviews">
+          <span class="belofay-product-nav__icon" style="--nav-icon-url: url('{{ 'belofay-nav-reviews.webp' | asset_url }}');" aria-hidden="true"></span>
+          <span class="belofay-product-nav__label">Reviews</span>
+        </a>
+      </div>
+      <div class="belofay-product-nav__item">
+        <a href="#faqs" class="belofay-product-nav__link" data-product-nav-link="faqs">
+          <span class="belofay-product-nav__icon" style="--nav-icon-url: url('{{ 'belofay-nav-faqs.webp' | asset_url }}');" aria-hidden="true"></span>
+          <span class="belofay-product-nav__label">FAQs</span>
+        </a>
+      </div>
     {%- endif -%}
   </div>
 </nav>
 
 {% stylesheet %}
-  .section-belofay-product-navigation { position: sticky; top: var(--header-height, 0px); z-index: 30; }
-  .belofay-product-nav { border-bottom: 1px solid var(--ds-border-default); background: var(--ds-overlay-white-96); font-family: var(--pdp-font-family, Arial, sans-serif); backdrop-filter: blur(12px); }
-  .belofay-product-nav__inner { max-width: 1600px; display: flex; gap: clamp(28px, 5vw, 78px); margin: 0 auto; padding: 0 32px; overflow-x: auto; scrollbar-width: none; }
-  .belofay-product-nav__inner::-webkit-scrollbar { display: none; }
-  .belofay-product-nav a { position: relative; flex: 0 0 auto; padding: 18px 8px 16px; color: var(--ds-text-supporting); font-size: 16px; line-height: 1; text-decoration: none; white-space: nowrap; }
-  .belofay-product-nav a:hover, .belofay-product-nav a:focus-visible, .belofay-product-nav a.is-active { color: var(--ds-action-primary-hover); }
-  .belofay-product-nav a.is-active::after { content: ''; position: absolute; right: 0; bottom: -1px; left: 0; height: 3px; border-radius: 3px 3px 0 0; background: var(--ds-action-primary); }
-  .belofay-product-nav a:focus-visible { outline: 2px solid var(--ds-action-primary-hover); outline-offset: -2px; }
+  .section-belofay-product-navigation {
+    position: sticky;
+    top: var(--header-height, 0px);
+    z-index: 30;
+  }
+  .belofay-product-nav {
+    border-bottom: 1px solid var(--ds-border-default, #e5e7eb);
+    background: var(--ds-overlay-white-96, rgba(255, 255, 255, 0.96));
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    width: 100%;
+  }
+  .belofay-product-nav__inner {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .belofay-product-nav__inner::-webkit-scrollbar {
+    display: none;
+  }
+  .belofay-product-nav__item {
+    display: inline-flex;
+    align-items: center;
+    flex: 0 0 auto;
+  }
+  .belofay-product-nav__item:not(:last-child)::after {
+    content: '';
+    display: inline-block;
+    width: 1px;
+    height: 18px;
+    margin: 0 clamp(14px, 2.4vw, 34px);
+    background-color: var(--ds-border-default, #e5e7eb);
+    opacity: 0.85;
+  }
+  .belofay-product-nav__link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 16px 2px 14px;
+    color: var(--ds-text-heading, #1e293b);
+    font-family: var(--ds-font-heading, "Gilroy"), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color var(--motion-duration-fast, 0.2s) ease;
+  }
+  .belofay-product-nav__icon {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    flex: 0 0 18px;
+    background-color: currentColor;
+    -webkit-mask-image: var(--nav-icon-url);
+    mask-image: var(--nav-icon-url);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    transition: background-color var(--motion-duration-fast, 0.2s) ease;
+  }
+  .belofay-product-nav__label {
+    letter-spacing: -0.01em;
+  }
+  .belofay-product-nav__link:hover,
+  .belofay-product-nav__link:focus-visible,
+  .belofay-product-nav__link.is-active {
+    color: var(--ds-action-primary);
+  }
+  .belofay-product-nav__link.is-active::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: -1px;
+    left: 0;
+    height: 3px;
+    border-radius: 3px 3px 0 0;
+    background-color: var(--ds-action-primary);
+  }
+  .belofay-product-nav__link:focus-visible {
+    outline: 2px solid var(--ds-action-primary);
+    outline-offset: -2px;
+  }
   @media (max-width: 1024px) {
-    .belofay-product-nav__inner { gap: 28px; padding: 0 16px; }
-    .belofay-product-nav a { padding: 15px 0 13px; font-size: 14px; }
+    .belofay-product-nav__inner {
+      padding: 0 16px;
+    }
+    .belofay-product-nav__item:not(:last-child)::after {
+      margin: 0 16px;
+    }
+    .belofay-product-nav__link {
+      padding: 14px 2px 12px;
+      font-size: 14px;
+      gap: 7px;
+    }
+    .belofay-product-nav__icon {
+      width: 16px;
+      height: 16px;
+      flex: 0 0 16px;
+    }
   }
 {% endstylesheet %}
 
@@ -36,34 +198,93 @@
     const links = Array.from(document.querySelectorAll('[data-product-nav-link]'));
     if (!links.length) return;
     const sections = links.map(link => document.getElementById(link.dataset.productNavLink)).filter(Boolean);
-    const setActive = id => links.forEach(link => link.classList.toggle('is-active', link.dataset.productNavLink === id));
+    const setActive = id => {
+      links.forEach(link => {
+        const isActive = link.dataset.productNavLink === id;
+        link.classList.toggle('is-active', isActive);
+      });
+    };
     const observer = new IntersectionObserver(entries => {
       const visible = entries.filter(entry => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
       if (visible) setActive(visible.target.id);
     }, { rootMargin: '-18% 0px -65% 0px', threshold: [0, .1, .25, .5] });
     sections.forEach(section => observer.observe(section));
-    setActive(location.hash.slice(1) || 'overview');
+
+    links.forEach(link => {
+      link.addEventListener('click', e => {
+        const targetId = link.dataset.productNavLink;
+        const targetEl = document.getElementById(targetId);
+        if (targetEl) {
+          e.preventDefault();
+          setActive(targetId);
+          targetEl.scrollIntoView({ behavior: 'smooth' });
+          if (history.pushState) {
+            history.pushState(null, null, '#' + targetId);
+          }
+        }
+      });
+    });
+
+    setActive(location.hash.slice(1) || (sections[0] ? sections[0].id : 'overview'));
   })();
 {% endjavascript %}
 
 {% schema %}
 {
-  "name":"Belofay PDP navigation","tag":"section","class":"section-belofay-product-navigation",
-  "settings":[
-    {"type":"text","id":"overview_label","label":"Overview label","default":"Overview"},
-    {"type":"text","id":"dimensions_label","label":"Dimensions label","default":"Dimensions & Fit"},
-    {"type":"text","id":"installation_label","label":"Installation label","default":"Installation"},
-    {"type":"text","id":"delivery_label","label":"Delivery label","default":"Delivery & Returns"},
-    {"type":"text","id":"reviews_label","label":"Reviews label","default":"Reviews"},
-    {"type":"text","id":"faq_label","label":"FAQ label","default":"FAQs"}
+  "name": "Belofay PDP navigation",
+  "tag": "section",
+  "class": "section-belofay-product-navigation",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "link",
+      "name": "Navigation link",
+      "limit": 8,
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Section"
+        },
+        {
+          "type": "text",
+          "id": "target",
+          "label": "Section ID",
+          "info": "Enter the section anchor without #, for example dimensions-fit or installation.",
+          "default": "overview"
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "auto", "label": "Automatic (match label/target)" },
+            { "value": "overview", "label": "Overview (4 Squares)" },
+            { "value": "product-details", "label": "Product Details (Photo Frame)" },
+            { "value": "specifications", "label": "Specifications (Layers)" },
+            { "value": "delivery", "label": "Delivery & Returns (Truck)" },
+            { "value": "reviews", "label": "Reviews (Chat Bubble)" },
+            { "value": "faqs", "label": "FAQs (Question Circle)" }
+          ],
+          "default": "auto"
+        }
+      ]
+    }
   ],
-  "blocks":[
-    {"type":"link","name":"Navigation link","limit":8,"settings":[
-      {"type":"text","id":"label","label":"Label","default":"Section"},
-      {"type":"text","id":"target","label":"Section ID","info":"Enter the section anchor without #, for example dimensions-fit.","default":"overview"}
-    ]}
-  ],
-  "max_blocks":8,
-  "presets":[{"name":"Belofay PDP navigation","blocks":[{"type":"link","settings":{"label":"Overview","target":"overview"}},{"type":"link","settings":{"label":"Dimensions & Fit","target":"dimensions-fit"}},{"type":"link","settings":{"label":"Installation","target":"installation"}},{"type":"link","settings":{"label":"Delivery & Returns","target":"delivery-returns"}},{"type":"link","settings":{"label":"Reviews","target":"reviews"}},{"type":"link","settings":{"label":"FAQs","target":"faqs"}}]}]
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "Belofay PDP navigation",
+      "blocks": [
+        { "type": "link", "settings": { "label": "Overview", "target": "overview", "icon": "overview" } },
+        { "type": "link", "settings": { "label": "Product Details", "target": "installation", "icon": "product-details" } },
+        { "type": "link", "settings": { "label": "Specifications", "target": "dimensions-fit", "icon": "specifications" } },
+        { "type": "link", "settings": { "label": "Delivery & Returns", "target": "delivery-returns", "icon": "delivery" } },
+        { "type": "link", "settings": { "label": "Reviews", "target": "reviews", "icon": "reviews" } },
+        { "type": "link", "settings": { "label": "FAQs", "target": "faqs", "icon": "faqs" } }
+      ]
+    }
+  ]
 }
 {% endschema %}
