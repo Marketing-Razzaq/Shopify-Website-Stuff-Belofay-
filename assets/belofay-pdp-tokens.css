@@ -105,7 +105,7 @@
   --motion-duration-fast: 140ms;
   --motion-duration-base: 220ms;
   --motion-duration-loading: 700ms;
-  --motion-duration-promo: 3000ms;
+  --motion-duration-promo: 4000ms;
   --motion-ease-standard: cubic-bezier(.2, .8, .2, 1);
   --motion-ease-emphasized: cubic-bezier(.2, 0, 0, 1);
   --motion-hover-lift: -2px;
