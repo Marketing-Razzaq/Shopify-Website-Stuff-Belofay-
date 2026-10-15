@@ -120,7 +120,7 @@
   .belofay-overview__image-label { position: absolute; top: 16px; left: 16px; max-width: calc(100% - 32px); padding: 10px 14px; border-radius: 9px; background: var(--ds-overlay-white-90); color: var(--ds-text-heading); font-weight: 700; font-size: 16px; backdrop-filter: blur(8px); }
   .belofay-overview figcaption { display: flex; flex-direction: column; padding: 10px 6px 0; color: var(--overview-muted); font-size: 15px; line-height: 1.35; }
   .belofay-overview figcaption strong { color: var(--ds-text-heading); font-size: 18px; }
-  .belofay-overview__cards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .belofay-overview__cards { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 14px; align-items: start; }
   .belofay-overview__card { min-width: 0; padding: 22px 24px; border: 1px solid var(--ds-border-default); border-radius: 10px; background: var(--ds-bg-page); }
   .belofay-overview__card--included { background: linear-gradient(135deg, var(--ds-bg-success), var(--ds-bg-page)); }
   .belofay-overview__card--warning { border-color: var(--ds-border-attention-soft); background: linear-gradient(135deg, var(--ds-bg-page), var(--ds-bg-attention)); }
@@ -142,7 +142,8 @@
   .belofay-overview__materials summary strong { display: block; color: var(--ds-text-heading); font-size: 17px; }
   .belofay-overview__materials summary small, .belofay-overview__materials .belofay-overview__chevron { display: none; }
   .belofay-overview__materials ul { margin-top: 20px; }
-  .belofay-overview__reviews-head { display: flex; justify-content: space-between; gap: 12px; align-items: center; }
+  .belofay-overview__reviews-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; align-items: center; }
+  .belofay-overview__reviews-head h3 { min-width: 0; margin: 0; overflow-wrap: normal; word-break: normal; }
   .belofay-overview__verified { display: inline-flex; align-items: center; gap: 6px; color: var(--ds-action-primary); font-size: 12px; white-space: nowrap; }
   .belofay-overview__verified .belofay-overview__status { width: 20px; height: 20px; flex-basis: 20px; }
   .belofay-overview__reviews { min-width: 0; overflow: hidden; }
@@ -159,7 +160,7 @@
   .belofay-overview__reviews blockquote footer { display: flex; justify-content: space-between; gap: 8px; margin-top: 8px; font-style: normal; }
   .belofay-overview__all-reviews { display: none; }
 
-  @media (max-width: 1199px) {
+  @media (max-width: 1599px) {
     .belofay-overview__intro { grid-template-columns: 1fr; gap: 24px; }
     .belofay-overview__grid { grid-template-columns: 1.4fr .8fr; }
     .belofay-overview__cards { grid-column: 1 / -1; }
@@ -203,7 +204,7 @@
     .belofay-overview__storage .belofay-overview__image { grid-column: 2; grid-row: 1; border-radius: 0; aspect-ratio: auto; }
     .belofay-overview__storage figcaption { grid-column: 1; grid-row: 1; justify-content: center; padding: 20px; }
     .belofay-overview__storage figcaption strong { margin-bottom: 8px; font-size: 22px; line-height: 1.05; }
-    .belofay-overview__cards { display: flex; flex-direction: column; gap: 10px; }
+    .belofay-overview__cards { display: flex; flex-direction: column; gap: 10px; align-items: stretch; }
     .belofay-overview__card { padding: 18px; }
     .belofay-overview__card h3 { font-size: 21px; }
     .belofay-overview__card--included { position: relative; overflow: hidden; }
