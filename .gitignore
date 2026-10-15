@@ -1,5 +1,6 @@
 # Local Shopify CLI state and dependencies
 /.shopify/
+/.preview/
 /node_modules/
 # Local secrets
 .env

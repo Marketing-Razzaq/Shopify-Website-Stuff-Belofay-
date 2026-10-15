@@ -10,6 +10,21 @@ The custom product page uses `templates/product.belofay-v2.json`, `sections/belo
 
 ## Local development and preview server
 
+### Green and red preview commands (Windows PowerShell)
+
+```powershell
+# Green by default, port 9292; watches the working source
+.\server-live.ps1
+
+# Red preview, port 9293; source remains green
+.\server-live.ps1 -Red
+
+# Optional custom port
+.\server-live.ps1 -Red -Port 9393
+```
+
+Red creates an ignored `.preview/red` snapshot and changes only the three green colour primitives in its token CSS to red values. Semantic tokens, layout and behaviour stay identical. Restart the red command after source edits to refresh the snapshot. The red preview does not automatically follow edits to the main working source. `-PrepareOnly` prepares the selected path without starting Shopify. These commands start temporary DEVELOPMENT previews, not a production server. Separate local ports do not isolate Shopify's remote development theme; run one colour preview at a time to avoid competing remote updates.
+
 Install Git, a Node.js version supported by the current Shopify CLI, and Shopify CLI on your development machine. Authenticate with a Shopify account authorized for the store. No access tokens or login credentials are included in this repository.
 
 From the repository directory, start the temporary development preview:

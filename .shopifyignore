@@ -6,3 +6,5 @@ source-icons/**
 demo.html
 font.zip
 docs/**
+.preview/**
+server-live.ps1
