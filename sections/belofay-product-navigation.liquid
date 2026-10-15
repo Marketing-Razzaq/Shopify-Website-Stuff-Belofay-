@@ -137,9 +137,9 @@
   }
   .belofay-product-nav__icon {
     display: inline-block;
-    width: 22px;
-    height: 22px;
-    flex: 0 0 22px;
+    width: 32px;
+    height: 24px;
+    flex: 0 0 32px;
     background-color: currentColor;
     -webkit-mask-image: var(--nav-icon-url);
     mask-image: var(--nav-icon-url);
@@ -147,9 +147,19 @@
     mask-repeat: no-repeat;
     -webkit-mask-position: center;
     mask-position: center;
-    -webkit-mask-size: 22px 22px;
-    mask-size: 22px 22px;
+    -webkit-mask-size: var(--nav-artwork-size, 22px) var(--nav-artwork-size, 22px);
+    mask-size: var(--nav-artwork-size, 22px) var(--nav-artwork-size, 22px);
     transition: background-color var(--motion-duration-fast, 0.2s) ease;
+  }
+  .belofay-product-nav__link[data-product-nav-link="installation"] .belofay-product-nav__icon,
+  .belofay-product-nav__link[data-product-nav-link="reviews"] .belofay-product-nav__icon {
+    --nav-artwork-size: 24px;
+  }
+  .belofay-product-nav__link[data-product-nav-link="dimensions-fit"] .belofay-product-nav__icon {
+    --nav-artwork-size: 23px;
+  }
+  .belofay-product-nav__link[data-product-nav-link="delivery-returns"] .belofay-product-nav__icon {
+    --nav-artwork-size: 32px;
   }
   .belofay-product-nav__label {
     letter-spacing: -0.01em;
