@@ -529,6 +529,12 @@
   .belofay-pdp .belofay-dimensions__intro > p:last-child { font-size: 16px; line-height: 1.45; margin: 0; }
 }
 
+@media (min-width: 1025px) {
+  .belofay-pdp-gallery__thumbs { grid-auto-columns: calc((100% - 3 * var(--ds-space-sm)) / 4); }
+  .belofay-pdp-gallery__thumb { aspect-ratio: 1; min-height: 0; width: 100%; }
+  .belofay-pdp-gallery__thumb img { width: 100%; height: 100%; object-fit: cover; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .belofay-pdp *, .belofay-pdp *::before, .belofay-pdp *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
 }
