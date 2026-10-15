@@ -137,9 +137,9 @@
   }
   .belofay-product-nav__icon {
     display: inline-block;
-    width: 20px;
-    height: 20px;
-    flex: 0 0 20px;
+    width: 22px;
+    height: 22px;
+    flex: 0 0 22px;
     background-color: currentColor;
     -webkit-mask-image: var(--nav-icon-url);
     mask-image: var(--nav-icon-url);
@@ -147,8 +147,8 @@
     mask-repeat: no-repeat;
     -webkit-mask-position: center;
     mask-position: center;
-    -webkit-mask-size: contain;
-    mask-size: contain;
+    -webkit-mask-size: 22px 22px;
+    mask-size: 22px 22px;
     transition: background-color var(--motion-duration-fast, 0.2s) ease;
   }
   .belofay-product-nav__label {
@@ -186,11 +186,6 @@
       font-size: 15px;
       gap: 8px;
     }
-    .belofay-product-nav__icon {
-      width: 18px;
-      height: 18px;
-      flex: 0 0 18px;
-    }
   }
   @media (max-width: 640px) {
     .belofay-product-nav__inner {
@@ -204,11 +199,6 @@
       padding: 20px 2px 18px;
       font-size: 16px;
       gap: 8px;
-    }
-    .belofay-product-nav__icon {
-      width: 22px;
-      height: 22px;
-      flex: 0 0 22px;
     }
   }
 {% endstylesheet %}
