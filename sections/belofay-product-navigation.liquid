@@ -218,18 +218,66 @@
     const links = Array.from(document.querySelectorAll('[data-product-nav-link]'));
     if (!links.length) return;
     const sections = links.map(link => document.getElementById(link.dataset.productNavLink)).filter(Boolean);
+
     const setActive = id => {
       links.forEach(link => {
         const isActive = link.dataset.productNavLink === id;
         link.classList.toggle('is-active', isActive);
       });
     };
-    const observer = new IntersectionObserver(entries => {
-      const visible = entries.filter(entry => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-      if (visible) setActive(visible.target.id);
-    }, { rootMargin: '-18% 0px -65% 0px', threshold: [0, .1, .25, .5] });
-    sections.forEach(section => observer.observe(section));
 
+    /* ------------------------------------------------------------------
+     * Scroll-based detection: picks the section whose top edge is closest
+     * to (but still above) the trigger line (nav bottom + 20% of viewport).
+     * This works even when a section has zero rendered height (e.g. Reviews
+     * inside a collapsed <details> on mobile).
+     * ------------------------------------------------------------------ */
+    const navEl = document.querySelector('.belofay-product-nav');
+    const getNavHeight = () => navEl ? navEl.offsetHeight : 0;
+
+    const getActiveSectionId = () => {
+      const triggerY = getNavHeight() + window.innerHeight * 0.20;
+      let best = null;
+      let bestTop = -Infinity;
+
+      sections.forEach(section => {
+        /* Use the section element's bounding rect. For collapsed <details>
+           the rect top is still correct (it's the section start in page flow),
+           even if its height is 0. */
+        const rect = section.getBoundingClientRect();
+        /* Section has scrolled past the trigger line → candidate */
+        if (rect.top <= triggerY && rect.top > bestTop) {
+          bestTop = rect.top;
+          best = section;
+        }
+      });
+
+      /* Nothing above trigger yet → first section */
+      if (!best) return sections[0] ? sections[0].id : null;
+
+      /* If we're very close to the bottom of the page, force last section */
+      const scrollBottom = window.scrollY + window.innerHeight;
+      const pageHeight = document.documentElement.scrollHeight;
+      if (pageHeight - scrollBottom < 60) {
+        return sections[sections.length - 1].id;
+      }
+
+      return best.id;
+    };
+
+    let rafId = null;
+    const onScroll = () => {
+      if (rafId) return;
+      rafId = requestAnimationFrame(() => {
+        rafId = null;
+        const id = getActiveSectionId();
+        if (id) setActive(id);
+      });
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    /* Click: smooth scroll + immediate highlight */
     links.forEach(link => {
       link.addEventListener('click', e => {
         const targetId = link.dataset.productNavLink;
@@ -241,11 +289,19 @@
           if (history.pushState) {
             history.pushState(null, null, '#' + targetId);
           }
+          /* If reviews <details> is closed on mobile, open it */
+          const details = targetEl.querySelector('details[data-reviews-outer]')
+                       || targetEl.closest('details[data-reviews-outer]');
+          if (details && !details.open) details.open = true;
         }
       });
     });
 
-    setActive(location.hash.slice(1) || (sections[0] ? sections[0].id : 'overview'));
+    /* Initial state */
+    const initId = location.hash.slice(1);
+    setActive((initId && document.getElementById(initId)) ? initId : (sections[0] ? sections[0].id : ''));
+    /* Run once after page paint to reflect scroll position on reload */
+    requestAnimationFrame(() => onScroll());
   })();
 {% endjavascript %}
 
