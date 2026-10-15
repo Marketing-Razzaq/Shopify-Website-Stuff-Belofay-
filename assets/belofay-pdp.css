@@ -565,6 +565,15 @@
   .belofay-pdp .belofay-pdp-reassurance small { font-size: var(--ds-text-xs); line-height: 1.35; }
 }
 
+@media (min-width: 1025px) {
+  .belofay-pdp .belofay-pdp-buy__reassurance { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--ds-space-md); }
+  .belofay-pdp .belofay-pdp-reassurance { min-width: 0; gap: var(--ds-space-sm); }
+  .belofay-pdp .belofay-pdp-reassurance > .belofay-pdp__icon { flex-basis: 28px; width: 28px; height: 28px; }
+  .belofay-pdp .belofay-pdp-reassurance svg { width: 28px; height: 28px; }
+  .belofay-pdp .belofay-pdp-reassurance strong { font-size: var(--ds-text-sm); }
+  .belofay-pdp .belofay-pdp-reassurance small { font-size: var(--ds-text-xs); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .belofay-pdp *, .belofay-pdp *::before, .belofay-pdp *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
 }
